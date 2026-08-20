@@ -1,3 +1,5 @@
+import math
+
 RARITIES = [
     "Base",
     "FirstEdition",
@@ -7,6 +9,22 @@ RARITIES = [
     "FullArt",
     "FullArtAnimated",
 ]
+
+LEVELS = {
+    "Basic": {
+        "Common": 1,
+        "Rare": 5,
+        "Epic": 12,
+        "Legendary": 20,
+    },
+    "Destiny": {
+        "Common": 25,
+        "Rare": 30,
+        "Epic": 40,
+        "Legendary": 50,
+        "Endgame": 70,
+    },
+}
 
 
 def bundle(set, items, expansions) -> dict:
@@ -98,6 +116,12 @@ def pack(set, kind) -> dict:
         "Slot7": SLOT_RARE,
     }
 
+    pack_at = LEVELS[set][kind]
+    next_pack_at = next_unlock(pack_at)
+
+    level = pack_at
+    level_big = pack_at + math.ceil((next_pack_at - pack_at) / 4)
+
     return {
         "Name": f"{set} {kind} Packs",
         "CardExpansion": f"Nikke_{set}",
@@ -118,13 +142,13 @@ def pack(set, kind) -> dict:
         "MaterialList": [],
         "IsBigBox": True,
         "BigBoxHideTillUnlocked": False,
-        "LicensePrice": 0,
-        "LicenseLevelRequirement": 0,
-        "IgnoreDoubleImage": True,
-        "HasSmallBox": False,
+        "LicensePrice": 50 * level_big,
+        "LicenseLevelRequirement": level_big,
+        "IgnoreDoubleImage": False,
+        "HasSmallBox": True,
         "SmallBoxHideTillUnlocked": False,
-        "SmallBoxLicensePrice": 0,
-        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxLicensePrice": 50 * level,
+        "SmallBoxLicenseLevelRequirement": level,
         "SmallBoxIgnoreDoubleImage": False,
         "IsBulkBox": False,
         "MinMarketPricePercent": 1,
@@ -152,6 +176,11 @@ def pack(set, kind) -> dict:
 
 
 def box(set, kind) -> dict:
+    pack_at = LEVELS[set][kind]
+    next_pack_at = next_unlock(pack_at)
+    level = pack_at + math.ceil((next_pack_at - pack_at) / 2)
+    level_big = pack_at + math.ceil(3 * (next_pack_at - pack_at) / 4)
+
     return {
         "Name": f"{set} {kind} Box",
         "Material": f"_BoosterBox_{kind}",
@@ -170,13 +199,13 @@ def box(set, kind) -> dict:
         "MaterialList": [],
         "IsBigBox": True,
         "BigBoxHideTillUnlocked": False,
-        "LicensePrice": 0,
-        "LicenseLevelRequirement": 0,
-        "IgnoreDoubleImage": True,
-        "HasSmallBox": False,
+        "LicensePrice": 50 * level_big,
+        "LicenseLevelRequirement": level_big,
+        "IgnoreDoubleImage": False,
+        "HasSmallBox": True,
         "SmallBoxHideTillUnlocked": False,
-        "SmallBoxLicensePrice": 0,
-        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxLicensePrice": 50 * level,
+        "SmallBoxLicenseLevelRequirement": level,
         "SmallBoxIgnoreDoubleImage": False,
         "IsBulkBox": False,
         "MinMarketPricePercent": 1,
@@ -227,3 +256,10 @@ def card(name, number, rarity, padding=4) -> dict:
         "FoilMask": "",
         "CardBack": "",
     }
+
+
+def next_unlock(level):
+    for levels in LEVELS.values():
+        for candidate in levels.values():
+            if candidate > level:
+                return candidate
