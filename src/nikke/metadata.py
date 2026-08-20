@@ -222,7 +222,7 @@ def card(name, number, rarity, padding=4) -> dict:
         "BorderType": RARITY_BORDER.get(rarity, rarity),
         "CardNumber": number,
         "Sprite": filename,
-        "IsFoil": rarity == "FullArt" or rarity == "EX",
+        "IsFoil": rarity == "EX" or "FullArt" in rarity,
         "ElementType": "None",
         "FoilMask": "",
         "CardBack": "",

@@ -1,4 +1,3 @@
-from nikke.metadata import RARITIES
 import configparser
 import json
 import math
@@ -20,12 +19,14 @@ ART_ANIMATED_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/animated/default
 EXTERNAL_DIR = WORKING_DIR.joinpath("external")
 OUTPUT_DIR = WORKING_DIR.joinpath("output")
 ANIMATED_OUTPUT_DIR = OUTPUT_DIR.joinpath("animated")
+UNITY_DIR = WORKING_DIR.joinpath("unity")
+EXPANSION_BUILDER = UNITY_DIR.joinpath("ExpansionBuilder")
 
 CARDBACK = TEXTURE_DIR.joinpath("cards/T_CardBackMesh.png")
 LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
 
 
-def extract() -> None:
+def generate() -> None:
     OUTPUT_DIR.mkdir(exist_ok=True)
 
     for set in ART_STATIC_DIR.iterdir():
@@ -68,7 +69,7 @@ def extract() -> None:
                 name = config[card_art.stem]["Name"]
                 number = int(
                     config[card_art.stem]["Number"]
-                ) + total_cards * RARITIES.index(expansion.name)
+                ) + total_cards * metadata.RARITIES.index(expansion.name)
 
                 card = metadata.card(name, number, expansion.name)
                 cards.append(card)
@@ -88,7 +89,7 @@ def extract() -> None:
 
                     total_animated += 1
 
-                    number = total_animated + total_cards * (len(RARITIES) - 1)
+                    number = total_animated + total_cards * (len(metadata.RARITIES) - 1)
                     card = metadata.card(name, number, "FullArtAnimated")
                     cards.append(card)
 
@@ -175,16 +176,34 @@ def extract() -> None:
         )
 
 
-def package():
+def bundle():
     UNITY_EXE = pathlib.Path(
         r"C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe"
     )
-    UNITY_DIR = WORKING_DIR.joinpath("unity")
-    EXPANSION_BUILDER = UNITY_DIR.joinpath("ExpansionBuilder")
+    ASSETS_DIR = EXPANSION_BUILDER.joinpath("Assets")
+
+    for path, dirs, files in ASSETS_DIR.walk(top_down=False):
+        if "Nikke" not in str(path):
+            continue
+
+        for dir in dirs:
+            dir = path / dir
+
+            if not any(dir.iterdir()):
+                dir.rmdir()
+
+        for file in files:
+            file = path / file
+            output_file = OUTPUT_DIR / file.with_suffix("").relative_to(ASSETS_DIR)
+
+            if file.suffix == ".meta" and output_file.exists():
+                continue
+
+            file.unlink()
 
     shutil.copytree(
         OUTPUT_DIR,
-        EXPANSION_BUILDER.joinpath("Assets"),
+        ASSETS_DIR,
         dirs_exist_ok=True,
     )
 
@@ -203,6 +222,41 @@ def package():
         check=True,
         text=True,
     )
+
+
+def package():
+    BUILD_DIR = WORKING_DIR / "build"
+    PLUGINS_DIR = BUILD_DIR / "BepInEx" / "plugins"
+    SHOP_DIR = PLUGINS_DIR / "Phone - Overhaul" / "App Images" / "Nikke"
+    SHOP_ICONS = EXTERNAL_DIR / "Shop"
+    EPL_ANIMATOR_DIR = PLUGINS_DIR / "EPLCardAnimator" / "animated"
+
+    shutil.rmtree(BUILD_DIR, ignore_errors=True)
+
+    SHOP_DIR.parent.mkdir(parents=True)
+    SHOP_ICONS.copy(SHOP_DIR)
+
+    for entry in OUTPUT_DIR.iterdir():
+        if entry.suffix != ".json":
+            continue
+
+        print(entry.stem)
+
+        plugin = PLUGINS_DIR / "Nikke" / f"{entry.stem}_prefabloader"
+        bundle = EXPANSION_BUILDER / "AssetBundles" / entry.stem
+        bundle_animated = bundle.with_name(bundle.name + "_animated")
+
+        plugin.mkdir(parents=True)
+        bundle.copy(plugin / entry.stem)
+        entry.copy(plugin / entry.name)
+
+        if bundle_animated.exists():
+            if not EPL_ANIMATOR_DIR.exists():
+                EPL_ANIMATOR_DIR.mkdir(parents=True)
+
+            bundle_animated.copy(
+                (EPL_ANIMATOR_DIR / bundle_animated.name).with_suffix(".assets")
+            )
 
 
 def write_json(data: dict, file: pathlib.Path):
