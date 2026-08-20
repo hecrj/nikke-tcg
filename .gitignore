@@ -1,0 +1,21 @@
+output/
+original/
+cards/
+.venv/
+__pycache__/
+
+# Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Aa]sset[Bb]undles/
+
+[Aa]ssets/
+!Assets/Editor
+
+# Memory captures
+[Mm]emoryCaptures/
