@@ -22,7 +22,6 @@ LEVELS = {
         "Rare": 30,
         "Epic": 40,
         "Legendary": 50,
-        "Endgame": 70,
     },
 }
 
@@ -76,9 +75,19 @@ def expansion(set, cards) -> dict:
 
 
 def pack(set, kind) -> dict:
-    SLOT_COMMON = {
-        "Base": 99,
-        "FirstEdition": 1,
+    t = list(LEVELS[set].keys()).index(kind)
+
+    common = t / (len(LEVELS[set]) - 1)
+    premium = common**1.5
+
+    # -------------------------
+    # Slots 1-4: Common
+    # -------------------------
+    first_edition = 1 + 9 * common
+
+    slot_common = {
+        "Base": 100 - first_edition,
+        "FirstEdition": first_edition,
         "Silver": 0,
         "Gold": 0,
         "EX": 0,
@@ -86,34 +95,49 @@ def pack(set, kind) -> dict:
         "FullArtAnimated": 0,
     }
 
-    SLOT_UNCOMMON = {
+    # -------------------------
+    # Slots 5-6: Uncommon
+    # -------------------------
+    ex = 2 + 28 * premium
+    gold = 28 + 22 * common
+    silver = 100 - gold - ex
+
+    slot_uncommon = {
         "Base": 0,
         "FirstEdition": 0,
-        "Silver": 64,
-        "Gold": 16,
-        "EX": 1,
+        "Silver": silver,
+        "Gold": gold,
+        "EX": ex,
         "FullArt": 0,
         "FullArtAnimated": 0,
     }
 
-    SLOT_RARE = {
+    # -------------------------
+    # Slot 7: Rare+
+    # -------------------------
+    animated = 0.1 + 0.9 * premium
+    full_art = 0.5 + 4.5 * premium
+    ex = 9.5 + 35.5 * premium
+    gold = 100 - ex - full_art - animated
+
+    slot_rare = {
         "Base": 0,
         "FirstEdition": 0,
         "Silver": 0,
-        "Gold": 0,
-        "EX": 0,
-        "FullArt": 0,
-        "FullArtAnimated": 1,
+        "Gold": gold,
+        "EX": ex,
+        "FullArt": full_art,
+        "FullArtAnimated": animated,
     }
 
-    SLOT_WEIGHTS = {
-        "Slot1": SLOT_COMMON,
-        "Slot2": SLOT_COMMON,
-        "Slot3": SLOT_COMMON,
-        "Slot4": SLOT_COMMON,
-        "Slot5": SLOT_UNCOMMON,
-        "Slot6": SLOT_UNCOMMON,
-        "Slot7": SLOT_RARE,
+    slot_weights = {
+        "Slot1": slot_common,
+        "Slot2": slot_common,
+        "Slot3": slot_common,
+        "Slot4": slot_common,
+        "Slot5": slot_uncommon,
+        "Slot6": slot_uncommon,
+        "Slot7": slot_rare,
     }
 
     pack_at = LEVELS[set][kind]
@@ -129,8 +153,8 @@ def pack(set, kind) -> dict:
         "ItemType": f"Nikke_{set}_{kind}_Pack_Item",
         "Material": f"_BoosterPack_{kind}",
         "SpriteName": f"_BoosterPack_{kind}_Icon",
-        "BaseCost": 2,
-        "SlotWeights": SLOT_WEIGHTS,
+        "BaseCost": 2 * (t + 1),
+        "SlotWeights": slot_weights,
         "ItemCategory": "TCG",
         "AddItemAsAccessory": False,
         "AddItemAsFigurine": False,
@@ -263,3 +287,5 @@ def next_unlock(level):
         for candidate in levels.values():
             if candidate > level:
                 return candidate
+
+    return 70  # Endgame
