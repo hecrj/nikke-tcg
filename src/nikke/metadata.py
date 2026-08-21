@@ -333,7 +333,75 @@ def deck(set, element) -> dict:
         "BigBoxHideTillUnlocked": False,
         "LicensePrice": 100 * level_requirement,
         "LicenseLevelRequirement": level_requirement,
-        "IgnoreDoubleImage": False,
+        "IgnoreDoubleImage": True,
+        "HasSmallBox": False,
+        "SmallBoxHideTillUnlocked": False,
+        "SmallBoxLicensePrice": 0,
+        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxIgnoreDoubleImage": False,
+        "IsBulkBox": False,
+        "MinMarketPricePercent": 1,
+        "MaxMarketPricePercent": 1.20000005,
+        "FollowItemPrice": "None",
+        "AutoSetBoxPrice": True,
+        "IsTallItem": False,
+        "InBoxOffsetY": 0,
+        "InBoxOffsetScale": 0,
+        "ItemDeminsion": {"x": 1, "y": 1, "z": 1},
+        "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
+        "ColliderScale": {"x": 1, "y": 1, "z": 1},
+        "PriceAffectedBy": [],
+        "IsCardPack": False,
+        "IsCardBox": False,
+        "MinValue": 0,
+        "CardExpansion": "",
+        "CanHaveDuplicates": False,
+        "CanHaveGodPacks": False,
+        "GodPackPercentage": 0.0,
+        "PackGenerationStrategy": "Guaranteed",
+        "PackType": "",
+        "NormalWeights": {},
+        "GodWeights": {},
+        "SlotWeights": {},
+    }
+
+
+def deck_box(i) -> dict:
+    CHARACTERS = [
+        "D_Killer_Wife",
+        "Siren",
+        "Helm",
+        "Red_Ash",
+    ]
+
+    character = CHARACTERS[i]
+    tier = i + 1
+
+    level = [level for levels in LEVELS.values() for level in levels.values()][tier - 1]
+    level_next = next_unlock(level)
+    level_requirement = level + math.ceil((level_next - level) / 4)
+
+    return {
+        "Name": f"{character.replace('_', ' ')} Deck Box",
+        "Material": f"_DeckBox_{character}_Material",
+        "SpriteName": f"_DeckBox_{character}_Icon",
+        "ItemType": f"Nikke_{character}_DeckBox_Item",
+        "SpawnsPackType": "",
+        "ItemCategory": "Deckbox",
+        "BaseCost": 20 * tier,
+        "AddItemAsAccessory": True,
+        "AddItemAsFigurine": False,
+        "AddItemAsBoardGame": False,
+        "PhoneAppId": "Nikke",
+        "UsesBaseGameMesh": True,
+        "MeshToUse": "DeckBox1",
+        "Mesh": "",
+        "MaterialList": [],
+        "IsBigBox": True,
+        "BigBoxHideTillUnlocked": False,
+        "LicensePrice": 20 * level_requirement,
+        "LicenseLevelRequirement": level_requirement,
+        "IgnoreDoubleImage": True,
         "HasSmallBox": False,
         "SmallBoxHideTillUnlocked": False,
         "SmallBoxLicensePrice": 0,

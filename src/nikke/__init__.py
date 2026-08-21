@@ -40,11 +40,12 @@ def generate() -> None:
     accessories = []
 
     for set_name in SETS.values():
+        suffix = "" if set_name == "Basic" else "Destiny"
+
+        ## Battle Decks
         for element in metadata.ELEMENTS:
             deck = metadata.deck(set_name, element)
             accessories.append(deck)
-
-            suffix = "" if set_name == "Basic" else "Destiny"
 
             copy(
                 TEXTURE_DIR / "boxes" / f"T_PreconDeck{element}{suffix}.png",
@@ -55,6 +56,23 @@ def generate() -> None:
                 TEXTURE_DIR / "boxes" / f"Icon_Precon{element}{suffix}.png",
                 ACCESSORIES_DIR / f"{deck['SpriteName']}.png",
             )
+
+    ## Deck Boxes
+    for i in range(4):
+        deck_box = metadata.deck_box(i)
+        accessories.append(deck_box)
+
+        suffix = "" if i == 0 else str(i + 1)
+
+        copy(
+            TEXTURE_DIR / "boxes" / f"T_DeckBox{suffix}.png",
+            ACCESSORIES_DIR / f"{deck_box['Material']}.png",
+        )
+
+        copy(
+            TEXTURE_DIR / "boxes" / f"Icon_DeckBox{i + 1}.png",
+            ACCESSORIES_DIR / f"{deck_box['SpriteName']}.png",
+        )
 
     write_json(
         metadata.bundle("Accessories", accessories),
