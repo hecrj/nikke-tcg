@@ -686,6 +686,88 @@ def figurine(original):
     }
 
 
+def board_game(name):
+    BOARD_GAMES = {
+        "Last Kingdom": {
+            "Mesh": "Claim",
+            "Material": "Last_Kingdom_D_Outsiders",
+        },
+        "D-Outsiders": {
+            "Mesh": "Mafia",
+            "Material": "Last_Kingdom_D_Outsiders",
+        },
+        "School of Lock": {
+            "Mesh": "Necro",
+            "Material": "School_of_Lock",
+        },
+        "Ice Dragon Saga": {
+            "Mesh": "SystemGate1",
+            "Material": "Ice_Dragon_Saga_ACPU_Freeze",
+        },
+        "A.C.P.U.! Freeze!": {
+            "Mesh": "SystemGate2",
+            "Material": "Ice_Dragon_Saga_ACPU_Freeze",
+        },
+    }
+
+    board_game = BOARD_GAMES[name]
+    filename = name.replace(".", "").replace("!", "").replace("-", "").replace(" ", "_")
+    tier = list(BOARD_GAMES.keys()).index(name) + 1
+    level_requirement = 8 + math.ceil(1.3 * tier**2)
+
+    return {
+        "Name": name,
+        "Material": f"_Boardgame_{board_game['Material']}_Material",
+        "SpriteName": f"_Boardgame_{filename}_Icon",
+        "ItemType": f"Nikke_Boardgame_{filename}_Item",
+        "UsesBaseGameMesh": True,
+        "MeshToUse": f"Boardgame_Speedrobo_{board_game['Mesh']}",
+        "Mesh": "",
+        "SpawnsPackType": "",
+        "ItemCategory": "Boardgame",
+        "BaseCost": 20 * tier,
+        "AddItemAsAccessory": True,
+        "AddItemAsFigurine": False,
+        "AddItemAsBoardGame": False,
+        "PhoneAppId": "Nikke",
+        "MaterialList": [],
+        "IsBigBox": True,
+        "BigBoxHideTillUnlocked": False,
+        "LicensePrice": math.ceil(5 * level_requirement**1.8 / 10) * 10,
+        "LicenseLevelRequirement": level_requirement,
+        "IgnoreDoubleImage": True,
+        "HasSmallBox": False,
+        "SmallBoxHideTillUnlocked": False,
+        "SmallBoxLicensePrice": 0,
+        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxIgnoreDoubleImage": False,
+        "IsBulkBox": False,
+        "MinMarketPricePercent": 1,
+        "MaxMarketPricePercent": 1.20000005,
+        "FollowItemPrice": "None",
+        "AutoSetBoxPrice": True,
+        "IsTallItem": False,
+        "InBoxOffsetY": 0,
+        "InBoxOffsetScale": 0,
+        "ItemDeminsion": {"x": 1, "y": 1, "z": 1},
+        "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
+        "ColliderScale": {"x": 1, "y": 1, "z": 1},
+        "PriceAffectedBy": [],
+        "IsCardPack": False,
+        "IsCardBox": False,
+        "MinValue": 0,
+        "CardExpansion": "",
+        "CanHaveDuplicates": False,
+        "CanHaveGodPacks": False,
+        "GodPackPercentage": 0.0,
+        "PackGenerationStrategy": "Guaranteed",
+        "PackType": "",
+        "NormalWeights": {},
+        "GodWeights": {},
+        "SlotWeights": {},
+    }
+
+
 def next_unlock(level):
     for levels in LEVELS.values():
         for candidate in levels.values():

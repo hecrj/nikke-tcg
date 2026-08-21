@@ -142,6 +142,32 @@ def generate() -> None:
             ACCESSORIES_DIR / f"{manga['SpriteName']}.png",
         )
 
+    ## Board Games
+    BOARD_GAME_ASSETS = {
+        "Claim!": ("Claim", "Claim_Mafia"),
+        "Mafia Works": ("Mafia", "Claim_Mafia"),
+        "Necromansters": ("Necro", "Necromansters"),
+        "System Gate 1": ("SystemGate1", "SystemGate"),
+        "System Gate 2": ("SystemGate2", "SystemGate"),
+    }
+
+    for original in (DATA_DIR / "accessories" / "boardgames").iterdir():
+        name = original.read_text().strip()
+        board_game = metadata.board_game(name)
+        accessories.append(board_game)
+
+        (icon, material) = BOARD_GAME_ASSETS[original.stem.removesuffix("_NAME")]
+
+        copy(
+            TEXTURE_DIR / ".." / "from Akalie" / f"Icon_Boardgame_Speedrobo_{icon}.png",
+            ACCESSORIES_DIR / f"{board_game['SpriteName']}.png",
+        )
+
+        copy(
+            TEXTURE_DIR / ".." / "from Akalie" / f"T_{material}.png",
+            ACCESSORIES_DIR / f"{board_game['Material']}.png",
+        )
+
     write_json(
         metadata.bundle("Accessories", accessories),
         OUTPUT_DIR / "nikke_accessories.json",
