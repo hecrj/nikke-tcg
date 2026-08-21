@@ -75,6 +75,29 @@ def generate() -> None:
             ACCESSORIES_DIR / f"{deck_box['SpriteName']}.png",
         )
 
+    ## Playmats
+    names = list((DATA_DIR / "accessories" / "playmats").iterdir())
+
+    for i in range(18):
+        name = (
+            next(name for name in names if f"_{i + 1}_" in name.stem)
+            .read_text()
+            .strip()
+        )
+
+        playmat = metadata.playmat(name, i)
+        accessories.append(playmat)
+
+        copy(
+            TEXTURE_DIR / "playmats" / f"T_PlayMat{i + 1}.png",
+            ACCESSORIES_DIR / f"{playmat['Material']}.png",
+        )
+
+        copy(
+            TEXTURE_DIR / "playmats" / f"Icon_Playmat{i + 1}.png",
+            ACCESSORIES_DIR / f"{playmat['SpriteName']}.png",
+        )
+
     ## Manga
     for i in range(12):
         name = (

@@ -491,6 +491,63 @@ def manga(name, i):
     }
 
 
+def playmat(name, i):
+    tier = i + 1
+    level_requirement = 3 + math.ceil(1.4 * tier**1.2)
+
+    return {
+        "Name": name,
+        "Material": f"_Playmat_{tier}_Material",
+        "SpriteName": f"_Playmat_{tier}_Icon",
+        "ItemType": f"Nikke_Playmat_{tier}_Item",
+        "SpawnsPackType": "",
+        "ItemCategory": "Playmat",
+        "BaseCost": 2 * tier,
+        "AddItemAsAccessory": True,
+        "AddItemAsFigurine": False,
+        "AddItemAsBoardGame": False,
+        "PhoneAppId": "Nikke",
+        "UsesBaseGameMesh": True,
+        "MeshToUse": "Playmat1",
+        "Mesh": "",
+        "MaterialList": [],
+        "IsBigBox": True,
+        "BigBoxHideTillUnlocked": False,
+        "LicensePrice": 80 * level_requirement,
+        "LicenseLevelRequirement": level_requirement,
+        "IgnoreDoubleImage": True,
+        "HasSmallBox": False,
+        "SmallBoxHideTillUnlocked": False,
+        "SmallBoxLicensePrice": 0,
+        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxIgnoreDoubleImage": False,
+        "IsBulkBox": False,
+        "MinMarketPricePercent": 1,
+        "MaxMarketPricePercent": 1.20000005,
+        "FollowItemPrice": "None",
+        "AutoSetBoxPrice": True,
+        "IsTallItem": False,
+        "InBoxOffsetY": 0,
+        "InBoxOffsetScale": 0,
+        "ItemDeminsion": {"x": 1, "y": 1, "z": 1},
+        "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
+        "ColliderScale": {"x": 1, "y": 1, "z": 1},
+        "PriceAffectedBy": [],
+        "IsCardPack": False,
+        "IsCardBox": False,
+        "MinValue": 0,
+        "CardExpansion": "",
+        "CanHaveDuplicates": False,
+        "CanHaveGodPacks": False,
+        "GodPackPercentage": 0.0,
+        "PackGenerationStrategy": "Guaranteed",
+        "PackType": "",
+        "NormalWeights": {},
+        "GodWeights": {},
+        "SlotWeights": {},
+    }
+
+
 def next_unlock(level):
     for levels in LEVELS.values():
         for candidate in levels.values():
