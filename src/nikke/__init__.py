@@ -368,6 +368,17 @@ def generate() -> None:
                 copy(entry, output_set / entry.name)
 
         expansion = metadata.expansion(set_name, cards)
+
+        for i, material in enumerate(expansion["PlayCardMaterials"]):
+            n = i if set_name == "Basic" else i + 4
+            n = 5 if i + 1 == len(expansion["PlayCardMaterials"]) else n
+            n = "" if n == 0 else str(n + 1)
+
+            copy(
+                TEXTURE_DIR / "cards" / f"T_3dCardModel{n}.png",
+                output_set / f"{material}.png",
+            )
+
         write_json(
             metadata.bundle(set_name, items, [expansion]),
             OUTPUT_DIR.joinpath(f"nikke_{set_name.lower()}.json"),
@@ -503,7 +514,7 @@ def package():
 
 
 def write_json(data: dict, file: pathlib.Path):
-    print(file.relative_to(OUTPUT_DIR))
+    print(file.relative_to(WORKING_DIR))
 
     json.dump(
         data,

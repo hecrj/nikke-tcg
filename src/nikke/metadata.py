@@ -56,6 +56,9 @@ def bundle(name, items, expansions=None) -> dict:
 
 
 def expansion(set, cards) -> dict:
+    materials = 5 if set == "Basic" else 2
+    materials = [f"_PlayCard_{material + 1}_Material" for material in range(materials)]
+
     return {
         "Name": f"{set} Set",
         "CardExpansion": f"Nikke_{set}",
@@ -73,7 +76,7 @@ def expansion(set, cards) -> dict:
         "RarityDrivenStepSize": 1.28,
         "RarityDrivenBorderMultiplierBase": 1.75,
         "RarityDrivenFoilMultiplier": 10.0,
-        "PlayCardMaterials": [],
+        "PlayCardMaterials": materials,
     }
 
 
