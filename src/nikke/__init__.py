@@ -32,7 +32,6 @@ LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
 
 
 def generate() -> None:
-    OUTPUT_DIR.mkdir(exist_ok=True)
 
     SETS = {
         "Tetramon": "Basic",
@@ -40,7 +39,6 @@ def generate() -> None:
     }
 
     # Accessories
-    ACCESSORIES_DIR.mkdir(exist_ok=True)
     accessories = []
 
     for set_name in SETS.values():
@@ -174,7 +172,6 @@ def generate() -> None:
     )
 
     # Figurines
-    FIGURINES_DIR.mkdir(exist_ok=True)
     figurines = []
 
     for mesh in (MESH_DIR / "figures").iterdir():
@@ -242,8 +239,6 @@ def generate() -> None:
         total_animated = 0
 
         output_set = OUTPUT_DIR.joinpath(f"Nikke_{set_name}")
-        output_set.mkdir(exist_ok=True)
-
         cards = []
 
         for expansion in set.iterdir():
@@ -300,7 +295,7 @@ def generate() -> None:
                     if output_frames_dir.exists():
                         continue
 
-                    print(output_frames_dir.relative_to(OUTPUT_DIR))
+                    print(output_frames_dir.relative_to(WORKING_DIR))
                     output_frames_dir.mkdir(parents=True)
 
                     total_padding = math.ceil(
@@ -481,16 +476,12 @@ def package():
             bundle = EXPANSION_BUILDER / "AssetBundles" / entry.stem
             bundle_animated = bundle.with_name(bundle.name + "_animated")
 
-            plugin.mkdir(parents=True)
             copy(bundle, plugin / entry.stem)
             copy(entry, plugin / entry.name)
 
             epl_animator_dir = plugins / "EPLCardAnimator" / "animated"
 
             if bundle_animated.exists():
-                if not epl_animator_dir.exists():
-                    epl_animator_dir.mkdir(parents=True)
-
                 copy(
                     bundle_animated,
                     (epl_animator_dir / bundle_animated.name).with_suffix(".assets"),
@@ -507,10 +498,20 @@ def package():
         )
 
     with mod("theme") as plugins:
-        copy(
-            TEXTURE_DIR / "misc",
-            plugins / "TextureReplacer" / "objects_textures" / "Nikke_Theme" / "misc",
-        )
+        output_dir = plugins / "TextureReplacer" / "objects_textures" / "Nikke_Theme"
+
+        TEXTURES = [
+            "misc",
+            "furniture/machines",
+            "shop/T_PaperBagAlbedoClosed.png",
+            "shop/T_PaperBagAlbedoOpen.png",
+        ]
+
+        for texture in TEXTURES:
+            copy(TEXTURE_DIR / texture, output_dir / texture)
+
+        for texture in (EXTERNAL_DIR / "Textures").iterdir():
+            copy(texture, output_dir / texture.name, overwrite=True)
 
 
 def write_json(data: dict, file: pathlib.Path):
@@ -523,11 +524,18 @@ def write_json(data: dict, file: pathlib.Path):
     )
 
 
-def copy(source: pathlib.Path, dest: pathlib.Path):
-    if not dest.exists():
-        print(dest.relative_to(WORKING_DIR))
+def copy(source: pathlib.Path, dest: pathlib.Path, overwrite=False):
+    if dest.exists():
+        if not overwrite:
+            return
 
         if source.is_dir():
-            dest.parent.mkdir(parents=True)
+            for entry in source.iterdir():
+                copy(entry, dest / entry.name, overwrite=True)
 
-        source.copy(dest)
+            return
+
+    print(dest.relative_to(WORKING_DIR))
+
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    source.copy(dest)
