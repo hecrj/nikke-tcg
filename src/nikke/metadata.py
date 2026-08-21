@@ -1,5 +1,4 @@
 import math
-from itertools import chain
 
 RARITIES = [
     "Base",
@@ -30,7 +29,7 @@ ELEMENTS = ["Fire", "Earth", "Water", "Wind"]
 SLEEVES = ["Clear"] + ELEMENTS + ["Tetramon"]
 
 
-def bundle(name, items, expansions=[]) -> dict:
+def bundle(name, items, expansions=None) -> dict:
     return {
         "Name": f"Nikke_{name}",
         "BundleId": f"nikke_{name.lower()}",
@@ -40,7 +39,7 @@ def bundle(name, items, expansions=[]) -> dict:
         "EnableMipMaps": False,
         "Assemblies": [],
         "Items": items,
-        "CardExpansions": expansions,
+        "CardExpansions": expansions or [],
         "CustomShops": [
             {
                 "PhoneAppId": "Nikke",
@@ -296,7 +295,7 @@ def deck(set, element) -> dict:
         },
         "Destiny": {
             "Fire": "Alice",
-            "Earth": "Red_Ash",
+            "Earth": "Red_Hood",
             "Water": "Dorothy",
             "Wind": "Siren",
         },
@@ -372,7 +371,7 @@ def deck_box(i) -> dict:
         "D_Killer_Wife",
         "Siren",
         "Helm",
-        "Red_Ash",
+        "Red_Hood",
     ]
 
     character = CHARACTERS[i]
@@ -590,6 +589,87 @@ def sleeve(name, kind):
         "ItemDeminsion": {"x": 1, "y": 1, "z": 1},
         "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
         "ColliderScale": {"x": 1, "y": 1, "z": 1},
+        "PriceAffectedBy": [],
+        "IsCardPack": False,
+        "IsCardBox": False,
+        "MinValue": 0,
+        "CardExpansion": "",
+        "CanHaveDuplicates": False,
+        "CanHaveGodPacks": False,
+        "GodPackPercentage": 0.0,
+        "PackGenerationStrategy": "Guaranteed",
+        "PackType": "",
+        "NormalWeights": {},
+        "GodWeights": {},
+        "SlotWeights": {},
+    }
+
+
+def figurine(original):
+    CHARACTERS = {
+        "PiggyA": "Rapi",
+        "GolemA": "Poli",
+        "StarfishA": "Snow White",
+        "BatB": "Grave",
+        "BatD": "Cinderella",
+        "BatA": "Red Hood",
+        "Beetle": "Shifty",
+        "GolemB": "Miranda",
+        "GolemC": "Quiry",
+        "GolemD": "D Killer Wife",
+        "PigB": "Neon",
+        "FoxB": "Red Hood (Nonsense Red)",
+        "PiggyC": "Anis",
+        "StarfishD": "Dorothy",
+        "PiggyD": "Marian",
+        "StarfishB": "Scarlet",
+        "StarFishC": "Rapunzel",
+        "ToonZ": "Liliweiss",
+        "BatC": "Siren",
+    }
+
+    name = CHARACTERS[original]
+    tier = list(CHARACTERS.values()).index(name) + 1
+    filename = name.replace(" ", "_").replace("(", "").replace(")", "")
+    level_requirement = 5 + math.ceil(1.3 * tier**1.35)
+
+    return {
+        "Name": name,
+        "Material": f"_Figurine_{filename}_Material",
+        "SpriteName": f"_Figurine_{filename}_Icon",
+        "ItemType": f"Nikke_Figurine_{filename}_Item",
+        "UsesBaseGameMesh": False,
+        "MeshToUse": "",
+        "Mesh": f"_Figurine_{filename}_Mesh",
+        "SpawnsPackType": "",
+        "ItemCategory": "Figurine",
+        "BaseCost": 10 * tier,
+        "AddItemAsAccessory": False,
+        "AddItemAsFigurine": True,
+        "AddItemAsBoardGame": False,
+        "PhoneAppId": "Nikke",
+        "MaterialList": [],
+        "IsBigBox": True,
+        "BigBoxHideTillUnlocked": False,
+        "LicensePrice": math.ceil(5 * level_requirement**1.8 / 10) * 10,
+        "LicenseLevelRequirement": level_requirement,
+        "IgnoreDoubleImage": True,
+        "HasSmallBox": False,
+        "SmallBoxHideTillUnlocked": False,
+        "SmallBoxLicensePrice": 0,
+        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxIgnoreDoubleImage": False,
+        "IsBulkBox": False,
+        "MinMarketPricePercent": 1,
+        "MaxMarketPricePercent": 1.20000005,
+        "FollowItemPrice": "None",
+        "AutoSetBoxPrice": True,
+        "IsTallItem": True,
+        "InBoxOffsetY": 0,
+        "InBoxOffsetScale": 0,
+        "ItemDeminsion": {"x": 2, "y": 4, "z": 1},
+        "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
+        "ColliderScale": {"x": 0.1, "y": 0.2, "z": 0.1},
         "PriceAffectedBy": [],
         "IsCardPack": False,
         "IsCardBox": False,

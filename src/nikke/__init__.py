@@ -6,13 +6,15 @@ import shutil
 import subprocess
 
 from PIL import Image
-from nikke import metadata
 
+from nikke import metadata
 
 WORKING_DIR = pathlib.Path.cwd()
 ORIGINAL_DIR = WORKING_DIR.joinpath("original/BepInEx")
-TEXTURE_DIR = ORIGINAL_DIR.joinpath("plugins/TextureReplacer/objects_textures/nikke")
-DATA_DIR = ORIGINAL_DIR.joinpath("plugins/TextureReplacer/objects_data")
+TEXTURE_REPLACER_DIR = ORIGINAL_DIR / "plugins" / "TextureReplacer"
+TEXTURE_DIR = TEXTURE_REPLACER_DIR / "objects_textures" / "nikke"
+DATA_DIR = TEXTURE_REPLACER_DIR / "objects_data"
+MESH_DIR = TEXTURE_REPLACER_DIR / "objects_meshes"
 ORIGINAL_CARDS_DIR = ORIGINAL_DIR.joinpath("plugins/CardConfigurator/Configs")
 ORIGINAL_PACKS_DIR = TEXTURE_DIR.joinpath("packs")
 ART_STATIC_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/cardart/default")
@@ -20,6 +22,7 @@ ART_ANIMATED_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/animated/default
 EXTERNAL_DIR = WORKING_DIR.joinpath("external")
 OUTPUT_DIR = WORKING_DIR.joinpath("output")
 ACCESSORIES_DIR = OUTPUT_DIR / "Nikke_Accessories"
+FIGURINES_DIR = OUTPUT_DIR / "Nikke_Figurines"
 ANIMATED_OUTPUT_DIR = OUTPUT_DIR.joinpath("animated")
 UNITY_DIR = WORKING_DIR.joinpath("unity")
 EXPANSION_BUILDER = UNITY_DIR.joinpath("ExpansionBuilder")
@@ -142,6 +145,64 @@ def generate() -> None:
     write_json(
         metadata.bundle("Accessories", accessories),
         OUTPUT_DIR / "nikke_accessories.json",
+    )
+
+    # Figurines
+    FIGURINES_DIR.mkdir(exist_ok=True)
+    figurines = []
+
+    for mesh in (MESH_DIR / "figures").iterdir():
+        name = (
+            mesh.stem.removeprefix("Figurine_")
+            .removesuffix("_Mesh")
+            .removesuffix("_Plushie")
+        )
+        figurine = metadata.figurine(name)
+        figurines.append(figurine)
+
+        copy(
+            mesh,
+            FIGURINES_DIR / f"{figurine['Mesh']}.obj",
+        )
+
+        for prefix in ["", "Toy_"]:
+            for suffix in ["", "Plushie"]:
+                icon = (
+                    TEXTURE_DIR
+                    / "figures"
+                    / f"Icon_{prefix}{name.replace('PigB', 'PiggyB')}{suffix}.png"
+                )
+
+                if icon.exists():
+                    break
+            else:
+                continue
+
+            break
+
+        copy(
+            icon,
+            FIGURINES_DIR / f"{figurine['SpriteName']}.png",
+        )
+
+        for suffix in ["", "Plushie"]:
+            material = (
+                TEXTURE_DIR
+                / "figures"
+                / f"T_{name.replace('PigB', 'PiggyB')}{suffix}.png"
+            )
+
+            if material.exists():
+                break
+
+        copy(
+            material,
+            FIGURINES_DIR / f"{figurine['Material']}.png",
+        )
+
+    write_json(
+        metadata.bundle("Figurines", figurines),
+        OUTPUT_DIR / "nikke_figurines.json",
     )
 
     # Expansions
@@ -275,18 +336,26 @@ def generate() -> None:
             )
 
         copy(CARDBACK, output_set.joinpath("_Cardback.png"))
-        copy(LOGO, output_set.joinpath("_ShopLogo.png"))
 
-        for entry in EXTERNAL_DIR.iterdir():
+        for entry in (EXTERNAL_DIR / "Expansion").iterdir():
             if entry.is_file():
-                copy(entry, output_set.joinpath(entry.name))
-                continue
+                copy(entry, output_set / entry.name)
 
         expansion = metadata.expansion(set_name, cards)
         write_json(
             metadata.bundle(set_name, items, [expansion]),
             OUTPUT_DIR.joinpath(f"nikke_{set_name.lower()}.json"),
         )
+
+    for bundle in OUTPUT_DIR.iterdir():
+        if not bundle.is_dir() or "Nikke_" not in bundle.name:
+            continue
+
+        copy(LOGO, bundle / "_ShopLogo.png")
+
+        for entry in EXTERNAL_DIR.iterdir():
+            if entry.is_file():
+                copy(entry, bundle / entry.name)
 
 
 def bundle():
