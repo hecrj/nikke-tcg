@@ -434,37 +434,72 @@ def bundle():
 
 def package():
     BUILD_DIR = WORKING_DIR / "build"
-    PLUGINS_DIR = BUILD_DIR / "BepInEx" / "plugins"
-    SHOP_DIR = PLUGINS_DIR / "Phone - Overhaul" / "App Images" / "Nikke"
     SHOP_ICONS = EXTERNAL_DIR / "Shop"
-    EPL_ANIMATOR_DIR = PLUGINS_DIR / "EPLCardAnimator" / "animated"
 
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
 
-    SHOP_DIR.parent.mkdir(parents=True)
-    SHOP_ICONS.copy(SHOP_DIR)
+    def mod(name):
+        class Mod:
+            def __init__(self, name):
+                self.name = name
+
+            def __enter__(self):
+                return (
+                    BUILD_DIR
+                    / f"Nikke - {self.name.capitalize()}"
+                    / "BepInEx"
+                    / "plugins"
+                )
+
+            def __exit__(self, _exc_type, _exc_value, _traceback):
+                pass
+
+        return Mod(name)
 
     for entry in OUTPUT_DIR.iterdir():
         if entry.suffix != ".json":
             continue
 
-        print(entry.stem)
-
-        plugin = PLUGINS_DIR / "Nikke" / f"{entry.stem}_prefabloader"
-        bundle = EXPANSION_BUILDER / "AssetBundles" / entry.stem
-        bundle_animated = bundle.with_name(bundle.name + "_animated")
-
-        plugin.mkdir(parents=True)
-        bundle.copy(plugin / entry.stem)
-        entry.copy(plugin / entry.name)
-
-        if bundle_animated.exists():
-            if not EPL_ANIMATOR_DIR.exists():
-                EPL_ANIMATOR_DIR.mkdir(parents=True)
-
-            bundle_animated.copy(
-                (EPL_ANIMATOR_DIR / bundle_animated.name).with_suffix(".assets")
+        with mod(entry.stem.removeprefix("nikke_")) as plugins:
+            copy(
+                SHOP_ICONS,
+                plugins / "Phone - Overhaul" / "App Images" / "Nikke",
             )
+
+            plugin = plugins / "Nikke" / f"{entry.stem}_prefabloader"
+            bundle = EXPANSION_BUILDER / "AssetBundles" / entry.stem
+            bundle_animated = bundle.with_name(bundle.name + "_animated")
+
+            plugin.mkdir(parents=True)
+            copy(bundle, plugin / entry.stem)
+            copy(entry, plugin / entry.name)
+
+            epl_animator_dir = plugins / "EPLCardAnimator" / "animated"
+
+            if bundle_animated.exists():
+                if not epl_animator_dir.exists():
+                    epl_animator_dir.mkdir(parents=True)
+
+                copy(
+                    bundle_animated,
+                    (epl_animator_dir / bundle_animated.name).with_suffix(".assets"),
+                )
+
+    with mod("posters") as plugins:
+        copy(
+            TEXTURE_DIR / "posters",
+            plugins
+            / "TextureReplacer"
+            / "objects_textures"
+            / "Nikke_Posters"
+            / "posters",
+        )
+
+    with mod("theme") as plugins:
+        copy(
+            TEXTURE_DIR / "misc",
+            plugins / "TextureReplacer" / "objects_textures" / "Nikke_Theme" / "misc",
+        )
 
 
 def write_json(data: dict, file: pathlib.Path):
@@ -479,5 +514,9 @@ def write_json(data: dict, file: pathlib.Path):
 
 def copy(source: pathlib.Path, dest: pathlib.Path):
     if not dest.exists():
-        print(dest.relative_to(OUTPUT_DIR))
+        print(dest.relative_to(WORKING_DIR))
+
+        if source.is_dir():
+            dest.parent.mkdir(parents=True)
+
         source.copy(dest)
