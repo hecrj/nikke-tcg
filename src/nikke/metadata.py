@@ -27,6 +27,7 @@ LEVELS = {
 }
 
 ELEMENTS = ["Fire", "Earth", "Water", "Wind"]
+SLEEVES = ["Clear"] + ELEMENTS + ["Tetramon"]
 
 
 def bundle(name, items, expansions=[]) -> dict:
@@ -514,6 +515,63 @@ def playmat(name, i):
         "IsBigBox": True,
         "BigBoxHideTillUnlocked": False,
         "LicensePrice": 80 * level_requirement,
+        "LicenseLevelRequirement": level_requirement,
+        "IgnoreDoubleImage": True,
+        "HasSmallBox": False,
+        "SmallBoxHideTillUnlocked": False,
+        "SmallBoxLicensePrice": 0,
+        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxIgnoreDoubleImage": False,
+        "IsBulkBox": False,
+        "MinMarketPricePercent": 1,
+        "MaxMarketPricePercent": 1.20000005,
+        "FollowItemPrice": "None",
+        "AutoSetBoxPrice": True,
+        "IsTallItem": False,
+        "InBoxOffsetY": 0,
+        "InBoxOffsetScale": 0,
+        "ItemDeminsion": {"x": 1, "y": 1, "z": 1},
+        "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
+        "ColliderScale": {"x": 1, "y": 1, "z": 1},
+        "PriceAffectedBy": [],
+        "IsCardPack": False,
+        "IsCardBox": False,
+        "MinValue": 0,
+        "CardExpansion": "",
+        "CanHaveDuplicates": False,
+        "CanHaveGodPacks": False,
+        "GodPackPercentage": 0.0,
+        "PackGenerationStrategy": "Guaranteed",
+        "PackType": "",
+        "NormalWeights": {},
+        "GodWeights": {},
+        "SlotWeights": {},
+    }
+
+
+def sleeve(name, kind):
+    tier = SLEEVES.index(kind) + 1
+    level_requirement = 3 + math.ceil(1.1 * tier**1.8)
+
+    return {
+        "Name": name,
+        "Material": f"_Sleeve_{tier}_Material",
+        "SpriteName": f"_Sleeve_{tier}_Icon",
+        "ItemType": f"Nikke_Sleeve_{tier}_Item",
+        "SpawnsPackType": "",
+        "ItemCategory": "Sleeve",
+        "BaseCost": 1 * tier,
+        "AddItemAsAccessory": True,
+        "AddItemAsFigurine": False,
+        "AddItemAsBoardGame": False,
+        "PhoneAppId": "Nikke",
+        "UsesBaseGameMesh": True,
+        "MeshToUse": "CardSleeve_Clear",
+        "Mesh": "",
+        "MaterialList": [],
+        "IsBigBox": True,
+        "BigBoxHideTillUnlocked": False,
+        "LicensePrice": 40 * level_requirement,
         "LicenseLevelRequirement": level_requirement,
         "IgnoreDoubleImage": True,
         "HasSmallBox": False,

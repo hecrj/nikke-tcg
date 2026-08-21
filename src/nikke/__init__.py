@@ -75,6 +75,27 @@ def generate() -> None:
             ACCESSORIES_DIR / f"{deck_box['SpriteName']}.png",
         )
 
+    ## Sleeves
+    for kind in metadata.SLEEVES:
+        name = (
+            (DATA_DIR / "accessories" / "sleeves" / f"Card Sleeves ({kind})_NAME.txt")
+            .read_text()
+            .strip()
+        )
+
+        sleeve = metadata.sleeve(name, kind)
+        accessories.append(sleeve)
+
+        copy(
+            TEXTURE_DIR / "sleeves" / f"T_CardSleeve{kind}.png",
+            ACCESSORIES_DIR / f"{sleeve['Material']}.png",
+        )
+
+        copy(
+            TEXTURE_DIR / "sleeves" / f"Icon_CardSleeve{kind}.png",
+            ACCESSORIES_DIR / f"{sleeve['SpriteName']}.png",
+        )
+
     ## Playmats
     names = list((DATA_DIR / "accessories" / "playmats").iterdir())
 
