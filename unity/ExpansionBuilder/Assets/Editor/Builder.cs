@@ -85,12 +85,8 @@ public class Builder : EditorWindow
             string texturePath = AssetDatabase.GUIDToAssetPath(guid);
             string fileName = System.IO.Path.GetFileNameWithoutExtension(texturePath);
 
-            // Must start with "_BoosterPack" or "_BoosterBox"
-            if (!fileName.StartsWith("_BoosterPack") && !fileName.StartsWith("_BoosterBox"))
-                continue;
-
-            // Must NOT end with "Icon"
-            if (fileName.EndsWith("Icon"))
+            // Must end with "_Material"
+            if (!fileName.EndsWith("_Material"))
             {
                 skipped++;
                 continue;

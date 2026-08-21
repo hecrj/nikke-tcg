@@ -18,6 +18,7 @@ ART_STATIC_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/cardart/default")
 ART_ANIMATED_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/animated/default/ghost")
 EXTERNAL_DIR = WORKING_DIR.joinpath("external")
 OUTPUT_DIR = WORKING_DIR.joinpath("output")
+ACCESSORIES_DIR = OUTPUT_DIR / "Nikke_Accessories"
 ANIMATED_OUTPUT_DIR = OUTPUT_DIR.joinpath("animated")
 UNITY_DIR = WORKING_DIR.joinpath("unity")
 EXPANSION_BUILDER = UNITY_DIR.joinpath("ExpansionBuilder")
@@ -29,11 +30,40 @@ LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
 def generate() -> None:
     OUTPUT_DIR.mkdir(exist_ok=True)
 
+    SETS = {
+        "Tetramon": "Basic",
+        "Destiny": "Destiny",
+    }
+
+    # Accessories
+    ACCESSORIES_DIR.mkdir(exist_ok=True)
+    accessories = []
+
+    for set_name in SETS.values():
+        for element in metadata.ELEMENTS:
+            deck = metadata.deck(set_name, element)
+            accessories.append(deck)
+
+            suffix = "" if set_name == "Basic" else "Destiny"
+
+            copy(
+                TEXTURE_DIR / "boxes" / f"T_PreconDeck{element}{suffix}.png",
+                ACCESSORIES_DIR / f"{deck['Material']}.png",
+            )
+
+            copy(
+                TEXTURE_DIR / "boxes" / f"Icon_Precon{element}{suffix}.png",
+                ACCESSORIES_DIR / f"{deck['SpriteName']}.png",
+            )
+
+    write_json(
+        metadata.bundle("Accessories", accessories),
+        OUTPUT_DIR / "nikke_accessories.json",
+    )
+
+    # Expansions
     for set in ART_STATIC_DIR.iterdir():
-        set_name = {
-            "Tetramon": "Basic",
-            "Destiny": "Destiny",
-        }.get(set.name)
+        set_name = SETS.get(set.name)
 
         if set_name is None:
             continue
@@ -122,29 +152,29 @@ def generate() -> None:
 
         items = []
 
-        PACKS = ["Common", "Rare", "Epic", "Legendary"]
+        TIERS = ["Common", "Rare", "Epic", "Legendary"]
 
-        for kind in PACKS:
-            pack = metadata.pack(set_name, kind)
+        for tier in TIERS:
+            pack = metadata.pack(set_name, tier)
             items.append(pack)
 
-            box = metadata.box(set_name, kind)
+            box = metadata.box(set_name, tier)
             items.append(box)
 
             prefix = "" if set_name == "Basic" else "Destiny_"
-            original_kind = "Legend" if kind == "Legendary" else kind
-            original_kind = "" if kind == "Common" else original_kind
+            original_kind = "Legend" if tier == "Legendary" else tier
+            original_kind = "" if tier == "Common" else original_kind
 
             copy(
                 ORIGINAL_PACKS_DIR.joinpath(
-                    f"T_CardPack{'' if set.name == 'Tetramon' else set.name}{kind}.png"
+                    f"T_CardPack{'' if set.name == 'Tetramon' else set.name}{tier}.png"
                 ),
                 output_set.joinpath(f"{pack['Material']}.png"),
             )
 
             copy(
                 ORIGINAL_PACKS_DIR.joinpath(
-                    f"Pack{'' if set.name == 'Tetramon' else set.name}{kind}.png"
+                    f"Pack{'' if set.name == 'Tetramon' else set.name}{tier}.png"
                 ),
                 output_set.joinpath(f"{pack['SpriteName']}.png"),
             )

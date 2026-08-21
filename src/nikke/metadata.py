@@ -1,4 +1,5 @@
 import math
+from itertools import chain
 
 RARITIES = [
     "Base",
@@ -25,11 +26,13 @@ LEVELS = {
     },
 }
 
+ELEMENTS = ["Fire", "Earth", "Water", "Wind"]
 
-def bundle(set, items, expansions) -> dict:
+
+def bundle(name, items, expansions=[]) -> dict:
     return {
-        "Name": f"Nikke_{set}",
-        "BundleId": f"nikke_{set.lower()}",
+        "Name": f"Nikke_{name}",
+        "BundleId": f"nikke_{name.lower()}",
         "AutoCompressTextures": True,
         "MaxTextureSize": 2048,
         "TextureCompression": "BC7",
@@ -151,7 +154,7 @@ def pack(set, kind) -> dict:
         "CardExpansion": f"Nikke_{set}",
         "PackType": f"Nikke_{set}_{kind}_Pack",
         "ItemType": f"Nikke_{set}_{kind}_Pack_Item",
-        "Material": f"_BoosterPack_{kind}",
+        "Material": f"_BoosterPack_{kind}_Material",
         "SpriteName": f"_BoosterPack_{kind}_Icon",
         "BaseCost": 2 * (t + 1),
         "SlotWeights": slot_weights,
@@ -207,7 +210,7 @@ def box(set, kind) -> dict:
 
     return {
         "Name": f"{set} {kind} Box",
-        "Material": f"_BoosterBox_{kind}",
+        "Material": f"_BoosterBox_{kind}_Material",
         "SpriteName": f"_BoosterBox_{kind}_Icon",
         "ItemType": f"Nikke_{set}_{kind}_Box_Item",
         "SpawnsPackType": f"Nikke_{set}_{kind}_Pack_Item",
@@ -279,6 +282,87 @@ def card(name, number, rarity, padding=4) -> dict:
         "ElementType": "None",
         "FoilMask": "",
         "CardBack": "",
+    }
+
+
+def deck(set, element) -> dict:
+    CHARACTERS = {
+        "Basic": {
+            "Fire": "Modernia",
+            "Earth": "Raven",
+            "Water": "Ludmilla",
+            "Wind": "Scarlet",
+        },
+        "Destiny": {
+            "Fire": "Alice",
+            "Earth": "Red_Ash",
+            "Water": "Dorothy",
+            "Wind": "Siren",
+        },
+    }
+
+    character = CHARACTERS[set][element]
+
+    tier = [
+        character
+        for characters in CHARACTERS.values()
+        for character in characters.values()
+    ].index(character) + 1
+
+    level = [level for levels in LEVELS.values() for level in levels.values()][tier - 1]
+    level_next = next_unlock(level)
+    level_requirement = level + (level_next - level) // 2
+
+    return {
+        "Name": f"{character.replace('_', ' ')} Deck",
+        "Material": f"_BattleDeck_{character}_Material",
+        "SpriteName": f"_BattleDeck_{character}_Icon",
+        "ItemType": f"Nikke_{character}_Deck_Item",
+        "SpawnsPackType": "",
+        "ItemCategory": "TCG",
+        "BaseCost": 15 * tier,
+        "AddItemAsAccessory": True,
+        "AddItemAsFigurine": False,
+        "AddItemAsBoardGame": False,
+        "PhoneAppId": "Nikke",
+        "UsesBaseGameMesh": True,
+        "MeshToUse": "PreconDeck_Fire",
+        "Mesh": "",
+        "MaterialList": [],
+        "IsBigBox": True,
+        "BigBoxHideTillUnlocked": False,
+        "LicensePrice": 100 * level_requirement,
+        "LicenseLevelRequirement": level_requirement,
+        "IgnoreDoubleImage": False,
+        "HasSmallBox": False,
+        "SmallBoxHideTillUnlocked": False,
+        "SmallBoxLicensePrice": 0,
+        "SmallBoxLicenseLevelRequirement": 0,
+        "SmallBoxIgnoreDoubleImage": False,
+        "IsBulkBox": False,
+        "MinMarketPricePercent": 1,
+        "MaxMarketPricePercent": 1.20000005,
+        "FollowItemPrice": "None",
+        "AutoSetBoxPrice": True,
+        "IsTallItem": False,
+        "InBoxOffsetY": 0,
+        "InBoxOffsetScale": 0,
+        "ItemDeminsion": {"x": 1, "y": 1, "z": 1},
+        "CollidorPosOffset": {"x": 0, "y": 0, "z": 0},
+        "ColliderScale": {"x": 1, "y": 1, "z": 1},
+        "PriceAffectedBy": [],
+        "IsCardPack": False,
+        "IsCardBox": False,
+        "MinValue": 0,
+        "CardExpansion": "",
+        "CanHaveDuplicates": False,
+        "CanHaveGodPacks": False,
+        "GodPackPercentage": 0.0,
+        "PackGenerationStrategy": "Guaranteed",
+        "PackType": "",
+        "NormalWeights": {},
+        "GodWeights": {},
+        "SlotWeights": {},
     }
 
 
