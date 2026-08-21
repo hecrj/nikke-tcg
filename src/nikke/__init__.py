@@ -12,6 +12,7 @@ from nikke import metadata
 WORKING_DIR = pathlib.Path.cwd()
 ORIGINAL_DIR = WORKING_DIR.joinpath("original/BepInEx")
 TEXTURE_DIR = ORIGINAL_DIR.joinpath("plugins/TextureReplacer/objects_textures/nikke")
+DATA_DIR = ORIGINAL_DIR.joinpath("plugins/TextureReplacer/objects_data")
 ORIGINAL_CARDS_DIR = ORIGINAL_DIR.joinpath("plugins/CardConfigurator/Configs")
 ORIGINAL_PACKS_DIR = TEXTURE_DIR.joinpath("packs")
 ART_STATIC_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/cardart/default")
@@ -72,6 +73,26 @@ def generate() -> None:
         copy(
             TEXTURE_DIR / "boxes" / f"Icon_DeckBox{i + 1}.png",
             ACCESSORIES_DIR / f"{deck_box['SpriteName']}.png",
+        )
+
+    ## Manga
+    for i in range(12):
+        name = (
+            (DATA_DIR / "accessories" / "manga" / f"Comic Vol {i + 1}_NAME.txt")
+            .read_text()
+            .strip()
+        )
+        manga = metadata.manga(name, i)
+        accessories.append(manga)
+
+        copy(
+            TEXTURE_DIR / "manga" / f"T_Manga_{i + 1}.png",
+            ACCESSORIES_DIR / f"{manga['Material']}.png",
+        )
+
+        copy(
+            TEXTURE_DIR / "manga" / f"Icon_Manga{i + 1}.png",
+            ACCESSORIES_DIR / f"{manga['SpriteName']}.png",
         )
 
     write_json(
