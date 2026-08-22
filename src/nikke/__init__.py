@@ -541,7 +541,7 @@ def write_json(data: dict, file: pathlib.Path):
 
     json.dump(
         data,
-        file.open("w"),
+        file.open("w", newline="\n"),
         indent=2,
     )
 
