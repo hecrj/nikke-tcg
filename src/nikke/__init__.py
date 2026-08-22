@@ -34,7 +34,7 @@ LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
 def generate() -> None:
 
     SETS = {
-        "Tetramon": "Basic",
+        "Tetramon": "Core",
         "Destiny": "Destiny",
     }
 
@@ -42,7 +42,7 @@ def generate() -> None:
     accessories = []
 
     for set_name in SETS.values():
-        suffix = "" if set_name == "Basic" else "Destiny"
+        suffix = "" if set_name == "Core" else "Destiny"
 
         ## Battle Decks
         for element in metadata.ELEMENTS:
@@ -245,6 +245,8 @@ def generate() -> None:
             if not expansion.is_dir():
                 continue
 
+            rarity = "Standard" if expansion.name == "Base" else expansion.name
+
             for card_art in expansion.iterdir():
                 ini = (
                     ORIGINAL_CARDS_DIR.joinpath(set.name)
@@ -253,9 +255,7 @@ def generate() -> None:
                 )
 
                 if not ini.is_file():
-                    print(
-                        f"[{expansion.name} - {card_art.name}] Config not found. Skipping..."
-                    )
+                    print(f"[{rarity} - {card_art.name}] Config not found. Skipping...")
                     continue
 
                 config = configparser.ConfigParser()
@@ -264,16 +264,16 @@ def generate() -> None:
                 name = config[card_art.stem]["Name"]
                 number = int(
                     config[card_art.stem]["Number"]
-                ) + total_cards * metadata.RARITIES.index(expansion.name)
+                ) + total_cards * metadata.RARITIES.index(rarity)
                 kind = config[card_art.stem]["Rarity"]
 
-                card = metadata.card(name, number, expansion.name, kind)
+                card = metadata.card(name, number, rarity, kind)
                 cards.append(card)
 
                 copy(card_art, output_set.joinpath(f"{card['Sprite']}.png"))
 
-                if expansion.name == "FullArt":
-                    selector = 1 if set_name == "Basic" else 0
+                if rarity == "FullArt":
+                    selector = 1 if set_name == "Core" else 0
 
                     if number % 2 == selector:
                         continue
@@ -327,7 +327,7 @@ def generate() -> None:
             box = metadata.box(set_name, tier)
             items.append(box)
 
-            prefix = "" if set_name == "Basic" else "Destiny_"
+            prefix = "" if set_name == "Core" else "Destiny_"
             original_kind = "Legend" if tier == "Legendary" else tier
             original_kind = "" if tier == "Common" else original_kind
 
@@ -366,7 +366,7 @@ def generate() -> None:
         expansion = metadata.expansion(set_name, cards)
 
         for i, material in enumerate(expansion["PlayCardMaterials"]):
-            n = i if set_name == "Basic" else i + 4
+            n = i if set_name == "Core" else i + 4
             n = 5 if i + 1 == len(expansion["PlayCardMaterials"]) else n
             n = "" if n == 0 else str(n + 1)
 

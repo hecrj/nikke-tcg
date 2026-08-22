@@ -1,7 +1,7 @@
 import math
 
 RARITIES = [
-    "Base",
+    "Standard",
     "Silver",
     "Gold",
     "FirstEdition",
@@ -11,7 +11,7 @@ RARITIES = [
 ]
 
 LEVELS = {
-    "Basic": {
+    "Core": {
         "Common": 1,
         "Rare": 5,
         "Epic": 12,
@@ -56,7 +56,7 @@ def bundle(name, items, expansions=None) -> dict:
 
 
 def expansion(set, cards) -> dict:
-    materials = 5 if set == "Basic" else 2
+    materials = 5 if set == "Core" else 2
     materials = [f"_PlayCard_{material + 1}_Material" for material in range(materials)]
 
     return {
@@ -93,7 +93,7 @@ def pack(set, kind) -> dict:
     p = 100 - first_edition
 
     slot_common = {
-        "Base": p if t == 0 else 0,
+        "Standard": p if t == 0 else 0,
         "Silver": p if t == 1 else 0,
         "Gold": p if t >= 2 else 0,
         "FirstEdition": first_edition,
@@ -110,7 +110,7 @@ def pack(set, kind) -> dict:
     p = 100 - first_edition - ex
 
     slot_uncommon = {
-        "Base": p if t == 0 else 0,
+        "Standard": p if t == 0 else 0,
         "Silver": p if t == 1 else 0,
         "Gold": p if t >= 2 else 0,
         "FirstEdition": first_edition,
@@ -129,7 +129,7 @@ def pack(set, kind) -> dict:
     p = 100 - first_edition - ex - full_art - animated
 
     slot_rare = {
-        "Base": p if t == 0 else 0,
+        "Standard": p if t == 0 else 0,
         "Silver": p if t == 1 else 0,
         "Gold": p if t >= 2 else 0,
         "FirstEdition": first_edition,
@@ -155,7 +155,7 @@ def pack(set, kind) -> dict:
     level_big = pack_at + math.ceil((next_pack_at - pack_at) / 4)
 
     return {
-        "Name": f"{set} {kind} Packs",
+        "Name": f"{kind} {set} Packs",
         "CardExpansion": f"Nikke_{set}",
         "PackType": f"Nikke_{set}_{kind}_Pack",
         "ItemType": f"Nikke_{set}_{kind}_Pack_Item",
@@ -270,7 +270,7 @@ def card(name, number, rarity, kind, padding=4) -> dict:
     BORDERS = ["Base", "FirstEdition", "Silver", "Gold", "EX", "FullArt"]
 
     RARITY_BORDER = {
-        "Base": 0,
+        "Standard": 0,
         "Silver": 0,
         "Gold": 0,
         "FirstEdition": 3,
@@ -313,7 +313,7 @@ def card(name, number, rarity, kind, padding=4) -> dict:
 
 def deck(set, element) -> dict:
     CHARACTERS = {
-        "Basic": {
+        "Core": {
             "Fire": "Modernia",
             "Earth": "Raven",
             "Water": "Ludmilla",
