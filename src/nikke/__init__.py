@@ -328,6 +328,7 @@ def generate() -> None:
             items.append(box)
 
             prefix = "" if set_name == "Core" else "Destiny_"
+            suffix = "" if set_name == "Core" else "_Destiny"
             original_kind = "Legend" if tier == "Legendary" else tier
             original_kind = "" if tier == "Common" else original_kind
 
@@ -346,7 +347,7 @@ def generate() -> None:
             )
 
             copy(
-                EXTERNAL_DIR.joinpath(set_name).joinpath(f"{box['Material']}.png"),
+                TEXTURE_DIR / "boxes" / f"T_Cardbox{suffix}.png",
                 output_set.joinpath(f"{box['Material']}.png"),
             )
 

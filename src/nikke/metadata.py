@@ -214,8 +214,8 @@ def box(set, kind) -> dict:
     level_big = pack_at + math.ceil(3 * (next_pack_at - pack_at) / 4)
 
     return {
-        "Name": f"{set} {kind} Box",
-        "Material": f"_BoosterBox_{kind}_Material",
+        "Name": f"{kind} {set} Box",
+        "Material": "_BoosterBox_Material",
         "SpriteName": f"_BoosterBox_{kind}_Icon",
         "ItemType": f"Nikke_{set}_{kind}_Box_Item",
         "SpawnsPackType": f"Nikke_{set}_{kind}_Pack_Item",
@@ -226,7 +226,7 @@ def box(set, kind) -> dict:
         "AddItemAsBoardGame": False,
         "PhoneAppId": "Nikke",
         "UsesBaseGameMesh": True,
-        "MeshToUse": "BasicCardBox",
+        "MeshToUse": f"{'Basic' if kind == 'Common' else kind}CardBox",
         "Mesh": "",
         "MaterialList": [],
         "IsBigBox": True,
