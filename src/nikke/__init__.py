@@ -510,8 +510,14 @@ def package():
         for texture in TEXTURES:
             copy(TEXTURE_DIR / texture, output_dir / texture)
 
-        for texture in (EXTERNAL_DIR / "Textures").iterdir():
+        for texture in (EXTERNAL_DIR / "Theme").iterdir():
             copy(texture, output_dir / texture.name, overwrite=True)
+
+        copy(
+            EXTERNAL_DIR / "Billboards" / "Nero.png",
+            output_dir / "misc" / "Billboard.png",
+            overwrite=True,
+        )
 
 
 def write_json(data: dict, file: pathlib.Path):
