@@ -89,7 +89,7 @@ def pack(set, kind) -> dict:
     # -------------------------
     # Slots 1-4: Common
     # -------------------------
-    first_edition = 1 + 9 * common
+    first_edition = 0.5 + 1.5 * common
     p = 100 - first_edition
 
     slot_common = {
@@ -106,7 +106,7 @@ def pack(set, kind) -> dict:
     # Slots 5-6: Uncommon
     # -------------------------
     ex = 0.5 + 2.5 * premium
-    first_edition = 2 + 8 * common
+    first_edition = 1 + 9 * common
     p = 100 - first_edition - ex
 
     slot_uncommon = {
@@ -132,7 +132,7 @@ def pack(set, kind) -> dict:
         "Base": p if t == 0 else 0,
         "Silver": p if t == 1 else 0,
         "Gold": p if t >= 2 else 0,
-        "FirstEdition": 0,
+        "FirstEdition": first_edition,
         "EX": ex,
         "FullArt": full_art,
         "FullArtAnimated": animated,
