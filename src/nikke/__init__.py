@@ -265,8 +265,9 @@ def generate() -> None:
                 number = int(
                     config[card_art.stem]["Number"]
                 ) + total_cards * metadata.RARITIES.index(expansion.name)
+                kind = config[card_art.stem]["Rarity"]
 
-                card = metadata.card(name, number, expansion.name)
+                card = metadata.card(name, number, expansion.name, kind)
                 cards.append(card)
 
                 copy(card_art, output_set.joinpath(f"{card['Sprite']}.png"))
@@ -285,7 +286,7 @@ def generate() -> None:
                     total_animated += 1
 
                     number = total_animated + total_cards * (len(metadata.RARITIES) - 1)
-                    card = metadata.card(name, number, "FullArtAnimated")
+                    card = metadata.card(name, number, "FullArtAnimated", kind)
                     cards.append(card)
 
                     output_frames_dir = ANIMATED_OUTPUT_DIR.joinpath(

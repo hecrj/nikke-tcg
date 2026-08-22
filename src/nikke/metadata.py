@@ -73,9 +73,9 @@ def expansion(set, cards) -> dict:
         "DefaultBorderMultiplierBase": 3.15,
         "DefaultFoilMultiplier": 10.0,
         "RarityDrivenFloor": 0.1,
-        "RarityDrivenStepSize": 20.0,
-        "RarityDrivenBorderMultiplierBase": 2.0,
-        "RarityDrivenFoilMultiplier": 5.0,
+        "RarityDrivenStepSize": 1.0,
+        "RarityDrivenBorderMultiplierBase": 2.5,
+        "RarityDrivenFoilMultiplier": 10.0,
         "PlayCardMaterials": materials,
     }
 
@@ -106,7 +106,7 @@ def pack(set, kind) -> dict:
     # Slots 5-6: Uncommon
     # -------------------------
     ex = 0.5 + 2.5 * premium
-    first_edition = 1 + 9 * common
+    first_edition = 1 + 1 * common
     p = 100 - first_edition - ex
 
     slot_uncommon = {
@@ -122,8 +122,8 @@ def pack(set, kind) -> dict:
     # -------------------------
     # Slot 7: Rare+
     # -------------------------
-    animated = 0.1 + 0.9 * premium
-    full_art = 0.5 + 4.5 * premium
+    animated = 0.1 + 0.4 * premium
+    full_art = 0.5 + 1.5 * premium
     ex = 3.0 + 7.0 * premium
     first_edition = 2 + 8 * common
     p = 100 - first_edition - ex - full_art - animated
@@ -266,13 +266,34 @@ def box(set, kind) -> dict:
     }
 
 
-def card(name, number, rarity, padding=4) -> dict:
+def card(name, number, rarity, kind, padding=4) -> dict:
+    BORDERS = ["Base", "FirstEdition", "Silver", "Gold", "EX", "FullArt"]
+
     RARITY_BORDER = {
-        "Silver": "Base",
-        "Gold": "Base",
-        "EX": "Silver",
-        "FullArtAnimated": "FullArt",
+        "Base": 0,
+        "Silver": 0,
+        "Gold": 0,
+        "FirstEdition": 3,
+        "EX": 3,
+        "FullArt": 4,
+        "FullArtAnimated": 5,
     }
+
+    KIND_BONUS = {
+        "Common": 0,
+        "Rare": 1,
+        "Epic": 2,
+        "Legendary": 3,
+    }
+
+    border = RARITY_BORDER[rarity]
+
+    border = BORDERS[
+        min(
+            border + round(KIND_BONUS[kind] / max(border, 1)),
+            len(BORDERS) - 1,
+        )
+    ]
 
     filename = "".join(c for c in name if c.isalnum() or c.isspace()).replace(" ", "_")
     filename = f"{str(number).rjust(padding, '0')}_{filename}_{rarity}"
@@ -280,7 +301,7 @@ def card(name, number, rarity, padding=4) -> dict:
     return {
         "Name": name,
         "Rarity": rarity,
-        "BorderType": RARITY_BORDER.get(rarity, rarity),
+        "BorderType": border,
         "CardNumber": number,
         "Sprite": filename,
         "IsFoil": rarity == "EX" or "FullArt" in rarity,
