@@ -520,6 +520,12 @@ def package():
         for texture in TEXTURES:
             copy(TEXTURE_DIR / texture, output_dir / texture)
 
+        for texture in (TEXTURE_DIR / "cards").iterdir():
+            if "CardModel" not in texture.name:
+                continue
+
+            copy(texture, output_dir / "cards" / texture.name)
+
         for texture in (EXTERNAL_DIR / "Theme").iterdir():
             copy(texture, output_dir / texture.name, overwrite=True)
 
