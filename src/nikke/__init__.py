@@ -248,11 +248,7 @@ def generate() -> None:
             rarity = "Standard" if expansion.name == "Base" else expansion.name
 
             for card_art in expansion.iterdir():
-                ini = (
-                    ORIGINAL_CARDS_DIR.joinpath(set.name)
-                    .joinpath("default")
-                    .joinpath(f"{card_art.stem}.ini")
-                )
+                ini = ORIGINAL_CARDS_DIR / set.name / "Default" / f"{card_art.stem}.ini"
 
                 if not ini.is_file():
                     print(f"[{rarity} - {card_art.name}] Config not found. Skipping...")
@@ -261,12 +257,17 @@ def generate() -> None:
                 config = configparser.ConfigParser()
                 config.read(ini)
 
-                name = config[card_art.stem]["Name"]
+                kind = config[card_art.stem]["Rarity"]
                 number = int(
                     config[card_art.stem]["Number"]
                 ) + total_cards * metadata.RARITIES.index(rarity)
-                kind = config[card_art.stem]["Rarity"]
 
+                ini_override = ORIGINAL_CARDS_DIR / set.name / expansion.name / ini.name
+
+                if ini_override.is_file():
+                    config.read(ini_override)
+
+                name = config[card_art.stem]["Name"]
                 card = metadata.card(name, number, rarity, kind)
                 cards.append(card)
 
@@ -285,6 +286,13 @@ def generate() -> None:
 
                     total_animated += 1
 
+                    suffix = "" if set_name == "Core" else "Destiny"
+                    ini_override = ORIGINAL_CARDS_DIR / f"Ghost{suffix}" / ini.name
+
+                    if ini_override.is_file():
+                        config.read(ini_override)
+
+                    name = config[card_art.stem]["Name"]
                     number = total_animated + total_cards * (len(metadata.RARITIES) - 1)
                     card = metadata.card(name, number, "FullArtAnimated", kind)
                     cards.append(card)
