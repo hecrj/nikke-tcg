@@ -2,9 +2,9 @@ import math
 
 RARITIES = [
     "Base",
-    "FirstEdition",
     "Silver",
     "Gold",
+    "FirstEdition",
     "EX",
     "FullArt",
     "FullArtAnimated",
@@ -73,9 +73,9 @@ def expansion(set, cards) -> dict:
         "DefaultBorderMultiplierBase": 3.15,
         "DefaultFoilMultiplier": 10.0,
         "RarityDrivenFloor": 0.1,
-        "RarityDrivenStepSize": 1.28,
-        "RarityDrivenBorderMultiplierBase": 1.75,
-        "RarityDrivenFoilMultiplier": 10.0,
+        "RarityDrivenStepSize": 20.0,
+        "RarityDrivenBorderMultiplierBase": 2.0,
+        "RarityDrivenFoilMultiplier": 5.0,
         "PlayCardMaterials": materials,
     }
 
@@ -84,18 +84,19 @@ def pack(set, kind) -> dict:
     t = list(LEVELS[set].keys()).index(kind)
 
     common = t / (len(LEVELS[set]) - 1)
-    premium = common**1.5
+    premium = common**2.0
 
     # -------------------------
     # Slots 1-4: Common
     # -------------------------
     first_edition = 1 + 9 * common
+    p = 100 - first_edition
 
     slot_common = {
-        "Base": 100 - first_edition,
+        "Base": p if t == 0 else 0,
+        "Silver": p if t == 1 else 0,
+        "Gold": p if t >= 2 else 0,
         "FirstEdition": first_edition,
-        "Silver": 0,
-        "Gold": 0,
         "EX": 0,
         "FullArt": 0,
         "FullArtAnimated": 0,
@@ -104,15 +105,15 @@ def pack(set, kind) -> dict:
     # -------------------------
     # Slots 5-6: Uncommon
     # -------------------------
-    ex = 2 + 28 * premium
-    gold = 28 + 22 * common
-    silver = 100 - gold - ex
+    ex = 0.5 + 2.5 * premium
+    first_edition = 2 + 8 * common
+    p = 100 - first_edition - ex
 
     slot_uncommon = {
-        "Base": 0,
-        "FirstEdition": 0,
-        "Silver": silver,
-        "Gold": gold,
+        "Base": p if t == 0 else 0,
+        "Silver": p if t == 1 else 0,
+        "Gold": p if t >= 2 else 0,
+        "FirstEdition": first_edition,
         "EX": ex,
         "FullArt": 0,
         "FullArtAnimated": 0,
@@ -123,14 +124,15 @@ def pack(set, kind) -> dict:
     # -------------------------
     animated = 0.1 + 0.9 * premium
     full_art = 0.5 + 4.5 * premium
-    ex = 9.5 + 35.5 * premium
-    gold = 100 - ex - full_art - animated
+    ex = 3.0 + 7.0 * premium
+    first_edition = 2 + 8 * common
+    p = 100 - first_edition - ex - full_art - animated
 
     slot_rare = {
-        "Base": 0,
+        "Base": p if t == 0 else 0,
+        "Silver": p if t == 1 else 0,
+        "Gold": p if t >= 2 else 0,
         "FirstEdition": 0,
-        "Silver": 0,
-        "Gold": gold,
         "EX": ex,
         "FullArt": full_art,
         "FullArtAnimated": animated,
