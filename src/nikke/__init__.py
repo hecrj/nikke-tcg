@@ -429,6 +429,7 @@ def bundle():
             if file.suffix == ".meta" and output_file.exists():
                 continue
 
+            print(file.relative_to(ASSETS_DIR))
             file.unlink()
 
     shutil.copytree(
@@ -437,7 +438,7 @@ def bundle():
         dirs_exist_ok=True,
     )
 
-    subprocess.run(
+    bundle = subprocess.Popen(
         [
             str(UNITY_EXE),
             "-batchmode",
@@ -449,9 +450,18 @@ def bundle():
             "-logFile",
             "-",
         ],
-        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         text=True,
     )
+
+    for line in bundle.stdout or []:
+        print(line, end="", flush=True)
+
+    bundle.wait()
+
+    if bundle.returncode != 0:
+        raise subprocess.CalledProcessError(bundle.returncode, bundle.args)
 
 
 def package():
