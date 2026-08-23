@@ -315,9 +315,7 @@ def generate() -> None:
                     print(output_frames_dir.relative_to(WORKING_DIR))
                     output_frames_dir.mkdir(parents=True)
 
-                    total_padding = math.ceil(
-                        math.log10(len(next(frames_dir.walk())[2]))
-                    )
+                    total_padding = math.ceil(math.log10(len(frames)))
 
                     for frame in frames:
                         img = Image.open(frame).convert("RGBA")
