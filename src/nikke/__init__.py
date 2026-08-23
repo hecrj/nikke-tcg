@@ -166,6 +166,8 @@ def generate() -> None:
             ACCESSORIES_DIR / f"{board_game['Material']}.png",
         )
 
+    accessories.sort(key=lambda accessory: accessory["LicenseLevelRequirement"])
+
     write_json(
         metadata.bundle("Accessories", accessories),
         OUTPUT_DIR / "nikke_accessories.json",
@@ -222,6 +224,8 @@ def generate() -> None:
             material,
             FIGURINES_DIR / f"{figurine['Material']}.png",
         )
+
+    figurines.sort(key=lambda figurine: figurine["LicenseLevelRequirement"])
 
     write_json(
         metadata.bundle("Figurines", figurines),
