@@ -73,9 +73,9 @@ def expansion(set, cards) -> dict:
         "DefaultBorderMultiplierBase": 3.15,
         "DefaultFoilMultiplier": 10.0,
         "RarityDrivenFloor": 0.1,
-        "RarityDrivenStepSize": 1.0,
+        "RarityDrivenStepSize": 0.25,
         "RarityDrivenBorderMultiplierBase": 2.5,
-        "RarityDrivenFoilMultiplier": 10.0,
+        "RarityDrivenFoilMultiplier": 40.0,
         "PlayCardMaterials": materials,
     }
 
@@ -273,7 +273,7 @@ def card(name, number, rarity, kind, padding=4) -> dict:
         "Standard": 0,
         "Silver": 0,
         "Gold": 0,
-        "FirstEdition": 3,
+        "FirstEdition": 4,
         "EX": 3,
         "FullArt": 4,
         "FullArtAnimated": 5,
@@ -287,10 +287,12 @@ def card(name, number, rarity, kind, padding=4) -> dict:
     }
 
     border = RARITY_BORDER[rarity]
+    bonus = KIND_BONUS[kind]
+
     bonus = (
-        round(KIND_BONUS[kind] / border)
+        round(bonus / border)
         if border > 0
-        else max(KIND_BONUS[kind] - list(RARITY_BORDER.keys()).index(rarity), 0)
+        else max(bonus - list(RARITY_BORDER.keys()).index(rarity), 0)
     )
 
     border = BORDERS[
