@@ -302,9 +302,12 @@ def generate() -> None:
                     card = metadata.card(name, number, "FullArtAnimated", kind)
                     cards.append(card)
 
-                    output_frames_dir = ANIMATED_OUTPUT_DIR.joinpath(
-                        f"Nikke_{set_name}"
-                    ).joinpath(card["Sprite"])
+                    frames = sorted(frames_dir.iterdir())
+                    copy(frames[0], output_set / f"{card['Sprite']}.png")
+
+                    output_frames_dir = (
+                        ANIMATED_OUTPUT_DIR / f"Nikke_{set_name}" / card["Sprite"]
+                    )
 
                     if output_frames_dir.exists():
                         continue
@@ -316,7 +319,7 @@ def generate() -> None:
                         math.log10(len(next(frames_dir.walk())[2]))
                     )
 
-                    for frame in frames_dir.iterdir():
+                    for frame in frames:
                         img = Image.open(frame).convert("RGBA")
                         background = Image.new("RGBA", img.size, (0, 0, 0, 255))
                         result = Image.alpha_composite(background, img)
