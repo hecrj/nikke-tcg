@@ -287,10 +287,15 @@ def card(name, number, rarity, kind, padding=4) -> dict:
     }
 
     border = RARITY_BORDER[rarity]
+    bonus = (
+        round(KIND_BONUS[kind] / border)
+        if border > 0
+        else max(KIND_BONUS[kind] - list(RARITY_BORDER.keys()).index(rarity), 0)
+    )
 
     border = BORDERS[
         min(
-            border + round(KIND_BONUS[kind] / max(border, 1)),
+            border + bonus,
             len(BORDERS) - 1,
         )
     ]

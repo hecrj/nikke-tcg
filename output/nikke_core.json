@@ -3031,7 +3031,7 @@
         {
           "Name": "Noah",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 206,
           "Sprite": "0206_Noah_Silver",
           "IsFoil": false,
@@ -3042,7 +3042,7 @@
         {
           "Name": "Syuen",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 207,
           "Sprite": "0207_Syuen_Silver",
           "IsFoil": false,
@@ -3053,7 +3053,7 @@
         {
           "Name": "Alice",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 208,
           "Sprite": "0208_Alice_Silver",
           "IsFoil": false,
@@ -3064,7 +3064,7 @@
         {
           "Name": "Cinderella",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 209,
           "Sprite": "0209_Cinderella_Silver",
           "IsFoil": false,
@@ -3075,7 +3075,7 @@
         {
           "Name": "Clay",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 210,
           "Sprite": "0210_Clay_Silver",
           "IsFoil": false,
@@ -3130,7 +3130,7 @@
         {
           "Name": "Pepper",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 215,
           "Sprite": "0215_Pepper_Silver",
           "IsFoil": false,
@@ -3141,7 +3141,7 @@
         {
           "Name": "Liter",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 216,
           "Sprite": "0216_Liter_Silver",
           "IsFoil": false,
@@ -3152,7 +3152,7 @@
         {
           "Name": "Scarlet",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 217,
           "Sprite": "0217_Scarlet_Silver",
           "IsFoil": false,
@@ -3185,7 +3185,7 @@
         {
           "Name": "Power",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 220,
           "Sprite": "0220_Power_Silver",
           "IsFoil": false,
@@ -3196,7 +3196,7 @@
         {
           "Name": "Behemoth",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 221,
           "Sprite": "0221_Behemoth_Silver",
           "IsFoil": false,
@@ -3218,7 +3218,7 @@
         {
           "Name": "Elegg",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 223,
           "Sprite": "0223_Elegg_Silver",
           "IsFoil": false,
@@ -3229,7 +3229,7 @@
         {
           "Name": "Asuka",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 224,
           "Sprite": "0224_Asuka_Silver",
           "IsFoil": false,
@@ -3262,7 +3262,7 @@
         {
           "Name": "Rumani",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 227,
           "Sprite": "0227_Rumani_Silver",
           "IsFoil": false,
@@ -3273,7 +3273,7 @@
         {
           "Name": "Rem",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 228,
           "Sprite": "0228_Rem_Silver",
           "IsFoil": false,
@@ -3295,7 +3295,7 @@
         {
           "Name": "Milk",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 230,
           "Sprite": "0230_Milk_Silver",
           "IsFoil": false,
@@ -3306,7 +3306,7 @@
         {
           "Name": "Biscuit",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 231,
           "Sprite": "0231_Biscuit_Silver",
           "IsFoil": false,
@@ -3317,7 +3317,7 @@
         {
           "Name": "2B",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 232,
           "Sprite": "0232_2B_Silver",
           "IsFoil": false,
@@ -3328,7 +3328,7 @@
         {
           "Name": "Yan",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 233,
           "Sprite": "0233_Yan_Silver",
           "IsFoil": false,
@@ -3339,7 +3339,7 @@
         {
           "Name": "Jackal",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 234,
           "Sprite": "0234_Jackal_Silver",
           "IsFoil": false,
@@ -3350,7 +3350,7 @@
         {
           "Name": "Noise",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 235,
           "Sprite": "0235_Noise_Silver",
           "IsFoil": false,
@@ -3361,7 +3361,7 @@
         {
           "Name": "Isabel",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 236,
           "Sprite": "0236_Isabel_Silver",
           "IsFoil": false,
@@ -3383,7 +3383,7 @@
         {
           "Name": "Alice: Wonderland Bunny",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 238,
           "Sprite": "0238_Alice_Wonderland_Bunny_Silver",
           "IsFoil": false,
@@ -3416,7 +3416,7 @@
         {
           "Name": "Raven",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 241,
           "Sprite": "0241_Raven_Silver",
           "IsFoil": false,
@@ -3427,7 +3427,7 @@
         {
           "Name": "Yulha",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 242,
           "Sprite": "0242_Yulha_Silver",
           "IsFoil": false,
@@ -3438,7 +3438,7 @@
         {
           "Name": "Rei",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 243,
           "Sprite": "0243_Rei_Silver",
           "IsFoil": false,
@@ -3449,7 +3449,7 @@
         {
           "Name": "Marian",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 244,
           "Sprite": "0244_Marian_Silver",
           "IsFoil": false,
@@ -3460,7 +3460,7 @@
         {
           "Name": "Dolla",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 245,
           "Sprite": "0245_Dolla_Silver",
           "IsFoil": false,
@@ -3471,7 +3471,7 @@
         {
           "Name": "Epinel",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 246,
           "Sprite": "0246_Epinel_Silver",
           "IsFoil": false,
@@ -3493,7 +3493,7 @@
         {
           "Name": "Belorta",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 248,
           "Sprite": "0248_Belorta_Silver",
           "IsFoil": false,
@@ -3504,7 +3504,7 @@
         {
           "Name": "Ade",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 249,
           "Sprite": "0249_Ade_Silver",
           "IsFoil": false,
@@ -3537,7 +3537,7 @@
         {
           "Name": "Mica: Snow Buddy",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 252,
           "Sprite": "0252_Mica_Snow_Buddy_Silver",
           "IsFoil": false,
@@ -3548,7 +3548,7 @@
         {
           "Name": "A2",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 253,
           "Sprite": "0253_A2_Silver",
           "IsFoil": false,
@@ -3559,7 +3559,7 @@
         {
           "Name": "Ziz",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 254,
           "Sprite": "0254_Ziz_Silver",
           "IsFoil": false,
@@ -3570,7 +3570,7 @@
         {
           "Name": "Mihara: Bonding Chain",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 255,
           "Sprite": "0255_Mihara_Bonding_Chain_Silver",
           "IsFoil": false,
@@ -3581,7 +3581,7 @@
         {
           "Name": "Volume: Beat the Gun",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 256,
           "Sprite": "0256_Volume_Beat_the_Gun_Silver",
           "IsFoil": false,
@@ -3592,7 +3592,7 @@
         {
           "Name": "Snow White",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 257,
           "Sprite": "0257_Snow_White_Silver",
           "IsFoil": false,
@@ -3603,7 +3603,7 @@
         {
           "Name": "Dorothy",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 258,
           "Sprite": "0258_Dorothy_Silver",
           "IsFoil": false,
@@ -3614,7 +3614,7 @@
         {
           "Name": "Sakura: Midnight Stealth",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 259,
           "Sprite": "0259_Sakura_Midnight_Stealth_Silver",
           "IsFoil": false,
@@ -3625,7 +3625,7 @@
         {
           "Name": "Velvet",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 260,
           "Sprite": "0260_Velvet_Silver",
           "IsFoil": false,
@@ -3636,7 +3636,7 @@
         {
           "Name": "Kilo",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 261,
           "Sprite": "0261_Kilo_Silver",
           "IsFoil": false,
@@ -3647,7 +3647,7 @@
         {
           "Name": "Soda",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 262,
           "Sprite": "0262_Soda_Silver",
           "IsFoil": false,
@@ -3658,7 +3658,7 @@
         {
           "Name": "Scarlet: Black Shadow",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 263,
           "Sprite": "0263_Scarlet_Black_Shadow_Silver",
           "IsFoil": false,
@@ -3669,7 +3669,7 @@
         {
           "Name": "Julia",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 264,
           "Sprite": "0264_Julia_Silver",
           "IsFoil": false,
@@ -3680,7 +3680,7 @@
         {
           "Name": "Leona",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 265,
           "Sprite": "0265_Leona_Silver",
           "IsFoil": false,
@@ -3691,7 +3691,7 @@
         {
           "Name": "Volume",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 266,
           "Sprite": "0266_Volume_Silver",
           "IsFoil": false,
@@ -3702,7 +3702,7 @@
         {
           "Name": "Marian: First Affection",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 267,
           "Sprite": "0267_Marian_First_Affection_Silver",
           "IsFoil": false,
@@ -3713,7 +3713,7 @@
         {
           "Name": "Anis",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 268,
           "Sprite": "0268_Anis_Silver",
           "IsFoil": false,
@@ -3724,7 +3724,7 @@
         {
           "Name": "Anne: Miracle Fairy",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 269,
           "Sprite": "0269_Anne_Miracle_Fairy_Silver",
           "IsFoil": false,
@@ -3746,7 +3746,7 @@
         {
           "Name": "Rupee: Luxury Bunny",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 271,
           "Sprite": "0271_Rupee_Luxury_Bunny_Silver",
           "IsFoil": false,
@@ -3757,7 +3757,7 @@
         {
           "Name": "Trina",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 272,
           "Sprite": "0272_Trina_Silver",
           "IsFoil": false,
@@ -3768,7 +3768,7 @@
         {
           "Name": "Novel",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 273,
           "Sprite": "0273_Novel_Silver",
           "IsFoil": false,
@@ -3779,7 +3779,7 @@
         {
           "Name": "Emilia",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 274,
           "Sprite": "0274_Emilia_Silver",
           "IsFoil": false,
@@ -3790,7 +3790,7 @@
         {
           "Name": "Crown: Naked King",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 275,
           "Sprite": "0275_Crown_Naked_King_Silver",
           "IsFoil": false,
@@ -3801,7 +3801,7 @@
         {
           "Name": "Exia",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 276,
           "Sprite": "0276_Exia_Silver",
           "IsFoil": false,
@@ -3812,7 +3812,7 @@
         {
           "Name": "Guilty",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 277,
           "Sprite": "0277_Guilty_Silver",
           "IsFoil": false,
@@ -3834,7 +3834,7 @@
         {
           "Name": "Red Hood",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 279,
           "Sprite": "0279_Red_Hood_Silver",
           "IsFoil": false,
@@ -3845,7 +3845,7 @@
         {
           "Name": "Sin",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 280,
           "Sprite": "0280_Sin_Silver",
           "IsFoil": false,
@@ -3867,7 +3867,7 @@
         {
           "Name": "Sin: Backstreet Dream",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 282,
           "Sprite": "0282_Sin_Backstreet_Dream_Silver",
           "IsFoil": false,
@@ -3878,7 +3878,7 @@
         {
           "Name": "Neve",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 283,
           "Sprite": "0283_Neve_Silver",
           "IsFoil": false,
@@ -3900,7 +3900,7 @@
         {
           "Name": "Mori",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 285,
           "Sprite": "0285_Mori_Silver",
           "IsFoil": false,
@@ -3911,7 +3911,7 @@
         {
           "Name": "Nero",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 286,
           "Sprite": "0286_Nero_Silver",
           "IsFoil": false,
@@ -3922,7 +3922,7 @@
         {
           "Name": "Sugar",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 287,
           "Sprite": "0287_Sugar_Silver",
           "IsFoil": false,
@@ -3933,7 +3933,7 @@
         {
           "Name": "Rosanna: Chic Ocean",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 288,
           "Sprite": "0288_Rosanna_Chic_Ocean_Silver",
           "IsFoil": false,
@@ -3944,7 +3944,7 @@
         {
           "Name": "Aria",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 289,
           "Sprite": "0289_Aria_Silver",
           "IsFoil": false,
@@ -3955,7 +3955,7 @@
         {
           "Name": "Irony",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 290,
           "Sprite": "0290_Irony_Silver",
           "IsFoil": false,
@@ -3966,7 +3966,7 @@
         {
           "Name": "Ein",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 291,
           "Sprite": "0291_Ein_Silver",
           "IsFoil": false,
@@ -3988,7 +3988,7 @@
         {
           "Name": "Makima",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 293,
           "Sprite": "0293_Makima_Silver",
           "IsFoil": false,
@@ -3999,7 +3999,7 @@
         {
           "Name": "Centi",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 294,
           "Sprite": "0294_Centi_Silver",
           "IsFoil": false,
@@ -4010,7 +4010,7 @@
         {
           "Name": "Rei",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 295,
           "Sprite": "0295_Rei_Silver",
           "IsFoil": false,
@@ -4021,7 +4021,7 @@
         {
           "Name": "Ram",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 296,
           "Sprite": "0296_Ram_Silver",
           "IsFoil": false,
@@ -4032,7 +4032,7 @@
         {
           "Name": "Tove",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 297,
           "Sprite": "0297_Tove_Silver",
           "IsFoil": false,
@@ -4043,7 +4043,7 @@
         {
           "Name": "Folkwang",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 298,
           "Sprite": "0298_Folkwang_Silver",
           "IsFoil": false,
@@ -4054,7 +4054,7 @@
         {
           "Name": "Admi",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 299,
           "Sprite": "0299_Admi_Silver",
           "IsFoil": false,
@@ -4065,7 +4065,7 @@
         {
           "Name": "Maxwell",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 300,
           "Sprite": "0300_Maxwell_Silver",
           "IsFoil": false,
@@ -4076,7 +4076,7 @@
         {
           "Name": "Mary: Bay Goddess",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 301,
           "Sprite": "0301_Mary_Bay_Goddess_Silver",
           "IsFoil": false,
@@ -4087,7 +4087,7 @@
         {
           "Name": "Quency: Escape Artist",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 302,
           "Sprite": "0302_Quency_Escape_Artist_Silver",
           "IsFoil": false,
@@ -4098,7 +4098,7 @@
         {
           "Name": "Noir",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 303,
           "Sprite": "0303_Noir_Silver",
           "IsFoil": false,
@@ -4109,7 +4109,7 @@
         {
           "Name": "Harran",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 304,
           "Sprite": "0304_Harran_Silver",
           "IsFoil": false,
@@ -4120,7 +4120,7 @@
         {
           "Name": "Blanc",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 305,
           "Sprite": "0305_Blanc_Silver",
           "IsFoil": false,
@@ -4131,7 +4131,7 @@
         {
           "Name": "Cinderella: Glass Princess",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 306,
           "Sprite": "0306_Cinderella_Glass_Princess_Silver",
           "IsFoil": false,
@@ -4164,7 +4164,7 @@
         {
           "Name": "Rouge",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 309,
           "Sprite": "0309_Rouge_Silver",
           "IsFoil": false,
@@ -4175,7 +4175,7 @@
         {
           "Name": "Yuni",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 310,
           "Sprite": "0310_Yuni_Silver",
           "IsFoil": false,
@@ -4186,7 +4186,7 @@
         {
           "Name": "Drake",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 311,
           "Sprite": "0311_Drake_Silver",
           "IsFoil": false,
@@ -4197,7 +4197,7 @@
         {
           "Name": "Mari",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 312,
           "Sprite": "0312_Mari_Silver",
           "IsFoil": false,
@@ -4208,7 +4208,7 @@
         {
           "Name": "Moran",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 313,
           "Sprite": "0313_Moran_Silver",
           "IsFoil": false,
@@ -4219,7 +4219,7 @@
         {
           "Name": "Tia",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 314,
           "Sprite": "0314_Tia_Silver",
           "IsFoil": false,
@@ -4230,7 +4230,7 @@
         {
           "Name": "Grave",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 315,
           "Sprite": "0315_Grave_Silver",
           "IsFoil": false,
@@ -4252,7 +4252,7 @@
         {
           "Name": "Flora",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 317,
           "Sprite": "0317_Flora_Silver",
           "IsFoil": false,
@@ -4263,7 +4263,7 @@
         {
           "Name": "Cocoa",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 318,
           "Sprite": "0318_Cocoa_Silver",
           "IsFoil": false,
@@ -4285,7 +4285,7 @@
         {
           "Name": "Naga",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 320,
           "Sprite": "0320_Naga_Silver",
           "IsFoil": false,
@@ -4296,7 +4296,7 @@
         {
           "Name": "Chime",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 321,
           "Sprite": "0321_Chime_Silver",
           "IsFoil": false,
@@ -4307,7 +4307,7 @@
         {
           "Name": "Frima",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 322,
           "Sprite": "0322_Frima_Silver",
           "IsFoil": false,
@@ -4318,7 +4318,7 @@
         {
           "Name": "Rupee",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 323,
           "Sprite": "0323_Rupee_Silver",
           "IsFoil": false,
@@ -4329,7 +4329,7 @@
         {
           "Name": "Eve: Keyhole Dress",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 324,
           "Sprite": "0324_Eve_Keyhole_Dress_Silver",
           "IsFoil": false,
@@ -4351,7 +4351,7 @@
         {
           "Name": "2B: YoRHa Uniform 1",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 326,
           "Sprite": "0326_2B_YoRHa_Uniform_1_Silver",
           "IsFoil": false,
@@ -4384,7 +4384,7 @@
         {
           "Name": "Ade: Agent Bunny",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 329,
           "Sprite": "0329_Ade_Agent_Bunny_Silver",
           "IsFoil": false,
@@ -4406,7 +4406,7 @@
         {
           "Name": "Alice: Sweet Home",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 331,
           "Sprite": "0331_Alice_Sweet_Home_Silver",
           "IsFoil": false,
@@ -4417,7 +4417,7 @@
         {
           "Name": "Anis: Sparkling Summer",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 332,
           "Sprite": "0332_Anis_Sparkling_Summer_Silver",
           "IsFoil": false,
@@ -4428,7 +4428,7 @@
         {
           "Name": "Asuka: Ocean's Lament",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 333,
           "Sprite": "0333_Asuka_Oceans_Lament_Silver",
           "IsFoil": false,
@@ -4439,7 +4439,7 @@
         {
           "Name": "Bay: Radiant Rabbit",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 334,
           "Sprite": "0334_Bay_Radiant_Rabbit_Silver",
           "IsFoil": false,
@@ -4450,7 +4450,7 @@
         {
           "Name": "Bay (Treasure)",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 335,
           "Sprite": "0335_Bay_Treasure_Silver",
           "IsFoil": false,
@@ -4461,7 +4461,7 @@
         {
           "Name": "Sakura",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 336,
           "Sprite": "0336_Sakura_Silver",
           "IsFoil": false,
@@ -4472,7 +4472,7 @@
         {
           "Name": "Blanc: White Rabbit",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 337,
           "Sprite": "0337_Blanc_White_Rabbit_Silver",
           "IsFoil": false,
@@ -4483,7 +4483,7 @@
         {
           "Name": "Booms Day",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 338,
           "Sprite": "0338_Booms_Day_Silver",
           "IsFoil": false,
@@ -4494,7 +4494,7 @@
         {
           "Name": "Bready",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 339,
           "Sprite": "0339_Bready_Silver",
           "IsFoil": false,
@@ -4505,7 +4505,7 @@
         {
           "Name": "Bunny x 777",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 340,
           "Sprite": "0340_Bunny_x_777_Silver",
           "IsFoil": false,
@@ -4516,7 +4516,7 @@
         {
           "Name": "Cecil",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 341,
           "Sprite": "0341_Cecil_Silver",
           "IsFoil": false,
@@ -4549,7 +4549,7 @@
         {
           "Name": "Doro",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 344,
           "Sprite": "0344_Doro_Silver",
           "IsFoil": false,
@@ -4560,7 +4560,7 @@
         {
           "Name": "Dorothy: Serendipity",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 345,
           "Sprite": "0345_Dorothy_Serendipity_Silver",
           "IsFoil": false,
@@ -4571,7 +4571,7 @@
         {
           "Name": "Drake (Treasure)",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 346,
           "Sprite": "0346_Drake_Treasure_Silver",
           "IsFoil": false,
@@ -4582,7 +4582,7 @@
         {
           "Name": "Einkk",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 347,
           "Sprite": "0347_Einkk_Silver",
           "IsFoil": false,
@@ -4593,7 +4593,7 @@
         {
           "Name": "Elegg: Boom and Shock",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 348,
           "Sprite": "0348_Elegg_Boom_and_Shock_Silver",
           "IsFoil": false,
@@ -4615,7 +4615,7 @@
         {
           "Name": "Endless",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 350,
           "Sprite": "0350_Endless_Silver",
           "IsFoil": false,
@@ -4626,7 +4626,7 @@
         {
           "Name": "Enikk",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 351,
           "Sprite": "0351_Enikk_Silver",
           "IsFoil": false,
@@ -4637,7 +4637,7 @@
         {
           "Name": "Eternity",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 352,
           "Sprite": "0352_Eternity_Silver",
           "IsFoil": false,
@@ -4659,7 +4659,7 @@
         {
           "Name": "Eve: Skin Suit",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 354,
           "Sprite": "0354_Eve_Skin_Suit_Silver",
           "IsFoil": false,
@@ -4670,7 +4670,7 @@
         {
           "Name": "Exia: Hacker Rabbit",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 355,
           "Sprite": "0355_Exia_Hacker_Rabbit_Silver",
           "IsFoil": false,
@@ -4681,7 +4681,7 @@
         {
           "Name": "Exia (Treasure)",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 356,
           "Sprite": "0356_Exia_Treasure_Silver",
           "IsFoil": false,
@@ -4714,7 +4714,7 @@
         {
           "Name": "Guilty: Wave of Disbelief",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 359,
           "Sprite": "0359_Guilty_Wave_of_Disbelief_Silver",
           "IsFoil": false,
@@ -4736,7 +4736,7 @@
         {
           "Name": "Harran: Banquet Witch",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 361,
           "Sprite": "0361_Harran_Banquet_Witch_Silver",
           "IsFoil": false,
@@ -4791,7 +4791,7 @@
         {
           "Name": "Julia (Treasure)",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 366,
           "Sprite": "0366_Julia_Treasure_Silver",
           "IsFoil": false,
@@ -4802,7 +4802,7 @@
         {
           "Name": "Last Kingdom",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 367,
           "Sprite": "0367_Last_Kingdom_Silver",
           "IsFoil": false,
@@ -4813,7 +4813,7 @@
         {
           "Name": "Laplace (Treasure)",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 368,
           "Sprite": "0368_Laplace_Treasure_Silver",
           "IsFoil": false,
@@ -4824,7 +4824,7 @@
         {
           "Name": "Leviatan",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 369,
           "Sprite": "0369_Leviatan_Silver",
           "IsFoil": false,
@@ -4835,7 +4835,7 @@
         {
           "Name": "Liberalio",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 370,
           "Sprite": "0370_Liberalio_Silver",
           "IsFoil": false,
@@ -4846,7 +4846,7 @@
         {
           "Name": "Life Again",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 371,
           "Sprite": "0371_Life_Again_Silver",
           "IsFoil": false,
@@ -4857,7 +4857,7 @@
         {
           "Name": "Liliweiss",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 372,
           "Sprite": "0372_Liliweiss_Silver",
           "IsFoil": false,
@@ -4868,7 +4868,7 @@
         {
           "Name": "Lily",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 373,
           "Sprite": "0373_Lily_Silver",
           "IsFoil": false,
@@ -4879,7 +4879,7 @@
         {
           "Name": "Golden Coin Rush",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 374,
           "Sprite": "0374_Golden_Coin_Rush_Silver",
           "IsFoil": false,
@@ -4890,7 +4890,7 @@
         {
           "Name": "Ludmilla: Winter Owner",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 375,
           "Sprite": "0375_Ludmilla_Winter_Owner_Silver",
           "IsFoil": false,
@@ -4923,7 +4923,7 @@
         {
           "Name": "Mica: Snow Buddy",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 378,
           "Sprite": "0378_Mica_Snow_Buddy_Silver",
           "IsFoil": false,
@@ -4934,7 +4934,7 @@
         {
           "Name": "Mihara: Pain Eater",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 379,
           "Sprite": "0379_Mihara_Pain_Eater_Silver",
           "IsFoil": false,
@@ -4956,7 +4956,7 @@
         {
           "Name": "Modernia",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 381,
           "Sprite": "0381_Modernia_Silver",
           "IsFoil": false,
@@ -4967,7 +4967,7 @@
         {
           "Name": "Moran: Off-Duty Queen",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 382,
           "Sprite": "0382_Moran_OffDuty_Queen_Silver",
           "IsFoil": false,
@@ -4978,7 +4978,7 @@
         {
           "Name": "Naga: Last Girlhood",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 383,
           "Sprite": "0383_Naga_Last_Girlhood_Silver",
           "IsFoil": false,
@@ -4989,7 +4989,7 @@
         {
           "Name": "Nayuta",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 384,
           "Sprite": "0384_Nayuta_Silver",
           "IsFoil": false,
@@ -5000,7 +5000,7 @@
         {
           "Name": "Nihilister",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 385,
           "Sprite": "0385_Nihilister_Silver",
           "IsFoil": false,
@@ -5011,7 +5011,7 @@
         {
           "Name": "Noise: Classic Diva",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 386,
           "Sprite": "0386_Noise_Classic_Diva_Silver",
           "IsFoil": false,
@@ -5022,7 +5022,7 @@
         {
           "Name": "Neverland",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 387,
           "Sprite": "0387_Neverland_Silver",
           "IsFoil": false,
@@ -5044,7 +5044,7 @@
         {
           "Name": "Raven: Midsummer Alice",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 389,
           "Sprite": "0389_Raven_Midsummer_Alice_Silver",
           "IsFoil": false,
@@ -5055,7 +5055,7 @@
         {
           "Name": "Red Ash",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 390,
           "Sprite": "0390_Red_Ash_Silver",
           "IsFoil": false,
@@ -5066,7 +5066,7 @@
         {
           "Name": "Red and White",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 391,
           "Sprite": "0391_Red_and_White_Silver",
           "IsFoil": false,
@@ -5077,7 +5077,7 @@
         {
           "Name": "Rosanna: Chic Ocean",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 392,
           "Sprite": "0392_Rosanna_Chic_Ocean_Silver",
           "IsFoil": false,
@@ -5088,7 +5088,7 @@
         {
           "Name": "Rose",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 393,
           "Sprite": "0393_Rose_Silver",
           "IsFoil": false,
@@ -5099,7 +5099,7 @@
         {
           "Name": "Rupee: Winter Shopper",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 394,
           "Sprite": "0394_Rupee_Winter_Shopper_Silver",
           "IsFoil": false,
@@ -5110,7 +5110,7 @@
         {
           "Name": "Ruru",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 395,
           "Sprite": "0395_Ruru_Silver",
           "IsFoil": false,
@@ -5121,7 +5121,7 @@
         {
           "Name": "Sakura: Bloom in Summer",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 396,
           "Sprite": "0396_Sakura_Bloom_in_Summer_Silver",
           "IsFoil": false,
@@ -5132,7 +5132,7 @@
         {
           "Name": "Scarlet: Racer's High",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 397,
           "Sprite": "0397_Scarlet_Racers_High_Silver",
           "IsFoil": false,
@@ -5143,7 +5143,7 @@
         {
           "Name": "Scarlet: Black Shadow",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 398,
           "Sprite": "0398_Scarlet_Black_Shadow_Silver",
           "IsFoil": false,
@@ -5165,7 +5165,7 @@
         {
           "Name": "Siren: Abyss Flower",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 400,
           "Sprite": "0400_Siren_Abyss_Flower_Silver",
           "IsFoil": false,
@@ -5176,7 +5176,7 @@
         {
           "Name": "Nikke x Stellar Blade",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 401,
           "Sprite": "0401_Nikke_x_Stellar_Blade_Silver",
           "IsFoil": false,
@@ -5187,7 +5187,7 @@
         {
           "Name": "Viper: Shine of Love",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 402,
           "Sprite": "0402_Viper_Shine_of_Love_Silver",
           "IsFoil": false,
@@ -5198,7 +5198,7 @@
         {
           "Name": "Viper (Treasure)",
           "Rarity": "Silver",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 403,
           "Sprite": "0403_Viper_Treasure_Silver",
           "IsFoil": false,
@@ -5209,7 +5209,7 @@
         {
           "Name": "Red Hood",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 404,
           "Sprite": "0404_Red_Hood_Silver",
           "IsFoil": false,
@@ -5220,7 +5220,7 @@
         {
           "Name": "Nayuta",
           "Rarity": "Silver",
-          "BorderType": "Gold",
+          "BorderType": "Silver",
           "CardNumber": 405,
           "Sprite": "0405_Nayuta_Silver",
           "IsFoil": false,
@@ -5242,7 +5242,7 @@
         {
           "Name": "Jill Valentine",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 407,
           "Sprite": "0407_Jill_Valentine_Silver",
           "IsFoil": false,
@@ -5253,7 +5253,7 @@
         {
           "Name": "Ada Wong",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 408,
           "Sprite": "0408_Ada_Wong_Silver",
           "IsFoil": false,
@@ -5275,7 +5275,7 @@
         {
           "Name": "Noah",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 410,
           "Sprite": "0410_Noah_Gold",
           "IsFoil": false,
@@ -5286,7 +5286,7 @@
         {
           "Name": "Syuen",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 411,
           "Sprite": "0411_Syuen_Gold",
           "IsFoil": false,
@@ -5297,7 +5297,7 @@
         {
           "Name": "Alice",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 412,
           "Sprite": "0412_Alice_Gold",
           "IsFoil": false,
@@ -5308,7 +5308,7 @@
         {
           "Name": "Cinderella",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 413,
           "Sprite": "0413_Cinderella_Gold",
           "IsFoil": false,
@@ -5319,7 +5319,7 @@
         {
           "Name": "Clay",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 414,
           "Sprite": "0414_Clay_Gold",
           "IsFoil": false,
@@ -5374,7 +5374,7 @@
         {
           "Name": "Pepper",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 419,
           "Sprite": "0419_Pepper_Gold",
           "IsFoil": false,
@@ -5385,7 +5385,7 @@
         {
           "Name": "Liter",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 420,
           "Sprite": "0420_Liter_Gold",
           "IsFoil": false,
@@ -5396,7 +5396,7 @@
         {
           "Name": "Scarlet",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 421,
           "Sprite": "0421_Scarlet_Gold",
           "IsFoil": false,
@@ -5429,7 +5429,7 @@
         {
           "Name": "Power",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 424,
           "Sprite": "0424_Power_Gold",
           "IsFoil": false,
@@ -5440,7 +5440,7 @@
         {
           "Name": "Behemoth",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 425,
           "Sprite": "0425_Behemoth_Gold",
           "IsFoil": false,
@@ -5462,7 +5462,7 @@
         {
           "Name": "Elegg",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 427,
           "Sprite": "0427_Elegg_Gold",
           "IsFoil": false,
@@ -5473,7 +5473,7 @@
         {
           "Name": "Asuka",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 428,
           "Sprite": "0428_Asuka_Gold",
           "IsFoil": false,
@@ -5506,7 +5506,7 @@
         {
           "Name": "Rumani",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 431,
           "Sprite": "0431_Rumani_Gold",
           "IsFoil": false,
@@ -5517,7 +5517,7 @@
         {
           "Name": "Rem",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 432,
           "Sprite": "0432_Rem_Gold",
           "IsFoil": false,
@@ -5539,7 +5539,7 @@
         {
           "Name": "Milk",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 434,
           "Sprite": "0434_Milk_Gold",
           "IsFoil": false,
@@ -5550,7 +5550,7 @@
         {
           "Name": "Biscuit",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 435,
           "Sprite": "0435_Biscuit_Gold",
           "IsFoil": false,
@@ -5561,7 +5561,7 @@
         {
           "Name": "2B",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 436,
           "Sprite": "0436_2B_Gold",
           "IsFoil": false,
@@ -5572,7 +5572,7 @@
         {
           "Name": "Yan",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 437,
           "Sprite": "0437_Yan_Gold",
           "IsFoil": false,
@@ -5583,7 +5583,7 @@
         {
           "Name": "Jackal",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 438,
           "Sprite": "0438_Jackal_Gold",
           "IsFoil": false,
@@ -5594,7 +5594,7 @@
         {
           "Name": "Noise",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 439,
           "Sprite": "0439_Noise_Gold",
           "IsFoil": false,
@@ -5605,7 +5605,7 @@
         {
           "Name": "Isabel",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 440,
           "Sprite": "0440_Isabel_Gold",
           "IsFoil": false,
@@ -5627,7 +5627,7 @@
         {
           "Name": "Alice: Wonderland Bunny",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 442,
           "Sprite": "0442_Alice_Wonderland_Bunny_Gold",
           "IsFoil": false,
@@ -5660,7 +5660,7 @@
         {
           "Name": "Raven",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 445,
           "Sprite": "0445_Raven_Gold",
           "IsFoil": false,
@@ -5671,7 +5671,7 @@
         {
           "Name": "Yulha",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 446,
           "Sprite": "0446_Yulha_Gold",
           "IsFoil": false,
@@ -5682,7 +5682,7 @@
         {
           "Name": "Rei",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 447,
           "Sprite": "0447_Rei_Gold",
           "IsFoil": false,
@@ -5693,7 +5693,7 @@
         {
           "Name": "Marian",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 448,
           "Sprite": "0448_Marian_Gold",
           "IsFoil": false,
@@ -5704,7 +5704,7 @@
         {
           "Name": "Dolla",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 449,
           "Sprite": "0449_Dolla_Gold",
           "IsFoil": false,
@@ -5715,7 +5715,7 @@
         {
           "Name": "Epinel",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 450,
           "Sprite": "0450_Epinel_Gold",
           "IsFoil": false,
@@ -5737,7 +5737,7 @@
         {
           "Name": "Belorta",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 452,
           "Sprite": "0452_Belorta_Gold",
           "IsFoil": false,
@@ -5748,7 +5748,7 @@
         {
           "Name": "Ade",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 453,
           "Sprite": "0453_Ade_Gold",
           "IsFoil": false,
@@ -5781,7 +5781,7 @@
         {
           "Name": "Mica: Snow Buddy",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 456,
           "Sprite": "0456_Mica_Snow_Buddy_Gold",
           "IsFoil": false,
@@ -5792,7 +5792,7 @@
         {
           "Name": "A2",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 457,
           "Sprite": "0457_A2_Gold",
           "IsFoil": false,
@@ -5803,7 +5803,7 @@
         {
           "Name": "Ziz",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 458,
           "Sprite": "0458_Ziz_Gold",
           "IsFoil": false,
@@ -5814,7 +5814,7 @@
         {
           "Name": "Mihara: Bonding Chain",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 459,
           "Sprite": "0459_Mihara_Bonding_Chain_Gold",
           "IsFoil": false,
@@ -5825,7 +5825,7 @@
         {
           "Name": "Volume: Beat the Gun",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 460,
           "Sprite": "0460_Volume_Beat_the_Gun_Gold",
           "IsFoil": false,
@@ -5836,7 +5836,7 @@
         {
           "Name": "Snow White",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 461,
           "Sprite": "0461_Snow_White_Gold",
           "IsFoil": false,
@@ -5847,7 +5847,7 @@
         {
           "Name": "Dorothy",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 462,
           "Sprite": "0462_Dorothy_Gold",
           "IsFoil": false,
@@ -5858,7 +5858,7 @@
         {
           "Name": "Sakura: Midnight Stealth",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 463,
           "Sprite": "0463_Sakura_Midnight_Stealth_Gold",
           "IsFoil": false,
@@ -5869,7 +5869,7 @@
         {
           "Name": "Velvet",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 464,
           "Sprite": "0464_Velvet_Gold",
           "IsFoil": false,
@@ -5880,7 +5880,7 @@
         {
           "Name": "Kilo",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 465,
           "Sprite": "0465_Kilo_Gold",
           "IsFoil": false,
@@ -5891,7 +5891,7 @@
         {
           "Name": "Soda",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 466,
           "Sprite": "0466_Soda_Gold",
           "IsFoil": false,
@@ -5902,7 +5902,7 @@
         {
           "Name": "Scarlet: Black Shadow",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 467,
           "Sprite": "0467_Scarlet_Black_Shadow_Gold",
           "IsFoil": false,
@@ -5913,7 +5913,7 @@
         {
           "Name": "Julia",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 468,
           "Sprite": "0468_Julia_Gold",
           "IsFoil": false,
@@ -5924,7 +5924,7 @@
         {
           "Name": "Leona",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 469,
           "Sprite": "0469_Leona_Gold",
           "IsFoil": false,
@@ -5935,7 +5935,7 @@
         {
           "Name": "Volume",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 470,
           "Sprite": "0470_Volume_Gold",
           "IsFoil": false,
@@ -5946,7 +5946,7 @@
         {
           "Name": "Marian: First Affection",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 471,
           "Sprite": "0471_Marian_First_Affection_Gold",
           "IsFoil": false,
@@ -5957,7 +5957,7 @@
         {
           "Name": "Anis",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 472,
           "Sprite": "0472_Anis_Gold",
           "IsFoil": false,
@@ -5968,7 +5968,7 @@
         {
           "Name": "Anne: Miracle Fairy",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 473,
           "Sprite": "0473_Anne_Miracle_Fairy_Gold",
           "IsFoil": false,
@@ -5990,7 +5990,7 @@
         {
           "Name": "Rupee: Luxury Bunny",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 475,
           "Sprite": "0475_Rupee_Luxury_Bunny_Gold",
           "IsFoil": false,
@@ -6001,7 +6001,7 @@
         {
           "Name": "Trina",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 476,
           "Sprite": "0476_Trina_Gold",
           "IsFoil": false,
@@ -6012,7 +6012,7 @@
         {
           "Name": "Novel",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 477,
           "Sprite": "0477_Novel_Gold",
           "IsFoil": false,
@@ -6023,7 +6023,7 @@
         {
           "Name": "Emilia",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 478,
           "Sprite": "0478_Emilia_Gold",
           "IsFoil": false,
@@ -6034,7 +6034,7 @@
         {
           "Name": "Crown: Naked King",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 479,
           "Sprite": "0479_Crown_Naked_King_Gold",
           "IsFoil": false,
@@ -6045,7 +6045,7 @@
         {
           "Name": "Exia",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 480,
           "Sprite": "0480_Exia_Gold",
           "IsFoil": false,
@@ -6056,7 +6056,7 @@
         {
           "Name": "Guilty",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 481,
           "Sprite": "0481_Guilty_Gold",
           "IsFoil": false,
@@ -6078,7 +6078,7 @@
         {
           "Name": "Red Hood",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 483,
           "Sprite": "0483_Red_Hood_Gold",
           "IsFoil": false,
@@ -6089,7 +6089,7 @@
         {
           "Name": "Sin",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 484,
           "Sprite": "0484_Sin_Gold",
           "IsFoil": false,
@@ -6111,7 +6111,7 @@
         {
           "Name": "Sin: Backstreet Dream",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 486,
           "Sprite": "0486_Sin_Backstreet_Dream_Gold",
           "IsFoil": false,
@@ -6122,7 +6122,7 @@
         {
           "Name": "Neve",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 487,
           "Sprite": "0487_Neve_Gold",
           "IsFoil": false,
@@ -6144,7 +6144,7 @@
         {
           "Name": "Mori",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 489,
           "Sprite": "0489_Mori_Gold",
           "IsFoil": false,
@@ -6155,7 +6155,7 @@
         {
           "Name": "Nero",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 490,
           "Sprite": "0490_Nero_Gold",
           "IsFoil": false,
@@ -6166,7 +6166,7 @@
         {
           "Name": "Sugar",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 491,
           "Sprite": "0491_Sugar_Gold",
           "IsFoil": false,
@@ -6177,7 +6177,7 @@
         {
           "Name": "Rosanna: Chic Ocean",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 492,
           "Sprite": "0492_Rosanna_Chic_Ocean_Gold",
           "IsFoil": false,
@@ -6188,7 +6188,7 @@
         {
           "Name": "Aria",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 493,
           "Sprite": "0493_Aria_Gold",
           "IsFoil": false,
@@ -6199,7 +6199,7 @@
         {
           "Name": "Irony",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 494,
           "Sprite": "0494_Irony_Gold",
           "IsFoil": false,
@@ -6210,7 +6210,7 @@
         {
           "Name": "Ein",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 495,
           "Sprite": "0495_Ein_Gold",
           "IsFoil": false,
@@ -6232,7 +6232,7 @@
         {
           "Name": "Makima",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 497,
           "Sprite": "0497_Makima_Gold",
           "IsFoil": false,
@@ -6243,7 +6243,7 @@
         {
           "Name": "Centi",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 498,
           "Sprite": "0498_Centi_Gold",
           "IsFoil": false,
@@ -6254,7 +6254,7 @@
         {
           "Name": "Rei",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 499,
           "Sprite": "0499_Rei_Gold",
           "IsFoil": false,
@@ -6265,7 +6265,7 @@
         {
           "Name": "Ram",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 500,
           "Sprite": "0500_Ram_Gold",
           "IsFoil": false,
@@ -6276,7 +6276,7 @@
         {
           "Name": "Tove",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 501,
           "Sprite": "0501_Tove_Gold",
           "IsFoil": false,
@@ -6287,7 +6287,7 @@
         {
           "Name": "Folkwang",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 502,
           "Sprite": "0502_Folkwang_Gold",
           "IsFoil": false,
@@ -6298,7 +6298,7 @@
         {
           "Name": "Admi",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 503,
           "Sprite": "0503_Admi_Gold",
           "IsFoil": false,
@@ -6309,7 +6309,7 @@
         {
           "Name": "Maxwell",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 504,
           "Sprite": "0504_Maxwell_Gold",
           "IsFoil": false,
@@ -6320,7 +6320,7 @@
         {
           "Name": "Mary: Bay Goddess",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 505,
           "Sprite": "0505_Mary_Bay_Goddess_Gold",
           "IsFoil": false,
@@ -6331,7 +6331,7 @@
         {
           "Name": "Quency: Escape Artist",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 506,
           "Sprite": "0506_Quency_Escape_Artist_Gold",
           "IsFoil": false,
@@ -6342,7 +6342,7 @@
         {
           "Name": "Noir",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 507,
           "Sprite": "0507_Noir_Gold",
           "IsFoil": false,
@@ -6353,7 +6353,7 @@
         {
           "Name": "Harran",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 508,
           "Sprite": "0508_Harran_Gold",
           "IsFoil": false,
@@ -6364,7 +6364,7 @@
         {
           "Name": "Blanc",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 509,
           "Sprite": "0509_Blanc_Gold",
           "IsFoil": false,
@@ -6375,7 +6375,7 @@
         {
           "Name": "Cinderella: Glass Princess",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 510,
           "Sprite": "0510_Cinderella_Glass_Princess_Gold",
           "IsFoil": false,
@@ -6408,7 +6408,7 @@
         {
           "Name": "Rouge",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 513,
           "Sprite": "0513_Rouge_Gold",
           "IsFoil": false,
@@ -6419,7 +6419,7 @@
         {
           "Name": "Yuni",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 514,
           "Sprite": "0514_Yuni_Gold",
           "IsFoil": false,
@@ -6430,7 +6430,7 @@
         {
           "Name": "Drake",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 515,
           "Sprite": "0515_Drake_Gold",
           "IsFoil": false,
@@ -6441,7 +6441,7 @@
         {
           "Name": "Mari",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 516,
           "Sprite": "0516_Mari_Gold",
           "IsFoil": false,
@@ -6452,7 +6452,7 @@
         {
           "Name": "Moran",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 517,
           "Sprite": "0517_Moran_Gold",
           "IsFoil": false,
@@ -6463,7 +6463,7 @@
         {
           "Name": "Tia",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 518,
           "Sprite": "0518_Tia_Gold",
           "IsFoil": false,
@@ -6474,7 +6474,7 @@
         {
           "Name": "Grave",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 519,
           "Sprite": "0519_Grave_Gold",
           "IsFoil": false,
@@ -6496,7 +6496,7 @@
         {
           "Name": "Flora",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 521,
           "Sprite": "0521_Flora_Gold",
           "IsFoil": false,
@@ -6507,7 +6507,7 @@
         {
           "Name": "Cocoa",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 522,
           "Sprite": "0522_Cocoa_Gold",
           "IsFoil": false,
@@ -6529,7 +6529,7 @@
         {
           "Name": "Naga",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 524,
           "Sprite": "0524_Naga_Gold",
           "IsFoil": false,
@@ -6540,7 +6540,7 @@
         {
           "Name": "Chime",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 525,
           "Sprite": "0525_Chime_Gold",
           "IsFoil": false,
@@ -6551,7 +6551,7 @@
         {
           "Name": "Frima",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 526,
           "Sprite": "0526_Frima_Gold",
           "IsFoil": false,
@@ -6562,7 +6562,7 @@
         {
           "Name": "Rupee",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 527,
           "Sprite": "0527_Rupee_Gold",
           "IsFoil": false,
@@ -6573,7 +6573,7 @@
         {
           "Name": "Eve: Keyhole Dress",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 528,
           "Sprite": "0528_Eve_Keyhole_Dress_Gold",
           "IsFoil": false,
@@ -6595,7 +6595,7 @@
         {
           "Name": "2B: YoRHa Uniform 1",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 530,
           "Sprite": "0530_2B_YoRHa_Uniform_1_Gold",
           "IsFoil": false,
@@ -6628,7 +6628,7 @@
         {
           "Name": "Ade: Agent Bunny",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 533,
           "Sprite": "0533_Ade_Agent_Bunny_Gold",
           "IsFoil": false,
@@ -6650,7 +6650,7 @@
         {
           "Name": "Alice: Sweet Home",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 535,
           "Sprite": "0535_Alice_Sweet_Home_Gold",
           "IsFoil": false,
@@ -6661,7 +6661,7 @@
         {
           "Name": "Anis: Sparkling Summer",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 536,
           "Sprite": "0536_Anis_Sparkling_Summer_Gold",
           "IsFoil": false,
@@ -6672,7 +6672,7 @@
         {
           "Name": "Asuka: Ocean's Lament",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 537,
           "Sprite": "0537_Asuka_Oceans_Lament_Gold",
           "IsFoil": false,
@@ -6683,7 +6683,7 @@
         {
           "Name": "Bay: Radiant Rabbit",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 538,
           "Sprite": "0538_Bay_Radiant_Rabbit_Gold",
           "IsFoil": false,
@@ -6694,7 +6694,7 @@
         {
           "Name": "Bay (Treasure)",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 539,
           "Sprite": "0539_Bay_Treasure_Gold",
           "IsFoil": false,
@@ -6705,7 +6705,7 @@
         {
           "Name": "Sakura",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 540,
           "Sprite": "0540_Sakura_Gold",
           "IsFoil": false,
@@ -6716,7 +6716,7 @@
         {
           "Name": "Blanc: White Rabbit",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 541,
           "Sprite": "0541_Blanc_White_Rabbit_Gold",
           "IsFoil": false,
@@ -6727,7 +6727,7 @@
         {
           "Name": "Booms Day",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 542,
           "Sprite": "0542_Booms_Day_Gold",
           "IsFoil": false,
@@ -6738,7 +6738,7 @@
         {
           "Name": "Bready",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 543,
           "Sprite": "0543_Bready_Gold",
           "IsFoil": false,
@@ -6749,7 +6749,7 @@
         {
           "Name": "Bunny x 777",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 544,
           "Sprite": "0544_Bunny_x_777_Gold",
           "IsFoil": false,
@@ -6760,7 +6760,7 @@
         {
           "Name": "Cecil",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 545,
           "Sprite": "0545_Cecil_Gold",
           "IsFoil": false,
@@ -6793,7 +6793,7 @@
         {
           "Name": "Doro",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 548,
           "Sprite": "0548_Doro_Gold",
           "IsFoil": false,
@@ -6804,7 +6804,7 @@
         {
           "Name": "Dorothy: Serendipity",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 549,
           "Sprite": "0549_Dorothy_Serendipity_Gold",
           "IsFoil": false,
@@ -6815,7 +6815,7 @@
         {
           "Name": "Drake (Treasure)",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 550,
           "Sprite": "0550_Drake_Treasure_Gold",
           "IsFoil": false,
@@ -6826,7 +6826,7 @@
         {
           "Name": "Einkk",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 551,
           "Sprite": "0551_Einkk_Gold",
           "IsFoil": false,
@@ -6837,7 +6837,7 @@
         {
           "Name": "Elegg: Boom and Shock",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 552,
           "Sprite": "0552_Elegg_Boom_and_Shock_Gold",
           "IsFoil": false,
@@ -6859,7 +6859,7 @@
         {
           "Name": "Endless",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 554,
           "Sprite": "0554_Endless_Gold",
           "IsFoil": false,
@@ -6870,7 +6870,7 @@
         {
           "Name": "Enikk",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 555,
           "Sprite": "0555_Enikk_Gold",
           "IsFoil": false,
@@ -6881,7 +6881,7 @@
         {
           "Name": "Eternity",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 556,
           "Sprite": "0556_Eternity_Gold",
           "IsFoil": false,
@@ -6903,7 +6903,7 @@
         {
           "Name": "Eve: Skin Suit",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 558,
           "Sprite": "0558_Eve_Skin_Suit_Gold",
           "IsFoil": false,
@@ -6914,7 +6914,7 @@
         {
           "Name": "Exia: Hacker Rabbit",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 559,
           "Sprite": "0559_Exia_Hacker_Rabbit_Gold",
           "IsFoil": false,
@@ -6925,7 +6925,7 @@
         {
           "Name": "Exia (Treasure)",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 560,
           "Sprite": "0560_Exia_Treasure_Gold",
           "IsFoil": false,
@@ -6958,7 +6958,7 @@
         {
           "Name": "Guilty: Wave of Disbelief",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 563,
           "Sprite": "0563_Guilty_Wave_of_Disbelief_Gold",
           "IsFoil": false,
@@ -6980,7 +6980,7 @@
         {
           "Name": "Harran: Banquet Witch",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 565,
           "Sprite": "0565_Harran_Banquet_Witch_Gold",
           "IsFoil": false,
@@ -7035,7 +7035,7 @@
         {
           "Name": "Julia (Treasure)",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 570,
           "Sprite": "0570_Julia_Treasure_Gold",
           "IsFoil": false,
@@ -7046,7 +7046,7 @@
         {
           "Name": "Last Kingdom",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 571,
           "Sprite": "0571_Last_Kingdom_Gold",
           "IsFoil": false,
@@ -7057,7 +7057,7 @@
         {
           "Name": "Laplace (Treasure)",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 572,
           "Sprite": "0572_Laplace_Treasure_Gold",
           "IsFoil": false,
@@ -7068,7 +7068,7 @@
         {
           "Name": "Leviatan",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 573,
           "Sprite": "0573_Leviatan_Gold",
           "IsFoil": false,
@@ -7079,7 +7079,7 @@
         {
           "Name": "Liberalio",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 574,
           "Sprite": "0574_Liberalio_Gold",
           "IsFoil": false,
@@ -7090,7 +7090,7 @@
         {
           "Name": "Life Again",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 575,
           "Sprite": "0575_Life_Again_Gold",
           "IsFoil": false,
@@ -7101,7 +7101,7 @@
         {
           "Name": "Liliweiss",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 576,
           "Sprite": "0576_Liliweiss_Gold",
           "IsFoil": false,
@@ -7112,7 +7112,7 @@
         {
           "Name": "Lily",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 577,
           "Sprite": "0577_Lily_Gold",
           "IsFoil": false,
@@ -7123,7 +7123,7 @@
         {
           "Name": "Golden Coin Rush",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 578,
           "Sprite": "0578_Golden_Coin_Rush_Gold",
           "IsFoil": false,
@@ -7134,7 +7134,7 @@
         {
           "Name": "Ludmilla: Winter Owner",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 579,
           "Sprite": "0579_Ludmilla_Winter_Owner_Gold",
           "IsFoil": false,
@@ -7167,7 +7167,7 @@
         {
           "Name": "Mica: Snow Buddy",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 582,
           "Sprite": "0582_Mica_Snow_Buddy_Gold",
           "IsFoil": false,
@@ -7178,7 +7178,7 @@
         {
           "Name": "Mihara: Pain Eater",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 583,
           "Sprite": "0583_Mihara_Pain_Eater_Gold",
           "IsFoil": false,
@@ -7200,7 +7200,7 @@
         {
           "Name": "Modernia",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 585,
           "Sprite": "0585_Modernia_Gold",
           "IsFoil": false,
@@ -7211,7 +7211,7 @@
         {
           "Name": "Moran: Off-Duty Queen",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 586,
           "Sprite": "0586_Moran_OffDuty_Queen_Gold",
           "IsFoil": false,
@@ -7222,7 +7222,7 @@
         {
           "Name": "Naga: Last Girlhood",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 587,
           "Sprite": "0587_Naga_Last_Girlhood_Gold",
           "IsFoil": false,
@@ -7233,7 +7233,7 @@
         {
           "Name": "Nayuta",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 588,
           "Sprite": "0588_Nayuta_Gold",
           "IsFoil": false,
@@ -7244,7 +7244,7 @@
         {
           "Name": "Nihilister",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 589,
           "Sprite": "0589_Nihilister_Gold",
           "IsFoil": false,
@@ -7255,7 +7255,7 @@
         {
           "Name": "Noise: Classic Diva",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 590,
           "Sprite": "0590_Noise_Classic_Diva_Gold",
           "IsFoil": false,
@@ -7266,7 +7266,7 @@
         {
           "Name": "Neverland",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 591,
           "Sprite": "0591_Neverland_Gold",
           "IsFoil": false,
@@ -7288,7 +7288,7 @@
         {
           "Name": "Raven: Midsummer Alice",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 593,
           "Sprite": "0593_Raven_Midsummer_Alice_Gold",
           "IsFoil": false,
@@ -7299,7 +7299,7 @@
         {
           "Name": "Red Ash",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 594,
           "Sprite": "0594_Red_Ash_Gold",
           "IsFoil": false,
@@ -7310,7 +7310,7 @@
         {
           "Name": "Red and White",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 595,
           "Sprite": "0595_Red_and_White_Gold",
           "IsFoil": false,
@@ -7321,7 +7321,7 @@
         {
           "Name": "Rosanna: Chic Ocean",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 596,
           "Sprite": "0596_Rosanna_Chic_Ocean_Gold",
           "IsFoil": false,
@@ -7332,7 +7332,7 @@
         {
           "Name": "Rose",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 597,
           "Sprite": "0597_Rose_Gold",
           "IsFoil": false,
@@ -7343,7 +7343,7 @@
         {
           "Name": "Rupee: Winter Shopper",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 598,
           "Sprite": "0598_Rupee_Winter_Shopper_Gold",
           "IsFoil": false,
@@ -7354,7 +7354,7 @@
         {
           "Name": "Ruru",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 599,
           "Sprite": "0599_Ruru_Gold",
           "IsFoil": false,
@@ -7365,7 +7365,7 @@
         {
           "Name": "Sakura: Bloom in Summer",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 600,
           "Sprite": "0600_Sakura_Bloom_in_Summer_Gold",
           "IsFoil": false,
@@ -7376,7 +7376,7 @@
         {
           "Name": "Scarlet: Racer's High",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 601,
           "Sprite": "0601_Scarlet_Racers_High_Gold",
           "IsFoil": false,
@@ -7387,7 +7387,7 @@
         {
           "Name": "Scarlet: Black Shadow",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 602,
           "Sprite": "0602_Scarlet_Black_Shadow_Gold",
           "IsFoil": false,
@@ -7409,7 +7409,7 @@
         {
           "Name": "Siren: Abyss Flower",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 604,
           "Sprite": "0604_Siren_Abyss_Flower_Gold",
           "IsFoil": false,
@@ -7420,7 +7420,7 @@
         {
           "Name": "Nikke x Stellar Blade",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 605,
           "Sprite": "0605_Nikke_x_Stellar_Blade_Gold",
           "IsFoil": false,
@@ -7431,7 +7431,7 @@
         {
           "Name": "Viper: Shine of Love",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 606,
           "Sprite": "0606_Viper_Shine_of_Love_Gold",
           "IsFoil": false,
@@ -7442,7 +7442,7 @@
         {
           "Name": "Viper (Treasure)",
           "Rarity": "Gold",
-          "BorderType": "Silver",
+          "BorderType": "Base",
           "CardNumber": 607,
           "Sprite": "0607_Viper_Treasure_Gold",
           "IsFoil": false,
@@ -7453,7 +7453,7 @@
         {
           "Name": "Red Hood",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 608,
           "Sprite": "0608_Red_Hood_Gold",
           "IsFoil": false,
@@ -7464,7 +7464,7 @@
         {
           "Name": "Nayuta",
           "Rarity": "Gold",
-          "BorderType": "Gold",
+          "BorderType": "FirstEdition",
           "CardNumber": 609,
           "Sprite": "0609_Nayuta_Gold",
           "IsFoil": false,
@@ -7486,7 +7486,7 @@
         {
           "Name": "Jill Valentine",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 611,
           "Sprite": "0611_Jill_Valentine_Gold",
           "IsFoil": false,
@@ -7497,7 +7497,7 @@
         {
           "Name": "Ada Wong",
           "Rarity": "Gold",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 612,
           "Sprite": "0612_Ada_Wong_Gold",
           "IsFoil": false,
