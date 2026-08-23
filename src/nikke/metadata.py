@@ -13,15 +13,15 @@ RARITIES = [
 LEVELS = {
     "Core": {
         "Common": 1,
-        "Rare": 5,
-        "Epic": 12,
-        "Legendary": 20,
+        "Rare": 10,
+        "Epic": 20,
+        "Legendary": 30,
     },
     "Destiny": {
-        "Common": 25,
-        "Rare": 30,
-        "Epic": 40,
-        "Legendary": 50,
+        "Common": 40,
+        "Rare": 50,
+        "Epic": 60,
+        "Legendary": 70,
     },
 }
 
@@ -336,6 +336,7 @@ def deck(set, element) -> dict:
     ].index(character) + 1
 
     level = [level for levels in LEVELS.values() for level in levels.values()][tier - 1]
+    level = max(level, 9)
     level_next = next_unlock(level)
     level_requirement = level + (level_next - level) // 2
 
@@ -404,6 +405,7 @@ def deck_box(i) -> dict:
     tier = i + 1
 
     level = [level for levels in LEVELS.values() for level in levels.values()][tier - 1]
+    level = max(level, 7)
     level_next = next_unlock(level)
     level_requirement = level + math.ceil((level_next - level) / 4)
 
@@ -462,7 +464,7 @@ def deck_box(i) -> dict:
 
 def manga(name, i):
     tier = i + 1
-    level_requirement = 5 + math.ceil(1.2 * tier**1.6)
+    level_requirement = 12 + math.ceil(1.2 * tier**1.6)
 
     return {
         "Name": name,
@@ -519,7 +521,7 @@ def manga(name, i):
 
 def playmat(name, i):
     tier = i + 1
-    level_requirement = 3 + math.ceil(1.4 * tier**1.2)
+    level_requirement = 12 + math.ceil(1.4 * tier**1.2)
 
     return {
         "Name": name,
@@ -576,7 +578,7 @@ def playmat(name, i):
 
 def sleeve(name, kind):
     tier = SLEEVES.index(kind) + 1
-    level_requirement = 3 + math.ceil(1.1 * tier**1.8)
+    level_requirement = 5 + math.ceil(1.2 * tier**1.8)
 
     return {
         "Name": name,
@@ -585,7 +587,7 @@ def sleeve(name, kind):
         "ItemType": f"Nikke_Sleeve_{tier}_Item",
         "SpawnsPackType": "",
         "ItemCategory": "Sleeve",
-        "BaseCost": 1 * tier,
+        "BaseCost": 2 + 1 * tier,
         "AddItemAsAccessory": True,
         "AddItemAsFigurine": False,
         "AddItemAsBoardGame": False,
@@ -657,7 +659,7 @@ def figurine(original):
     name = CHARACTERS[original]
     tier = list(CHARACTERS.values()).index(name) + 1
     filename = name.replace(" ", "_").replace("(", "").replace(")", "")
-    level_requirement = 5 + math.ceil(1.3 * tier**1.35)
+    level_requirement = 8 + math.ceil(1.3 * tier**1.35)
 
     return {
         "Name": name,
@@ -800,4 +802,4 @@ def next_unlock(level):
             if candidate > level:
                 return candidate
 
-    return 70  # Endgame
+    return 80  # Endgame

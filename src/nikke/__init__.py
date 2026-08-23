@@ -26,6 +26,7 @@ FIGURINES_DIR = OUTPUT_DIR / "Nikke_Figurines"
 ANIMATED_OUTPUT_DIR = OUTPUT_DIR.joinpath("animated")
 UNITY_DIR = WORKING_DIR.joinpath("unity")
 EXPANSION_BUILDER = UNITY_DIR.joinpath("ExpansionBuilder")
+BUILD_DIR = WORKING_DIR / "build"
 
 CARDBACK = TEXTURE_DIR.joinpath("cards/T_CardBackMesh.png")
 LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
@@ -453,7 +454,6 @@ def bundle():
 
 
 def package():
-    BUILD_DIR = WORKING_DIR / "build"
     SHOP_ICONS = EXTERNAL_DIR / "Shop"
 
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
@@ -540,6 +540,15 @@ def package():
         )
 
 
+def install():
+    GAME_DIR = pathlib.Path(
+        r"C:\Program Files (x86)\Steam\steamapps\common\TCG Card Shop Simulator"
+    )
+
+    for mod in BUILD_DIR.iterdir():
+        copy(mod / "BepInEx", GAME_DIR / "BepInEx", overwrite=True)
+
+
 def write_json(data: dict, file: pathlib.Path):
     print(file.relative_to(WORKING_DIR))
 
@@ -561,7 +570,10 @@ def copy(source: pathlib.Path, dest: pathlib.Path, overwrite=False):
 
             return
 
-    print(dest.relative_to(WORKING_DIR))
+    if dest.is_relative_to(WORKING_DIR):
+        print(dest.relative_to(WORKING_DIR))
+    else:
+        print(dest)
 
     dest.parent.mkdir(parents=True, exist_ok=True)
     source.copy(dest)
