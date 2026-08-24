@@ -13,28 +13,28 @@ from PIL import Image
 from nikke import metadata
 
 WORKING_DIR = pathlib.Path.cwd()
-ORIGINAL_DIR = WORKING_DIR.joinpath("original/BepInEx")
+ORIGINAL_DIR = WORKING_DIR / "original" / "BepInEx"
 TEXTURE_REPLACER_DIR = ORIGINAL_DIR / "plugins" / "TextureReplacer"
 TEXTURE_DIR = TEXTURE_REPLACER_DIR / "objects_textures" / "nikke"
 DATA_DIR = TEXTURE_REPLACER_DIR / "objects_data"
 MESH_DIR = TEXTURE_REPLACER_DIR / "objects_meshes"
-ORIGINAL_CARDS_DIR = ORIGINAL_DIR.joinpath("plugins/CardConfigurator/Configs")
-ORIGINAL_PACKS_DIR = TEXTURE_DIR.joinpath("packs")
-CARDS_DIR = WORKING_DIR.joinpath("cards")
-ART_STATIC_DIR = WORKING_DIR.joinpath("cards/assets/cardart/default")
-ART_ANIMATED_DIR = WORKING_DIR.joinpath("cards/assets/animated/default/ghost")
-EXTERNAL_DIR = WORKING_DIR.joinpath("external")
-TOOLS_DIR = WORKING_DIR.joinpath("tools")
-OUTPUT_DIR = WORKING_DIR.joinpath("output")
+ORIGINAL_CARDS_DIR = ORIGINAL_DIR / "plugins" / "CardConfigurator" / "Configs"
+ORIGINAL_PACKS_DIR = TEXTURE_DIR / "packs"
+CARDS_DIR = WORKING_DIR / "cards"
+ART_STATIC_DIR = WORKING_DIR / "cards" / "assets" / "cardart" / "default"
+ART_ANIMATED_DIR = WORKING_DIR / "cards" / "assets" / "animated" / "default" / "ghost"
+EXTERNAL_DIR = WORKING_DIR / "external"
+TOOLS_DIR = WORKING_DIR / "tools"
+OUTPUT_DIR = WORKING_DIR / "output"
 ACCESSORIES_DIR = OUTPUT_DIR / "Nikke_Accessories"
 FIGURINES_DIR = OUTPUT_DIR / "Nikke_Figurines"
-ANIMATED_OUTPUT_DIR = OUTPUT_DIR.joinpath("animated")
-UNITY_DIR = WORKING_DIR.joinpath("unity")
-EXPANSION_BUILDER = UNITY_DIR.joinpath("ExpansionBuilder")
+ANIMATED_OUTPUT_DIR = OUTPUT_DIR / "animated"
+UNITY_DIR = WORKING_DIR / "unity"
+EXPANSION_BUILDER = UNITY_DIR / "ExpansionBuilder"
 BUILD_DIR = WORKING_DIR / "build"
 
-CARDBACK = TEXTURE_DIR.joinpath("cards/T_CardBackMesh.png")
-LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
+CARDBACK = TEXTURE_DIR / "cards" / "T_CardBackMesh.png"
+LOGO = TEXTURE_DIR / "misc" / "GameTitle.png"
 
 
 def extract() -> None:
@@ -365,10 +365,10 @@ def generate() -> None:
             continue
 
         config_set = CONFIG_SETS[set.name]
-        total_cards = len(next(set.joinpath("base").walk())[2])
+        total_cards = len(next((set / "base").walk())[2])
         total_animated = 0
 
-        output_set = OUTPUT_DIR.joinpath(f"Nikke_{set_name}")
+        output_set = OUTPUT_DIR / f"Nikke_{set_name}"
         cards = []
 
         for expansion in set.iterdir():
@@ -405,7 +405,7 @@ def generate() -> None:
                 card = metadata.card(name, number, rarity, kind)
                 cards.append(card)
 
-                copy(card_art, output_set.joinpath(f"{card['Sprite']}.png"))
+                copy(card_art, output_set / f"{card['Sprite']}.png")
 
                 if rarity == "FullArt":
                     selector = 1 if set_name == "Core" else 0
@@ -413,7 +413,7 @@ def generate() -> None:
                     if number % 2 == selector:
                         continue
 
-                    frames_dir = ART_ANIMATED_DIR.joinpath(card_art.stem.lower())
+                    frames_dir = ART_ANIMATED_DIR / card_art.stem.lower()
 
                     if not frames_dir.exists():
                         continue
@@ -452,9 +452,8 @@ def generate() -> None:
                         result = Image.alpha_composite(background, img)
 
                         result.save(
-                            output_frames_dir.joinpath(
-                                f"{frame.stem.rjust(total_padding, '0')}.png"
-                            )
+                            output_frames_dir
+                            / f"{frame.stem.rjust(total_padding, '0')}.png"
                         )
 
         cards.sort(key=lambda card: card["CardNumber"])
@@ -484,27 +483,25 @@ def generate() -> None:
 
             copy(
                 ORIGINAL_PACKS_DIR / pack_material,
-                output_set.joinpath(f"{pack['Material']}.png"),
+                output_set / f"{pack['Material']}.png",
             )
 
             copy(
                 ORIGINAL_PACKS_DIR / pack_sprite,
-                output_set.joinpath(f"{pack['SpriteName']}.png"),
+                output_set / f"{pack['SpriteName']}.png",
             )
 
             copy(
                 TEXTURE_DIR / "boxes" / f"T_CardBox{box_suffix}.png",
-                output_set.joinpath(f"{box['Material']}.png"),
+                output_set / f"{box['Material']}.png",
             )
 
             copy(
-                TEXTURE_DIR.joinpath("boxes").joinpath(
-                    f"{box_prefix}{box_tier}CardBox.png"
-                ),
-                output_set.joinpath(f"{box['SpriteName']}.png"),
+                TEXTURE_DIR / "boxes" / f"{box_prefix}{box_tier}CardBox.png",
+                output_set / f"{box['SpriteName']}.png",
             )
 
-        copy(CARDBACK, output_set.joinpath("_Cardback.png"))
+        copy(CARDBACK, output_set / "_Cardback.png")
 
         for entry in (EXTERNAL_DIR / "Expansion").iterdir():
             if entry.is_file():
@@ -524,7 +521,7 @@ def generate() -> None:
 
         write_json(
             metadata.bundle(set_name, items, [expansion]),
-            OUTPUT_DIR.joinpath(f"nikke_{set_name.lower()}.json"),
+            OUTPUT_DIR / f"nikke_{set_name.lower()}.json",
         )
 
     for bundle in OUTPUT_DIR.iterdir():
@@ -542,7 +539,7 @@ def bundle():
     UNITY_EXE = pathlib.Path(
         r"C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe"
     )
-    ASSETS_DIR = EXPANSION_BUILDER.joinpath("Assets")
+    ASSETS_DIR = EXPANSION_BUILDER / "Assets"
 
     for path, dirs, files in ASSETS_DIR.walk(top_down=False):
         if "Nikke" not in str(path):
