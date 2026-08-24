@@ -1,0 +1,196 @@
+name: build
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+# Required repository secrets:
+#   GITLAB_TOKEN   - GitLab personal access token with the read_repository scope for
+#                    hecrj/nikke-tcg-assets (needed to check out the `external` submodule)
+#   UNITY_EMAIL    - Unity account email. The bundle step signs in with these
+#   UNITY_PASSWORD - credentials so the Licensing Client fetches the Personal
+#                    entitlement fresh for the runner. The account must NOT have
+#                    two-factor auth enabled (headless sign-in can't complete 2FA);
+#                    a dedicated CI account is recommended.
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    timeout-minutes: 90
+    env:
+      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    steps:
+      - name: Install vcredist2013
+        run: choco install vcredist2013 -y --no-progress
+
+      - name: Configure GitLab token for submodule
+        shell: bash
+        run: |
+          if [ -z "${{ secrets.GITLAB_TOKEN }}" ]; then
+            echo "::error::Missing GITLAB_TOKEN secret (personal access token with read_repository scope for hecrj/nikke-tcg-assets)"
+            exit 1
+          fi
+          # Rewrite the submodule's SSH URL to HTTPS authenticated with the token
+          git config --global url."https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/".insteadOf "git@gitlab.com:"
+
+          # The `external` submodule stores its assets (*.zip, *.png) via Git LFS:
+          # enable the smudge filter so the checkout downloads real files, not pointers
+          if ! command -v git-lfs >/dev/null 2>&1; then
+            echo "::error::git-lfs is not installed on the runner"
+            exit 1
+          fi
+
+      - name: Install Unity 2021.3.45f2
+        uses: RageAgainstThePixel/unity-setup@v2
+        with:
+          version-file: None
+          unity-version: 2021.3.45f2
+          cache-installation: true
+
+      - name: Verify Unity installation
+        run: |
+          $unity = 'C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe'
+          if (-not (Test-Path $unity)) {
+            throw "Unity 2021.3.45f2 not found at $unity (UNITY_EDITOR_PATH='${env:UNITY_EDITOR_PATH}'). Pin install-path in unity-setup to match bundle()'s hardcoded path."
+          }
+
+      # Unity.exe exiting with 0xC0000135 (STATUS_DLL_NOT_FOUND) means a DLL it
+      # links against is missing on the runner. The VC++ runtimes are present, so
+      # the likely culprit is an incomplete cached install missing one of Unity's
+      # own bundled DLLs. Resolve every direct import against the loader search
+      # path and flag any that don't exist.
+      - name: Diagnose Unity dependencies
+        run: |
+          $unity = 'C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe'
+          $editorDir = Split-Path $unity
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $dumpbin = & $vswhere -latest -find '**\dumpbin.exe' | Select-Object -First 1
+          if (-not $dumpbin) { throw "dumpbin.exe not found via vswhere" }
+
+          $deps = & $dumpbin /dependents $unity |
+            Select-String '^\s+(\S+\.[Dd][Ll][Ll])\s*$' |
+            ForEach-Object { $_.Matches[0].Groups[1].Value }
+
+          $searchDirs = @($editorDir, "$env:WINDIR\System32", "$env:WINDIR\SysWOW64")
+          $missing = @()
+          Write-Host "== Resolving $($deps.Count) direct imports =="
+          foreach ($d in $deps) {
+            $hit = $searchDirs |
+              ForEach-Object { Join-Path $_ $d } |
+              Where-Object { Test-Path -LiteralPath $_ } |
+              Select-Object -First 1
+            if ($hit) {
+              Write-Host ("  OK       {0}" -f $d)
+            } else {
+              Write-Host ("  MISSING  {0}" -f $d)
+              $missing += $d
+            }
+          }
+          if ($missing) {
+            Write-Host "::warning::Unresolved direct imports (likely a corrupt/partial Unity cache): $($missing -join ', ')"
+          } else {
+            Write-Host "All direct imports resolved; missing DLL may be transitive (see the post-crash step)."
+          }
+
+      - name: Verify Unity account secrets
+        run: |
+          if ([string]::IsNullOrEmpty($env:UNITY_EMAIL) -or [string]::IsNullOrEmpty($env:UNITY_PASSWORD)) {
+            Write-Error "Missing UNITY_EMAIL/UNITY_PASSWORD secrets. The bundle step signs in with these to activate the Personal license on the runner."
+            exit 1
+          }
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          # lfs: true
+
+      - name: Verify LFS assets
+        shell: bash
+        run: |
+          zip=external/Nikke_TCG_v2.3.0.zip
+          if [ "$(head -c 2 "$zip")" != "PK" ]; then
+            echo "::error::$zip does not look like a zip (first bytes: $(head -c 80 "$zip" | tr -d '\n'))"
+            echo "This usually means Git LFS did not run during checkout (pointer file instead of content)."
+            exit 1
+          fi
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Install Python dependencies
+        run: uv sync --frozen
+
+      - name: Bundle
+        run: uv run bundle
+
+      # Runs only if a prior step failed. When Unity dies with 0xC0000135 the
+      # OS logs an "Application Error" (Event ID 1000) naming the faulting
+      # module, which points at the missing/transitive DLL.
+      - name: Unity crash diagnostics
+        if: failure()
+        run: |
+          Write-Host "== Application errors (last 15 min) =="
+          Get-WinEvent -FilterHashtable @{ LogName='Application'; StartTime=(Get-Date).AddMinutes(-15) } -ErrorAction SilentlyContinue |
+            Where-Object { $_.ProviderName -match 'Application Error|Windows Error Reporting' -or $_.Message -match 'Unity|\.dll' } |
+            Format-List TimeCreated, Id, ProviderName, Message
+          $log = "$env:LOCALAPPDATA\Unity\Editor\Editor.log"
+          if (Test-Path $log) {
+            Write-Host "== Unity Editor.log (tail) =="
+            Get-Content $log -Tail 100
+          }
+
+      - name: Extract
+        run: uv run extract
+
+      - name: Generate
+        run: uv run generate
+
+      - name: Bundle
+        run: uv run bundle
+
+      - name: Package
+        run: uv run package
+
+      - name: Summarize
+        run: |
+          $root = (Get-Location).Path
+          $files = Get-ChildItem -Path build -Recurse -File
+          $total = ($files | Measure-Object -Property Length -Sum).Sum
+
+          Write-Host ("build/: {0:N2} MB across {1} files" -f ($total / 1MB), $files.Count)
+
+          Get-ChildItem -Path build -Directory | ForEach-Object {
+            $size = (Get-ChildItem $_.FullName -Recurse -File | Measure-Object -Property Length -Sum).Sum
+            Write-Host ("  {0}: {1:N2} MB" -f $_.Name, ($size / 1MB))
+          }
+
+          Write-Host ""
+          Write-Host "SHA256 manifest"
+          foreach ($file in $files) {
+            $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToLower()
+            $relative = $file.FullName.Substring($root.Length + 1)
+            Write-Host ("{0}  {1}" -f $hash, $relative)
+          }
+
+      # Return the Personal seat activated during Bundle so repeated CI runs
+      # don't exhaust the account's activation limit. Runs even on failure, but
+      # only once Unity was installed (skipped if an earlier setup step failed).
+      - name: Return Unity license
+        if: always()
+        continue-on-error: true
+        run: |
+          $unity = 'C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe'
+          if ((Test-Path $unity) -and $env:UNITY_EMAIL -and $env:UNITY_PASSWORD) {
+            & $unity -batchmode -nographics -quit -logFile - `
+              -returnlicense -username $env:UNITY_EMAIL -password $env:UNITY_PASSWORD
+            & 'C:\Program Files\Unity Hub\Unity Hub.exe' -- --headless install-path --get
+          } else {
+            Write-Host "Skipping license return (Unity not installed or credentials absent)"
+          }
