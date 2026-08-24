@@ -16,6 +16,7 @@ WORKING_DIR = pathlib.Path.cwd()
 ORIGINAL_DIR = WORKING_DIR / "original" / "BepInEx"
 TEXTURE_REPLACER_DIR = ORIGINAL_DIR / "plugins" / "TextureReplacer"
 TEXTURE_DIR = TEXTURE_REPLACER_DIR / "objects_textures" / "nikke"
+AKALIE_DIR = TEXTURE_REPLACER_DIR / "objects_textures" / "from Akalie"
 DATA_DIR = TEXTURE_REPLACER_DIR / "objects_data"
 MESH_DIR = TEXTURE_REPLACER_DIR / "objects_meshes"
 ORIGINAL_CARDS_DIR = ORIGINAL_DIR / "plugins" / "CardConfigurator" / "Configs"
@@ -282,12 +283,12 @@ def generate() -> None:
         (icon, material) = BOARD_GAME_ASSETS[original.stem.removesuffix("_NAME")]
 
         copy(
-            TEXTURE_DIR / ".." / "from Akalie" / f"Icon_Boardgame_Speedrobo_{icon}.png",
+            AKALIE_DIR / f"Icon_Boardgame_Speedrobo_{icon}.png",
             ACCESSORIES_DIR / f"{board_game['SpriteName']}.png",
         )
 
         copy(
-            TEXTURE_DIR / ".." / "from Akalie" / f"T_{material}.png",
+            AKALIE_DIR / f"T_{material}.png",
             ACCESSORIES_DIR / f"{board_game['Material']}.png",
         )
 
@@ -365,8 +366,10 @@ def generate() -> None:
             continue
 
         config_set = CONFIG_SETS[set.name]
-        total_cards = len(next((set / "base").walk())[2])
+        total_cards = len(list((set / "base").glob("*.png")))
         total_animated = 0
+        animated_selector = 1 if set_name == "Core" else 0
+        ghost_suffix = "" if set_name == "Core" else "Destiny"
 
         output_set = OUTPUT_DIR / f"Nikke_{set_name}"
         cards = []
@@ -408,9 +411,7 @@ def generate() -> None:
                 copy(card_art, output_set / f"{card['Sprite']}.png")
 
                 if rarity == "FullArt":
-                    selector = 1 if set_name == "Core" else 0
-
-                    if number % 2 == selector:
+                    if number % 2 == animated_selector:
                         continue
 
                     frames_dir = ART_ANIMATED_DIR / card_art.stem.lower()
@@ -420,8 +421,7 @@ def generate() -> None:
 
                     total_animated += 1
 
-                    suffix = "" if set_name == "Core" else "Destiny"
-                    ini_override = ORIGINAL_CARDS_DIR / f"Ghost{suffix}" / ini.name
+                    ini_override = ORIGINAL_CARDS_DIR / f"Ghost{ghost_suffix}" / ini.name
 
                     if ini_override.is_file():
                         config.read(ini_override)
