@@ -1,0 +1,3 @@
+[submodule "external"]
+	path = external
+	url = git@gitlab.com:hecrj/nikke-tcg-assets.git
