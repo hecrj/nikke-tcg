@@ -692,11 +692,8 @@ def install():
 def write_json(data: dict, file: pathlib.Path):
     print(file.relative_to(WORKING_DIR))
 
-    json.dump(
-        data,
-        file.open("w", newline="\n"),
-        indent=2,
-    )
+    with file.open("w", newline="\n", encoding="utf-8") as json_file:
+        json.dump(data, json_file, indent=2)
 
 
 def copy(source: pathlib.Path, dest: pathlib.Path, overwrite=False):
