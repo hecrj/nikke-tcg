@@ -1709,11 +1709,11 @@
           "CardBack": ""
         },
         {
-          "Name": "Irony",
+          "Name": "Trony",
           "Rarity": "Standard",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 86,
-          "Sprite": "0086_Irony_Standard",
+          "Sprite": "0086_Trony_Standard",
           "IsFoil": false,
           "ElementType": "None",
           "FoilMask": "",
@@ -1722,7 +1722,7 @@
         {
           "Name": "Ein",
           "Rarity": "Standard",
-          "BorderType": "Silver",
+          "BorderType": "FirstEdition",
           "CardNumber": 87,
           "Sprite": "0087_Ein_Standard",
           "IsFoil": false,
@@ -3953,11 +3953,11 @@
           "CardBack": ""
         },
         {
-          "Name": "Irony",
+          "Name": "Trony",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 290,
-          "Sprite": "0290_Irony_Silver",
+          "Sprite": "0290_Trony_Silver",
           "IsFoil": false,
           "ElementType": "None",
           "FoilMask": "",
@@ -3966,7 +3966,7 @@
         {
           "Name": "Ein",
           "Rarity": "Silver",
-          "BorderType": "FirstEdition",
+          "BorderType": "Base",
           "CardNumber": 291,
           "Sprite": "0291_Ein_Silver",
           "IsFoil": false,
@@ -6197,11 +6197,11 @@
           "CardBack": ""
         },
         {
-          "Name": "Irony",
+          "Name": "Trony",
           "Rarity": "Gold",
           "BorderType": "Base",
           "CardNumber": 494,
-          "Sprite": "0494_Irony_Gold",
+          "Sprite": "0494_Trony_Gold",
           "IsFoil": false,
           "ElementType": "None",
           "FoilMask": "",
@@ -8441,11 +8441,11 @@
           "CardBack": ""
         },
         {
-          "Name": "Irony",
+          "Name": "Trony",
           "Rarity": "FirstEdition",
           "BorderType": "EX",
           "CardNumber": 698,
-          "Sprite": "0698_Irony_FirstEdition",
+          "Sprite": "0698_Trony_FirstEdition",
           "IsFoil": false,
           "ElementType": "None",
           "FoilMask": "",
@@ -10685,11 +10685,11 @@
           "CardBack": ""
         },
         {
-          "Name": "Irony",
+          "Name": "Trony",
           "Rarity": "EX",
-          "BorderType": "EX",
+          "BorderType": "Gold",
           "CardNumber": 902,
-          "Sprite": "0902_Irony_EX",
+          "Sprite": "0902_Trony_EX",
           "IsFoil": true,
           "ElementType": "None",
           "FoilMask": "",
@@ -10698,7 +10698,7 @@
         {
           "Name": "Ein",
           "Rarity": "EX",
-          "BorderType": "EX",
+          "BorderType": "Gold",
           "CardNumber": 903,
           "Sprite": "0903_Ein_EX",
           "IsFoil": true,
@@ -12401,11 +12401,11 @@
           "CardBack": ""
         },
         {
-          "Name": "Yulha",
+          "Name": "Red Hood",
           "Rarity": "FullArt",
           "BorderType": "EX",
           "CardNumber": 1058,
-          "Sprite": "1058_Yulha_FullArt",
+          "Sprite": "1058_Red_Hood_FullArt",
           "IsFoil": true,
           "ElementType": "None",
           "FoilMask": "",
@@ -12918,33 +12918,33 @@
           "CardBack": ""
         },
         {
-          "Name": "Aria",
+          "Name": "Dorothy",
           "Rarity": "FullArt",
           "BorderType": "EX",
           "CardNumber": 1105,
-          "Sprite": "1105_Aria_FullArt",
+          "Sprite": "1105_Dorothy_FullArt",
           "IsFoil": true,
           "ElementType": "None",
           "FoilMask": "",
           "CardBack": ""
         },
         {
-          "Name": "Irony",
+          "Name": "Trony",
           "Rarity": "FullArt",
           "BorderType": "EX",
           "CardNumber": 1106,
-          "Sprite": "1106_Irony_FullArt",
+          "Sprite": "1106_Trony_FullArt",
           "IsFoil": true,
           "ElementType": "None",
           "FoilMask": "",
           "CardBack": ""
         },
         {
-          "Name": "Ein",
+          "Name": "School Circle",
           "Rarity": "FullArt",
           "BorderType": "EX",
           "CardNumber": 1107,
-          "Sprite": "1107_Ein_FullArt",
+          "Sprite": "1107_School_Circle_FullArt",
           "IsFoil": true,
           "ElementType": "None",
           "FoilMask": "",

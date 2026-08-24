@@ -1,9 +1,12 @@
 import configparser
+import hashlib
 import json
 import math
 import pathlib
 import shutil
 import subprocess
+import urllib.request
+import zipfile
 
 from PIL import Image
 
@@ -17,9 +20,11 @@ DATA_DIR = TEXTURE_REPLACER_DIR / "objects_data"
 MESH_DIR = TEXTURE_REPLACER_DIR / "objects_meshes"
 ORIGINAL_CARDS_DIR = ORIGINAL_DIR.joinpath("plugins/CardConfigurator/Configs")
 ORIGINAL_PACKS_DIR = TEXTURE_DIR.joinpath("packs")
-ART_STATIC_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/cardart/default")
-ART_ANIMATED_DIR = WORKING_DIR.joinpath("cards/Texture2D/assets/animated/default/ghost")
+CARDS_DIR = WORKING_DIR.joinpath("cards")
+ART_STATIC_DIR = WORKING_DIR.joinpath("cards/assets/cardart/default")
+ART_ANIMATED_DIR = WORKING_DIR.joinpath("cards/assets/animated/default/ghost")
 EXTERNAL_DIR = WORKING_DIR.joinpath("external")
+TOOLS_DIR = WORKING_DIR.joinpath("tools")
 OUTPUT_DIR = WORKING_DIR.joinpath("output")
 ACCESSORIES_DIR = OUTPUT_DIR / "Nikke_Accessories"
 FIGURINES_DIR = OUTPUT_DIR / "Nikke_Figurines"
@@ -32,10 +37,130 @@ CARDBACK = TEXTURE_DIR.joinpath("cards/T_CardBackMesh.png")
 LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
 
 
+def extract() -> None:
+    zips = list(EXTERNAL_DIR.glob("*.zip"))
+
+    if len(zips) != 1:
+        raise SystemExit(
+            f"Expected exactly one zip in {EXTERNAL_DIR}, found: {[z.name for z in zips]}"
+        )
+
+    zip_file = zips[0]
+
+    with zipfile.ZipFile(zip_file) as archive:
+        required = [
+            "BepInEx/plugins/ArtExpander/cardart.assets",
+            "BepInEx/plugins/ArtExpander/animated.assets",
+        ]
+
+        if any(entry not in archive.namelist() for entry in required):
+            raise SystemExit(f"{zip_file.name} is missing the ArtExpander assets")
+
+    for directory in (ORIGINAL_DIR.parent, CARDS_DIR):
+        shutil.rmtree(directory, ignore_errors=True)
+
+    print(
+        f"Extracting {zip_file.name} -> {ORIGINAL_DIR.parent.relative_to(WORKING_DIR)}/"
+    )
+
+    with zipfile.ZipFile(zip_file) as archive:
+        archive.extractall(ORIGINAL_DIR.parent)
+
+    cli = asset_studio_cli()
+
+    art_expander_dir = ORIGINAL_DIR / "plugins" / "ArtExpander"
+
+    for name in ("cardart", "animated"):
+        print(f"Exporting {name}.assets -> {CARDS_DIR.relative_to(WORKING_DIR)}/")
+
+        subprocess.run(
+            [
+                str(cli),
+                "export",
+                str(art_expander_dir / f"{name}.assets"),
+                "-o",
+                str(CARDS_DIR),
+                "--types",
+                "Texture2D",
+                "--group-by",
+                "container",
+            ],
+            check=True,
+        )
+
+
+def asset_studio_cli():
+    # AssetStudioCLI 0.17.0, .NET Framework 4.7.2 build (ships with Windows)
+    VERSION = "0.17.0"
+    ZIP = "AssetStudioCLI.net472.zip"
+    FOLDER = "AssetStudioCLI.net472"
+    BINARY = "AssetStudioCLI.exe"
+    SHA256 = "17834cc9bddf791f7b2c76cbdcc3f2a6a35408b2c466c927d085a5b58da85ff7"
+    URL = f"https://github.com/hecrj/AssetStudio/releases/download/{VERSION}/{ZIP}"
+
+    executable_path = TOOLS_DIR / FOLDER / BINARY
+
+    if executable_path.is_file():
+        return executable_path
+
+    TOOLS_DIR.mkdir(parents=True, exist_ok=True)
+
+    zip_path = TOOLS_DIR / ZIP
+
+    print(f"Downloading {URL}")
+
+    with urllib.request.urlopen(URL) as response, zip_path.open("wb") as file:
+        shutil.copyfileobj(response, file)
+
+    digest = hashlib.sha256(zip_path.read_bytes()).hexdigest()
+
+    if digest != SHA256:
+        zip_path.unlink()
+        raise RuntimeError(f"SHA256 mismatch for {ZIP}: {digest}")
+
+    with zipfile.ZipFile(zip_path) as archive:
+        archive.extractall(TOOLS_DIR)
+
+    zip_path.unlink()
+
+    return executable_path
+
+
 def generate() -> None:
     SETS = {
-        "Tetramon": "Core",
-        "Destiny": "Destiny",
+        "all_expansions": "Core",
+        "destiny": "Destiny",
+    }
+
+    CONFIG_SETS = {
+        "all_expansions": "Tetramon",
+        "destiny": "Destiny",
+    }
+
+    RARITIES = {
+        "base": "Standard",
+        "silver": "Silver",
+        "gold": "Gold",
+        "firstedition": "FirstEdition",
+        "ex": "EX",
+        "fullart": "FullArt",
+    }
+
+    # Card art names that differ from their config names
+    NAME_OVERRIDES = {
+        "CrystalA": "EmeraldA",
+        "CrystalB": "EmeraldB",
+        "CrystalC": "EmeraldC",
+        "Mummy": "MummyMan",
+    }
+
+    # Legendary pack textures don't follow the regular naming pattern
+    PACK_TEXTURES_LEGENDARY = {
+        "Core": ("T_CardPackLegnd.png", "PackLegend.png"),
+        "Destiny": (
+            "T_CardPackDestinyLegend.png",
+            "PackDestinyLegendary.png",
+        ),
     }
 
     # Accessories
@@ -239,6 +364,7 @@ def generate() -> None:
         if set_name is None:
             continue
 
+        config_set = CONFIG_SETS[set.name]
         total_cards = len(next(set.joinpath("base").walk())[2])
         total_animated = 0
 
@@ -249,10 +375,14 @@ def generate() -> None:
             if not expansion.is_dir():
                 continue
 
-            rarity = "Standard" if expansion.name == "Base" else expansion.name
+            rarity = RARITIES.get(expansion.name)
+
+            if rarity is None:
+                continue
 
             for card_art in expansion.iterdir():
-                ini = ORIGINAL_CARDS_DIR / set.name / "Default" / f"{card_art.stem}.ini"
+                config_name = NAME_OVERRIDES.get(card_art.stem, card_art.stem)
+                ini = ORIGINAL_CARDS_DIR / config_set / "Default" / f"{config_name}.ini"
 
                 if not ini.is_file():
                     print(f"[{rarity} - {card_art.name}] Config not found. Skipping...")
@@ -261,17 +391,17 @@ def generate() -> None:
                 config = configparser.ConfigParser()
                 config.read(ini)
 
-                kind = config[card_art.stem]["Rarity"]
+                kind = config[config_name]["Rarity"]
                 number = int(
-                    config[card_art.stem]["Number"]
+                    config[config_name]["Number"]
                 ) + total_cards * metadata.RARITIES.index(rarity)
 
-                ini_override = ORIGINAL_CARDS_DIR / set.name / expansion.name / ini.name
+                ini_override = ORIGINAL_CARDS_DIR / config_set / rarity / ini.name
 
                 if ini_override.is_file():
                     config.read(ini_override)
 
-                name = config[card_art.stem]["Name"]
+                name = config[config_name]["Name"]
                 card = metadata.card(name, number, rarity, kind)
                 cards.append(card)
 
@@ -296,7 +426,7 @@ def generate() -> None:
                     if ini_override.is_file():
                         config.read(ini_override)
 
-                    name = config[card_art.stem]["Name"]
+                    name = config[config_name]["Name"]
                     number = total_animated + total_cards * (len(metadata.RARITIES) - 1)
                     card = metadata.card(name, number, "FullArtAnimated", kind)
                     cards.append(card)
@@ -340,33 +470,36 @@ def generate() -> None:
             box = metadata.box(set_name, tier)
             items.append(box)
 
-            prefix = "" if set_name == "Core" else "Destiny_"
-            suffix = "" if set_name == "Core" else "_Destiny"
-            original_kind = "Legend" if tier == "Legendary" else tier
-            original_kind = "" if tier == "Common" else original_kind
+            pack_suffix = "" if set_name == "Core" else "Destiny"
+            box_prefix = "" if set_name == "Core" else "Destiny_"
+            box_suffix = "" if set_name == "Core" else "_Destiny"
+            box_tier = "Legend" if tier == "Legendary" else tier
+            box_tier = "" if tier == "Common" else box_tier
+
+            if tier == "Legendary":
+                pack_material, pack_sprite = PACK_TEXTURES_LEGENDARY[set_name]
+            else:
+                pack_material = f"T_CardPack{pack_suffix}{tier}.png"
+                pack_sprite = f"Pack{pack_suffix}{tier}.png"
 
             copy(
-                ORIGINAL_PACKS_DIR.joinpath(
-                    f"T_CardPack{'' if set.name == 'Tetramon' else set.name}{tier}.png"
-                ),
+                ORIGINAL_PACKS_DIR / pack_material,
                 output_set.joinpath(f"{pack['Material']}.png"),
             )
 
             copy(
-                ORIGINAL_PACKS_DIR.joinpath(
-                    f"Pack{'' if set.name == 'Tetramon' else set.name}{tier}.png"
-                ),
+                ORIGINAL_PACKS_DIR / pack_sprite,
                 output_set.joinpath(f"{pack['SpriteName']}.png"),
             )
 
             copy(
-                TEXTURE_DIR / "boxes" / f"T_Cardbox{suffix}.png",
+                TEXTURE_DIR / "boxes" / f"T_CardBox{box_suffix}.png",
                 output_set.joinpath(f"{box['Material']}.png"),
             )
 
             copy(
                 TEXTURE_DIR.joinpath("boxes").joinpath(
-                    f"{prefix}{original_kind}Cardbox.png"
+                    f"{box_prefix}{box_tier}CardBox.png"
                 ),
                 output_set.joinpath(f"{box['SpriteName']}.png"),
             )

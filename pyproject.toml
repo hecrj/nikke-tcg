@@ -9,6 +9,7 @@ dependencies = [
 ]
 
 [project.scripts]
+extract = "nikke:extract"
 generate = "nikke:generate"
 bundle = "nikke:bundle"
 package = "nikke:package"

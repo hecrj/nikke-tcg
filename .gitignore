@@ -2,6 +2,7 @@ output/
 build/
 original/
 cards/
+tools/
 .venv/
 __pycache__/
 
