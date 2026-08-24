@@ -33,7 +33,6 @@ LOGO = TEXTURE_DIR.joinpath("misc/GameTitle.png")
 
 
 def generate() -> None:
-
     SETS = {
         "Tetramon": "Core",
         "Destiny": "Destiny",
@@ -401,7 +400,7 @@ def generate() -> None:
 
         copy(LOGO, bundle / "_ShopLogo.png")
 
-        for entry in EXTERNAL_DIR.iterdir():
+        for entry in (EXTERNAL_DIR / "Bundle").iterdir():
             if entry.is_file():
                 copy(entry, bundle / entry.name)
 
