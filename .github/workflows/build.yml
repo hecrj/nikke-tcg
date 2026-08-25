@@ -88,9 +88,6 @@ jobs:
       - name: Install Python dependencies
         run: uv sync --frozen
 
-      - name: Bundle
-        run: uv run bundle
-
       - name: Extract
         run: uv run extract
 
