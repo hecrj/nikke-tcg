@@ -287,7 +287,7 @@ def progress(items: list, label: str):
             print(f"\r  {label}: {done}/{total} ({pct}%)", end="", flush=True)
         elif pct != percent:
             percent = pct
-            print(f"  {label}: {done}/{total} ({pct}%)")
+            print(f"  {label}: {done}/{total} ({pct}%)", flush=True)
 
     if live:
         print()

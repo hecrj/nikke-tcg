@@ -11,7 +11,12 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      PYTHONUNBUFFERED: "1"
     steps:
+      - name: Check disk space
+        run: df -h /
+
       - name: Configure GitLab token for submodule
         shell: bash
         run: |
