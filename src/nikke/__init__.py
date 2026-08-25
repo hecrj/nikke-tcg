@@ -280,11 +280,8 @@ def generate() -> None:
 
         for prefix in ["", "Toy_"]:
             for suffix in ["", "Plushie"]:
-                icon = (
-                    TEXTURE_DIR
-                    / "figures"
-                    / f"Icon_{prefix}{name.replace('PigB', 'PiggyB')}{suffix}.png"
-                )
+                name = name.replace("PigB", "PiggyB").replace("StarFish", "Starfish")
+                icon = TEXTURE_DIR / "figures" / f"Icon_{prefix}{name}{suffix}.png"
 
                 if icon.exists():
                     break
