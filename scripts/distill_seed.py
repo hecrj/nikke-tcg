@@ -41,7 +41,17 @@ def main() -> None:
     shader_path_id = material.read().m_Shader.m_PathID
     manifest = one("AssetBundle")
 
+    # Figurine .obj files import as a model: a Mesh plus a root GameObject -> child
+    # GameObject (MeshFilter + MeshRenderer) hierarchy with two Transforms. Keep one of
+    # each as a prototype the bundler clones and rewires (see bundler.Bundle.add_mesh).
+    model = [
+        o
+        for o in sf.objects.values()
+        if o.type.name in ("Mesh", "GameObject", "Transform", "MeshFilter", "MeshRenderer")
+    ]
+
     keep = {texture.path_id, sprite.path_id, material.path_id, shader_path_id, manifest.path_id}
+    keep |= {o.path_id for o in model}
     sf.objects = {path_id: o for path_id, o in sf.objects.items() if path_id in keep}
     # Drop the resource stream (.resS); our prototypes store data inline.
     env.file.files = {n: f for n, f in env.file.files.items() if isinstance(f, SerializedFile)}

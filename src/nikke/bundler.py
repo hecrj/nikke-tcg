@@ -78,6 +78,87 @@ def read_raw_texture(png: pathlib.Path):
     return None
 
 
+# Unity's mesh vertex layout for an imported model: position + normal + tangent + uv0,
+# interleaved as floats (channels 0/1/2/4), 48-byte stride. Matches the seed's mesh prototype.
+VERTEX_STRIDE = 48
+
+
+def _parse_obj(path: pathlib.Path):
+    positions, normals, uvs, faces = [], [], [], []
+    for line in path.read_text().splitlines():
+        tag, _, rest = line.partition(" ")
+        if tag == "v":
+            x, y, z = rest.split()[:3]
+            positions.append((float(x), float(y), float(z)))
+        elif tag == "vn":
+            x, y, z = rest.split()[:3]
+            normals.append((float(x), float(y), float(z)))
+        elif tag == "vt":
+            u, v = rest.split()[:2]
+            uvs.append((float(u), float(v)))
+        elif tag == "f":
+            face = []
+            for token in rest.split():
+                v, _, vt_vn = token.partition("/")
+                vt, _, vn = vt_vn.partition("/")
+                face.append(
+                    (int(v) - 1, int(vt) - 1 if vt else None, int(vn) - 1 if vn else None)
+                )
+            faces.append(face)
+    return positions, normals, uvs, faces
+
+
+def build_mesh_buffers(path: pathlib.Path):
+    """Convert a Wavefront .obj to Unity mesh buffers.
+
+    Returns (vertex_count, vertex_bytes, index_bytes, index_count, index_format, center,
+    extent). Unity's importer converts the .obj's right-handed Y-up space to its own
+    left-handed system; we negate X and reverse triangle winding to match. Tangents are a
+    placeholder -- figurine materials sample only albedo. NOTE: the axis/winding is the one
+    thing that needs an in-game check; flip it here if a figurine renders mirrored/inside-out.
+    """
+    positions, normals, uvs, faces = _parse_obj(path)
+
+    seen: dict = {}
+    pos, nrm, uv = [], [], []
+
+    def vertex(key):
+        if key in seen:
+            return seen[key]
+        vi, ti, ni = key
+        index = len(pos)
+        x, y, z = positions[vi]
+        pos.append((-x, y, z))
+        nx, ny, nz = normals[ni] if ni is not None else (0.0, 0.0, 1.0)
+        nrm.append((-nx, ny, nz))
+        uv.append(uvs[ti] if ti is not None else (0.0, 0.0))
+        seen[key] = index
+        return index
+
+    indices: list = []
+    for face in faces:
+        corner = [vertex(key) for key in face]
+        for i in range(1, len(corner) - 1):  # fan-triangulate; reversed winding for the X flip
+            indices += (corner[0], corner[i + 1], corner[i])
+
+    vertex_bytes = bytearray()
+    for i in range(len(pos)):
+        vertex_bytes += struct.pack("<3f", *pos[i])
+        vertex_bytes += struct.pack("<3f", *nrm[i])
+        vertex_bytes += struct.pack("<4f", 1.0, 0.0, 0.0, -1.0)  # placeholder tangent
+        vertex_bytes += struct.pack("<2f", *uv[i])
+
+    if len(pos) <= 65535:
+        index_bytes, index_format = struct.pack(f"<{len(indices)}H", *indices), 0
+    else:
+        index_bytes, index_format = struct.pack(f"<{len(indices)}I", *indices), 1
+
+    xs, ys, zs = ([p[a] for p in pos] for a in range(3))
+    center = ((max(xs) + min(xs)) / 2, (max(ys) + min(ys)) / 2, (max(zs) + min(zs)) / 2)
+    extent = ((max(xs) - min(xs)) / 2, (max(ys) - min(ys)) / 2, (max(zs) - min(zs)) / 2)
+    return len(pos), bytes(vertex_bytes), index_bytes, len(indices), index_format, center, extent
+
+
 @dataclasses.dataclass
 class Prototypes:
     """Known-good objects lifted from the reference bundle, used as clone templates."""
@@ -86,6 +167,15 @@ class Prototypes:
     sprite: ObjectReader
     material: ObjectReader  # a Standard-shader material (`defaultMat`)
     shader_path_id: int  # the embedded built-in Standard shader
+    # A figurine model: root GameObject -> child GameObject (MeshFilter + MeshRenderer),
+    # a Transform each, and the Mesh.
+    mesh: ObjectReader
+    mesh_filter: ObjectReader
+    mesh_renderer: ObjectReader
+    child_object: ObjectReader
+    root_object: ObjectReader
+    child_transform: ObjectReader
+    root_transform: ObjectReader
 
 
 class Bundle:
@@ -133,7 +223,36 @@ class Bundle:
             lambda o: o.type.name == "Material" and o.read().m_Name == "defaultMat"
         )
         shader_path_id = material.read().m_Shader.m_PathID
-        return Prototypes(texture, sprite, material, shader_path_id)
+
+        mesh = self._find(lambda o: o.type.name == "Mesh")
+        mesh_filter = self._find(lambda o: o.type.name == "MeshFilter")
+        mesh_renderer = self._find(lambda o: o.type.name == "MeshRenderer")
+        # The child carries the mesh (Transform + MeshFilter + MeshRenderer); the root just
+        # parents it (Transform only) and is the asset the game loads by name.
+        objects = [o for o in self._sf.objects.values() if o.type.name == "GameObject"]
+        child_object = next(o for o in objects if len(o.read().m_Component) == 3)
+        root_object = next(o for o in objects if len(o.read().m_Component) == 1)
+        child_transform = self._find(
+            lambda o: o.type.name == "Transform"
+            and o.read().m_GameObject.m_PathID == child_object.path_id
+        )
+        root_transform = self._find(
+            lambda o: o.type.name == "Transform"
+            and o.read().m_GameObject.m_PathID == root_object.path_id
+        )
+        return Prototypes(
+            texture,
+            sprite,
+            material,
+            shader_path_id,
+            mesh,
+            mesh_filter,
+            mesh_renderer,
+            child_object,
+            root_object,
+            child_transform,
+            root_transform,
+        )
 
     def _clone(self, proto: ObjectReader) -> ObjectReader:
         path_id = self._next_path_id
@@ -156,11 +275,11 @@ class Bundle:
         self._sf.objects[path_id] = clone
         return clone
 
-    def _pptr(self, obj: ObjectReader):
-        """A same-file PPtr (m_FileID = 0) pointing at one of our objects."""
+    def _pptr(self, obj: ObjectReader | None):
+        """A same-file PPtr (m_FileID = 0) pointing at one of our objects (or null)."""
         from UnityPy.classes import PPtr
 
-        return PPtr(m_FileID=0, m_PathID=obj.path_id, assetsfile=self._sf)
+        return PPtr(m_FileID=0, m_PathID=obj.path_id if obj else 0, assetsfile=self._sf)
 
     def add_texture(self, name: str, image: Image.Image) -> ObjectReader:
         obj = self._clone(self._protos.texture)
@@ -224,6 +343,89 @@ class Bundle:
                 tex_env.m_Texture = self._pptr(texture)
         data.save()
         return obj
+
+    def add_mesh(self, name: str, obj_path: pathlib.Path):
+        """Build a figurine model from a .obj: a Mesh and the GameObject hierarchy Unity
+        imports for it. Returns (root_object, objects) -- the root GameObject is what the
+        game loads by `name`; `objects` is the whole graph, for the container preload.
+
+        The MeshRenderer gets a placeholder `defaultMat` (what Unity's importer assigns to
+        a material-less .obj); the figurine's real material lives as a separate asset that
+        the mod loader applies at runtime from its JSON, so we don't wire it here.
+        """
+        mesh = self._clone(self._protos.mesh)
+        mesh_filter = self._clone(self._protos.mesh_filter)
+        mesh_renderer = self._clone(self._protos.mesh_renderer)
+        child = self._clone(self._protos.child_object)
+        root = self._clone(self._protos.root_object)
+        child_transform = self._clone(self._protos.child_transform)
+        root_transform = self._clone(self._protos.root_transform)
+        default_material = self._clone(self._protos.material)  # already named "defaultMat"
+
+        count, vertices, indices, index_count, index_format, center, extent = (
+            build_mesh_buffers(obj_path)
+        )
+        data = mesh.read()
+        data.m_Name = "default"
+        data.m_IndexFormat = index_format
+        data.m_VertexData.m_VertexCount = count
+        data.m_VertexData.m_DataSize = vertices
+        data.m_IndexBuffer = indices
+        submesh = data.m_SubMeshes[0]
+        submesh.firstByte = submesh.firstVertex = submesh.baseVertex = 0
+        submesh.indexCount = index_count
+        submesh.vertexCount = count
+        submesh.topology = 0
+        for box in (data.m_LocalAABB, submesh.localAABB):
+            box.m_Center.x, box.m_Center.y, box.m_Center.z = center
+            box.m_Extent.x, box.m_Extent.y, box.m_Extent.z = extent
+        data.save()
+
+        data = child.read()
+        data.m_Name = "default"
+        data.m_Component[0].component = self._pptr(child_transform)
+        data.m_Component[1].component = self._pptr(mesh_filter)
+        data.m_Component[2].component = self._pptr(mesh_renderer)
+        data.save()
+
+        data = child_transform.read()
+        data.m_GameObject = self._pptr(child)
+        data.m_Father = self._pptr(root_transform)
+        data.m_Children = []
+        data.save()
+
+        data = mesh_filter.read()
+        data.m_GameObject = self._pptr(child)
+        data.m_Mesh = self._pptr(mesh)
+        data.save()
+
+        data = mesh_renderer.read()
+        data.m_GameObject = self._pptr(child)
+        data.m_Materials = [self._pptr(default_material)]
+        data.save()
+
+        data = root.read()
+        data.m_Name = name
+        data.m_Component[0].component = self._pptr(root_transform)
+        data.save()
+
+        data = root_transform.read()
+        data.m_GameObject = self._pptr(root)
+        data.m_Children = [self._pptr(child_transform)]
+        data.m_Father = self._pptr(None)
+        data.save()
+
+        graph = [
+            root,
+            root_transform,
+            child,
+            child_transform,
+            mesh_filter,
+            mesh_renderer,
+            mesh,
+            default_material,
+        ]
+        return root, graph
 
     @property
     def shader(self) -> ObjectReader:
@@ -332,10 +534,15 @@ def build(
             sprite = bundle.add_sprite(asset.stem, texture, size)
             bundle.register(container, sprite, [sprite, texture])
 
-    if meshes:
-        # Figurine .obj meshes need Mesh/GameObject/MeshRenderer serialization (phase 2).
-        skipped = ", ".join(m.name for m in meshes)
-        print(f"  {name}: skipped {len(meshes)} unsupported mesh(es): {skipped}")
+    # A figurine .obj imports as a model whose MeshRenderer uses a placeholder defaultMat;
+    # its real material is a separate asset above, applied by the loader from the JSON.
+    for asset in progress(meshes, f"{name} meshes"):
+        container = "assets/" + asset.relative_to(root).as_posix().lower()
+        root_object, graph = bundle.add_mesh(asset.stem, asset)
+        bundle.register(container, root_object, graph + [bundle.shader])
 
     bundle.save(output)
-    print(f"  {name}: {len(textures)} textures, {output.stat().st_size / 1e6:.1f} MB")
+    print(
+        f"  {name}: {len(textures)} textures, {len(meshes)} meshes, "
+        f"{output.stat().st_size / 1e6:.1f} MB"
+    )
