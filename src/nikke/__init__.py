@@ -2,7 +2,6 @@ import configparser
 import hashlib
 import json
 import math
-import os
 import pathlib
 import shutil
 import subprocess
@@ -570,19 +569,6 @@ def bundle():
         dirs_exist_ok=True,
     )
 
-    # On CI there is no interactive session and no pre-activated license. A
-    # Personal Unity_lic.ulf is machine-bound, so it cannot be reused across the
-    # ephemeral runners ("Machine bindings don't match"). Instead we sign in with
-    # the Unity account credentials so the Licensing Client fetches the Personal
-    # entitlement fresh for this machine (no -serial for Personal licenses).
-    email = os.environ.get("UNITY_EMAIL")
-    password = os.environ.get("UNITY_PASSWORD")
-
-    if email and password:
-        activation = ["-username", email, "-password", password]
-    else:
-        activation = []
-
     bundle = subprocess.Popen(
         [
             str(UNITY_EXE),
@@ -595,8 +581,7 @@ def bundle():
             "Builder.Run",
             "-logFile",
             "-",
-        ]
-        + activation,
+        ],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         text=True,
