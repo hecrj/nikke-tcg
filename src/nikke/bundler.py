@@ -273,21 +273,21 @@ def progress(items: list, label: str):
     those, so there it prints once per percent instead of once per item.
     """
     total = len(items)
+
     if not total:
         return
 
     live = sys.stdout.isatty()
-    percent = -1
 
     for done, item in enumerate(items, start=1):
         yield item
 
-        pct = done * 100 // total
+        percent = done * 100 // total
+
         if live:
-            print(f"\r  {label}: {done}/{total} ({pct}%)", end="", flush=True)
-        elif pct != percent:
-            percent = pct
-            print(f"  {label}: {done}/{total} ({pct}%)", flush=True)
+            print(f"\r  {label}: {done}/{total} ({percent}%)", end="", flush=True)
+        else:
+            print(f"  {label}: {done}/{total} ({percent}%)", flush=True)
 
     if live:
         print()
