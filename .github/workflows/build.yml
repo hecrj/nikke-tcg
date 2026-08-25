@@ -119,3 +119,51 @@ jobs:
             $relative = $file.FullName.Substring($root.Length + 1)
             Write-Host ("{0}  {1}" -f $hash, $relative)
           }
+
+      - name: Upload Nikke - Core
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nikke - Core
+          path: build/Nikke - Core
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload Nikke - Destiny
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nikke - Destiny
+          path: build/Nikke - Destiny
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload Nikke - Accessories
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nikke - Accessories
+          path: build/Nikke - Accessories
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload Nikke - Figurines
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nikke - Figurines
+          path: build/Nikke - Figurines
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload Nikke - Posters
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nikke - Posters
+          path: build/Nikke - Posters
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Upload Nikke - Theme
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nikke - Theme
+          path: build/Nikke - Theme
+          if-no-files-found: error
+          retention-days: 1
