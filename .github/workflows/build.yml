@@ -12,22 +12,11 @@ concurrency:
 # Required repository secrets:
 #   GITLAB_TOKEN   - GitLab personal access token with the read_repository scope for
 #                    hecrj/nikke-tcg-assets (needed to check out the `external` submodule)
-#   UNITY_EMAIL    - Unity account email + password. The activate-unity-license step
-#   UNITY_PASSWORD - signs in and activates a Personal license on the runner (Unity
-#                    discontinued manual .ulf activation for Personal licenses). Use
-#                    a dedicated CI account WITHOUT two-factor auth, and a password of
-#                    only letters/digits (symbols break the command-line handoff).
 jobs:
   build:
     name: Build
-    runs-on: windows-latest
-    env:
-      UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-      UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+    runs-on: ubuntu-latest
     steps:
-      - name: Install vcredist2013
-        run: choco install vcredist2013 -y --no-progress
-
       - name: Configure GitLab token for submodule
         shell: bash
         run: |
@@ -44,26 +33,6 @@ jobs:
             echo "::error::git-lfs is not installed on the runner"
             exit 1
           fi
-
-      - name: Install Unity 2021.3.45f2
-        uses: RageAgainstThePixel/unity-setup@v2
-        with:
-          version-file: None
-          unity-version: 2021.3.45f2
-
-      - name: Verify Unity installation
-        run: |
-          $unity = 'C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe'
-          if (-not (Test-Path $unity)) {
-            throw "Unity 2021.3.45f2 not found at $unity (UNITY_EDITOR_PATH='${env:UNITY_EDITOR_PATH}'). Pin install-path in unity-setup to match bundle()'s hardcoded path."
-          }
-
-      - name: Activate Unity license
-        uses: RageAgainstThePixel/activate-unity-license@v2
-        with:
-          license: 'personal'
-          username: ${{ secrets.UNITY_EMAIL }}
-          password: ${{ secrets.UNITY_PASSWORD }}
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -100,25 +69,15 @@ jobs:
         run: uv run package
 
       - name: Summarize
+        shell: bash
         run: |
-          $root = (Get-Location).Path
-          $files = Get-ChildItem -Path build -Recurse -File
-          $total = ($files | Measure-Object -Property Length -Sum).Sum
-
-          Write-Host ("build/: {0:N2} MB across {1} files" -f ($total / 1MB), $files.Count)
-
-          Get-ChildItem -Path build -Directory | ForEach-Object {
-            $size = (Get-ChildItem $_.FullName -Recurse -File | Measure-Object -Property Length -Sum).Sum
-            Write-Host ("  {0}: {1:N2} MB" -f $_.Name, ($size / 1MB))
-          }
-
-          Write-Host ""
-          Write-Host "SHA256 manifest"
-          foreach ($file in $files) {
-            $hash = (Get-FileHash -Algorithm SHA256 -LiteralPath $file.FullName).Hash.ToLower()
-            $relative = $file.FullName.Substring($root.Length + 1)
-            Write-Host ("{0}  {1}" -f $hash, $relative)
-          }
+          echo "build/: $(du -sh build | cut -f1) across $(find build -type f | wc -l | tr -d ' ') files"
+          for dir in build/*/; do
+            echo "  $(basename "$dir"): $(du -sh "$dir" | cut -f1)"
+          done
+          echo ""
+          echo "SHA256 manifest"
+          find build -type f -print0 | sort -z | xargs -0 sha256sum
 
       - name: Upload Nikke - Core
         uses: actions/upload-artifact@v4

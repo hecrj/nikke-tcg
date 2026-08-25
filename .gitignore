@@ -6,16 +6,6 @@ tools/
 .venv/
 __pycache__/
 
-# Unity
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
-[Bb]uild/
-[Bb]uilds/
-[Ll]ogs/
-[Uu]ser[Ss]ettings/
-[Aa]ssets/
-[Aa]sset[Bb]undles/
-
-# Memory captures
-[Mm]emoryCaptures/
+# Full reference bundle used only to (re)generate src/nikke/seed.bundle via
+# scripts/distill_seed.py — 239 MB, not committed. The distilled seed is.
+reference/
