@@ -6,7 +6,7 @@ import shutil
 import zipfile
 
 import UnityPy
-from PIL import Image
+from PIL import Image, PngImagePlugin
 
 from nikke import bundler, metadata
 
@@ -67,10 +67,16 @@ def extract() -> None:
 
     for name in ("cardart", "animated"):
         print(f"Exporting {name}.assets -> {CARDS_DIR.relative_to(WORKING_DIR)}/")
-        export_textures(art_expander_dir / f"{name}.assets")
+        # Static card art is bundled as-is, so keep the source texture verbatim (see
+        # export_textures). Animated frames get a black background composited in later, so
+        # there is nothing to preserve.
+        export_textures(
+            art_expander_dir / f"{name}.assets",
+            preserve_raw=name == "cardart",
+        )
 
 
-def export_textures(assets: pathlib.Path) -> None:
+def export_textures(assets: pathlib.Path, preserve_raw: bool = False) -> None:
     # Replaces AssetStudioCLI `export --types Texture2D --group-by container`: write every
     # Texture2D as a PNG under CARDS_DIR, in the folder given by its AssetBundle container
     # path and named after the asset (m_Name), e.g.
@@ -78,6 +84,10 @@ def export_textures(assets: pathlib.Path) -> None:
     #     -> cards/assets/cardart/default/all_expansions/gold/ShellyD.png
     # UnityPy decodes any GPU format to a correctly-oriented image (Unity stores textures
     # bottom-up; .image already flips them).
+    #
+    # With preserve_raw, the source texture's encoded bytes are also stashed in a private PNG
+    # chunk so `bundle` can embed them untouched instead of decoding and re-encoding (which
+    # would compress an already-compressed texture a second time, losing quality).
     env = UnityPy.load(str(assets))
 
     textures = [o for o in env.objects if o.type.name == "Texture2D" and o.container]
@@ -86,7 +96,21 @@ def export_textures(assets: pathlib.Path) -> None:
         data = obj.read()
         output = (CARDS_DIR / obj.container).with_name(f"{data.m_Name}.png")
         output.parent.mkdir(parents=True, exist_ok=True)
-        data.image.save(output)
+
+        info = None
+        if preserve_raw:
+            info = PngImagePlugin.PngInfo()
+            info.add(
+                bundler.RAW_TEXTURE_CHUNK,
+                bundler.pack_raw_texture(
+                    int(data.m_TextureFormat),
+                    data.m_Width,
+                    data.m_Height,
+                    bytes(data.get_image_data()),
+                ),
+            )
+
+        data.image.save(output, pnginfo=info)
 
 
 def generate() -> None:

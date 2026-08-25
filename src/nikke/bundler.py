@@ -21,6 +21,7 @@ from __future__ import annotations
 import dataclasses
 import importlib.resources
 import pathlib
+import struct
 import sys
 
 import UnityPy
@@ -46,6 +47,35 @@ SPRITE_PIXELS_TO_UNITS = 100.0
 # Builder.GenerateMaterials created a Standard material for every `*_Material` texture.
 # Those become Texture2D + Material; every other PNG becomes Texture2D + Sprite.
 MATERIAL_SUFFIX = "_Material"
+
+# Static card art comes from an already-encoded source texture that `bundle` only relocates.
+# To avoid a lossy decode->PNG->re-encode round-trip, `extract` stashes the source texture
+# (format + dimensions + raw bytes) verbatim in this private PNG chunk, and `build` embeds it
+# untouched. Private/ancillary/safe-to-copy PNG chunk name, so it survives a byte copy.
+RAW_TEXTURE_CHUNK = b"nkTx"
+
+
+def pack_raw_texture(
+    texture_format: int, width: int, height: int, data: bytes
+) -> bytes:
+    return struct.pack("<iii", int(texture_format), width, height) + data
+
+
+def read_raw_texture(png: pathlib.Path):
+    """Return (format, width, height, data) from a PNG's raw-texture chunk, or None."""
+    blob = png.read_bytes()
+    if blob[:8] != b"\x89PNG\r\n\x1a\n":
+        return None
+
+    offset = 8
+    while offset + 12 <= len(blob):
+        (length,) = struct.unpack(">I", blob[offset : offset + 4])
+        if blob[offset + 4 : offset + 8] == RAW_TEXTURE_CHUNK:
+            payload = blob[offset + 8 : offset + 8 + length]
+            texture_format, width, height = struct.unpack("<iii", payload[:12])
+            return texture_format, width, height, payload[12:]
+        offset += 12 + length
+    return None
 
 
 @dataclasses.dataclass
@@ -136,11 +166,40 @@ class Bundle:
         obj = self._clone(self._protos.texture)
         data = obj.read()
         data.m_Name = name
-        # set_image re-encodes to BC7 and fixes m_Width/Height/CompleteImageSize/format.
-        data.set_image(image, target_format=TEXTURE_FORMAT)
+        # BC7 (like all block formats) needs both dimensions to be multiples of 4. Unity
+        # falls back to uncompressed RGBA32 otherwise -- as the source assets confirm -- so
+        # match that: forcing BC7 would pad the block grid and store a texture the game's
+        # runtime never sees Unity produce (and lose quality, since RGBA32 is lossless).
+        width, height = image.size
+        block_compressible = width % 4 == 0 and height % 4 == 0
+        fmt = TEXTURE_FORMAT if block_compressible else TextureFormat.RGBA32
+        # set_image re-encodes and fixes m_Width/Height/CompleteImageSize/format.
+        data.set_image(image, target_format=fmt)
         data.m_MipCount = 1
         data.m_IsReadable = False
         data.m_TextureSettings.m_FilterMode = 1  # Bilinear
+        data.save()
+        return obj
+
+    def add_raw_texture(
+        self, name: str, texture_format: int, width: int, height: int, data_bytes: bytes
+    ) -> ObjectReader:
+        """Embed an already-encoded texture verbatim (no decode/re-encode, so lossless)."""
+        obj = self._clone(self._protos.texture)
+        data = obj.read()
+        data.m_Name = name
+        data.m_Width = width
+        data.m_Height = height
+        data.image_data = data_bytes
+        data.m_CompleteImageSize = len(data_bytes)
+        data.m_TextureFormat = TextureFormat(texture_format)
+        data.m_MipCount = 1
+        data.m_IsReadable = False
+        data.m_TextureSettings.m_FilterMode = 1  # Bilinear
+        if data.m_StreamData is not None:
+            data.m_StreamData.path = ""
+            data.m_StreamData.offset = 0
+            data.m_StreamData.size = 0
         data.save()
         return obj
 
@@ -252,8 +311,17 @@ def build(
     for asset in progress(textures, name):
         container = "assets/" + asset.relative_to(root).as_posix().lower()
 
-        image = Image.open(asset).convert("RGBA")
-        texture = bundle.add_texture(asset.stem, image)
+        raw = read_raw_texture(asset)
+        if raw is not None:
+            texture_format, width, height, data_bytes = raw
+            texture = bundle.add_raw_texture(
+                asset.stem, texture_format, width, height, data_bytes
+            )
+            size = (width, height)
+        else:
+            image = Image.open(asset).convert("RGBA")
+            texture = bundle.add_texture(asset.stem, image)
+            size = image.size
         bundle.register(container, texture, [texture])
 
         if asset.stem.endswith(MATERIAL_SUFFIX):
@@ -261,7 +329,7 @@ def build(
             mat_path = container.removesuffix(".png") + ".mat"
             bundle.register(mat_path, material, [material, texture, bundle.shader])
         else:
-            sprite = bundle.add_sprite(asset.stem, texture, image.size)
+            sprite = bundle.add_sprite(asset.stem, texture, size)
             bundle.register(container, sprite, [sprite, texture])
 
     if meshes:
