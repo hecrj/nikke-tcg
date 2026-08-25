@@ -21,7 +21,6 @@ jobs:
   build:
     name: Build
     runs-on: windows-latest
-    timeout-minutes: 90
     env:
       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
