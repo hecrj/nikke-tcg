@@ -3,6 +3,7 @@ import json
 import math
 import pathlib
 import shutil
+import threading
 import zipfile
 
 import UnityPy
@@ -92,8 +93,21 @@ def export_textures(assets: pathlib.Path, preserve_raw: bool = False) -> None:
 
     textures = [o for o in env.objects if o.type.name == "Texture2D" and o.container]
 
-    for obj in bundler.progress(textures, assets.stem):
-        data = obj.read()
+    # Decoding (GPU format -> RGBA) and PNG encoding are C code that releases the GIL, so
+    # they parallelize across threads. The pixels live in a shared .resS stream, though, and
+    # every Texture2D reads it through one reader whose cursor is shared state -- so reading
+    # (obj.read + get_image_data) must be serialized. We do that under `read_lock`, inline the
+    # bytes so the later decode no longer touches the stream, then decode/encode unlocked.
+    read_lock = threading.Lock()
+
+    def export(obj):
+        with read_lock:
+            data = obj.read()
+            raw = bytes(data.get_image_data())
+            data.image_data = raw
+            data.m_StreamData.path = ""
+            data.m_StreamData.size = 0
+
         output = (CARDS_DIR / obj.container).with_name(f"{data.m_Name}.png")
         output.parent.mkdir(parents=True, exist_ok=True)
 
@@ -103,14 +117,13 @@ def export_textures(assets: pathlib.Path, preserve_raw: bool = False) -> None:
             info.add(
                 bundler.RAW_TEXTURE_CHUNK,
                 bundler.pack_raw_texture(
-                    int(data.m_TextureFormat),
-                    data.m_Width,
-                    data.m_Height,
-                    bytes(data.get_image_data()),
+                    int(data.m_TextureFormat), data.m_Width, data.m_Height, raw
                 ),
             )
 
         data.image.save(output, pnginfo=info)
+
+    bundler.parallel(textures, export, assets.stem)
 
 
 def generate() -> None:
@@ -342,6 +355,10 @@ def generate() -> None:
     )
 
     # Expansions
+    # Compositing every animation frame over a black background is independent per frame, so
+    # we collect the jobs here and run them in one parallel pass once all cards are known.
+    animated_jobs: list[tuple[pathlib.Path, pathlib.Path]] = []
+
     for set in ART_STATIC_DIR.iterdir():
         set_name = SETS.get(set.name)
 
@@ -432,14 +449,11 @@ def generate() -> None:
                     total_padding = math.ceil(math.log10(len(frames)))
 
                     for frame in frames:
-                        img = Image.open(frame).convert("RGBA")
-                        background = Image.new("RGBA", img.size, (0, 0, 0, 255))
-                        result = Image.alpha_composite(background, img)
-
-                        result.save(
+                        output = (
                             output_frames_dir
                             / f"{frame.stem.rjust(total_padding, '0')}.png"
                         )
+                        animated_jobs.append((frame, output))
 
         cards.sort(key=lambda card: card["CardNumber"])
 
@@ -508,6 +522,14 @@ def generate() -> None:
             metadata.bundle(set_name, items, [expansion]),
             OUTPUT_DIR / f"nikke_{set_name.lower()}.json",
         )
+
+    def composite(job):
+        frame, output = job
+        image = Image.open(frame).convert("RGBA")
+        background = Image.new("RGBA", image.size, (0, 0, 0, 255))
+        Image.alpha_composite(background, image).save(output)
+
+    bundler.parallel(animated_jobs, composite, "animated")
 
     for bundle in OUTPUT_DIR.iterdir():
         if not bundle.is_dir() or "Nikke_" not in bundle.name:

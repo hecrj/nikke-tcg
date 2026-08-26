@@ -18,8 +18,10 @@ and the PPtr wiring between them.
 
 from __future__ import annotations
 
+import concurrent.futures
 import dataclasses
 import importlib.resources
+import os
 import pathlib
 import struct
 import sys
@@ -496,6 +498,41 @@ def progress(items: list, label: str):
             print(f"\r  {label}: {done}/{total} ({percent}%)", end="", flush=True)
         else:
             print(f"  {label}: {done}/{total} ({percent}%)", flush=True)
+
+    if live:
+        print()
+
+
+def parallel(items: list, worker, label: str, workers: int | None = None) -> None:
+    """Run `worker(item)` over `items` across a thread pool, reporting progress as it goes.
+
+    Progress is printed the same way as `progress`, just keyed off completion order rather
+    than iteration order. The work must be thread-safe; the first worker exception is
+    re-raised. Defaults to one thread per CPU -- the payload here (texture decode, PNG
+    encode, image compositing) is C code that drops the GIL, so it scales with cores.
+    """
+    total = len(items)
+
+    if not total:
+        return
+
+    workers = workers or (os.cpu_count() or 4)
+    live = sys.stdout.isatty()
+    last_percent = -1
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = [pool.submit(worker, item) for item in items]
+
+        for done, future in enumerate(concurrent.futures.as_completed(futures), start=1):
+            future.result()
+
+            percent = done * 100 // total
+
+            if live:
+                print(f"\r  {label}: {done}/{total} ({percent}%)", end="", flush=True)
+            elif percent != last_percent:
+                last_percent = percent
+                print(f"  {label}: {done}/{total} ({percent}%)", flush=True)
 
     if live:
         print()
