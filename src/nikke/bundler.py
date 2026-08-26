@@ -439,6 +439,12 @@ class Bundle:
     def save(self, output: pathlib.Path):
         from UnityPy.classes import AssetInfo, PPtr
 
+        # Unity omits the Standard shader from bundles with no materials (e.g. the animated
+        # frame bundles). Drop our seed shader when nothing references it so we match.
+        has_material = any(o.type.name == "Material" for o in self._sf.objects.values())
+        if not has_material:
+            self._sf.objects.pop(self._protos.shader_path_id, None)
+
         manifest = self._manifest.read()
         manifest.m_Name = self._name
         manifest.m_AssetBundleName = self._name
