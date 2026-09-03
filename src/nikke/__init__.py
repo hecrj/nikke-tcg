@@ -1,16 +1,15 @@
 import configparser
-import hashlib
 import json
 import math
 import pathlib
 import shutil
-import subprocess
-import urllib.request
+import threading
 import zipfile
 
-from PIL import Image
+import UnityPy
+from PIL import Image, PngImagePlugin
 
-from nikke import metadata
+from nikke import bundler, metadata
 
 WORKING_DIR = pathlib.Path.cwd()
 ORIGINAL_DIR = WORKING_DIR / "original" / "BepInEx"
@@ -25,13 +24,11 @@ CARDS_DIR = WORKING_DIR / "cards"
 ART_STATIC_DIR = WORKING_DIR / "cards" / "assets" / "cardart" / "default"
 ART_ANIMATED_DIR = WORKING_DIR / "cards" / "assets" / "animated" / "default" / "ghost"
 EXTERNAL_DIR = WORKING_DIR / "external"
-TOOLS_DIR = WORKING_DIR / "tools"
 OUTPUT_DIR = WORKING_DIR / "output"
 ACCESSORIES_DIR = OUTPUT_DIR / "Nikke_Accessories"
 FIGURINES_DIR = OUTPUT_DIR / "Nikke_Figurines"
 ANIMATED_OUTPUT_DIR = OUTPUT_DIR / "animated"
-UNITY_DIR = WORKING_DIR / "unity"
-EXPANSION_BUILDER = UNITY_DIR / "ExpansionBuilder"
+BUNDLES_DIR = OUTPUT_DIR / "AssetBundles"
 BUILD_DIR = WORKING_DIR / "build"
 
 CARDBACK = TEXTURE_DIR / "cards" / "T_CardBackMesh.png"
@@ -67,64 +64,66 @@ def extract() -> None:
     with zipfile.ZipFile(zip_file) as archive:
         archive.extractall(ORIGINAL_DIR.parent)
 
-    cli = asset_studio_cli()
-
     art_expander_dir = ORIGINAL_DIR / "plugins" / "ArtExpander"
 
     for name in ("cardart", "animated"):
         print(f"Exporting {name}.assets -> {CARDS_DIR.relative_to(WORKING_DIR)}/")
-
-        subprocess.run(
-            [
-                str(cli),
-                "export",
-                str(art_expander_dir / f"{name}.assets"),
-                "-o",
-                str(CARDS_DIR),
-                "--types",
-                "Texture2D",
-                "--group-by",
-                "container",
-            ],
-            check=True,
+        # Static card art is bundled as-is, so keep the source texture verbatim (see
+        # export_textures). Animated frames get a black background composited in later, so
+        # there is nothing to preserve.
+        export_textures(
+            art_expander_dir / f"{name}.assets",
+            preserve_raw=name == "cardart",
         )
 
 
-def asset_studio_cli():
-    # AssetStudioCLI 0.17.0, .NET Framework 4.7.2 build (ships with Windows)
-    VERSION = "0.17.0"
-    ZIP = "AssetStudioCLI.net472.zip"
-    FOLDER = "AssetStudioCLI.net472"
-    BINARY = "AssetStudioCLI.exe"
-    SHA256 = "17834cc9bddf791f7b2c76cbdcc3f2a6a35408b2c466c927d085a5b58da85ff7"
-    URL = f"https://github.com/hecrj/AssetStudio/releases/download/{VERSION}/{ZIP}"
+def export_textures(assets: pathlib.Path, preserve_raw: bool = False) -> None:
+    # Replaces AssetStudioCLI `export --types Texture2D --group-by container`: write every
+    # Texture2D as a PNG under CARDS_DIR, in the folder given by its AssetBundle container
+    # path and named after the asset (m_Name), e.g.
+    #   assets/cardart/default/all_expansions/gold/shellyd.png + name "ShellyD"
+    #     -> cards/assets/cardart/default/all_expansions/gold/ShellyD.png
+    # UnityPy decodes any GPU format to a correctly-oriented image (Unity stores textures
+    # bottom-up; .image already flips them).
+    #
+    # With preserve_raw, the source texture's encoded bytes are also stashed in a private PNG
+    # chunk so `bundle` can embed them untouched instead of decoding and re-encoding (which
+    # would compress an already-compressed texture a second time, losing quality).
+    env = UnityPy.load(str(assets))
 
-    executable_path = TOOLS_DIR / FOLDER / BINARY
+    textures = [o for o in env.objects if o.type.name == "Texture2D" and o.container]
 
-    if executable_path.is_file():
-        return executable_path
+    # Decoding (GPU format -> RGBA) and PNG encoding are C code that releases the GIL, so
+    # they parallelize across threads. The pixels live in a shared .resS stream, though, and
+    # every Texture2D reads it through one reader whose cursor is shared state -- so reading
+    # (obj.read + get_image_data) must be serialized. We do that under `read_lock`, inline the
+    # bytes so the later decode no longer touches the stream, then decode/encode unlocked.
+    read_lock = threading.Lock()
 
-    TOOLS_DIR.mkdir(parents=True, exist_ok=True)
+    def export(obj):
+        with read_lock:
+            data = obj.read()
+            raw = bytes(data.get_image_data())
+            data.image_data = raw
+            data.m_StreamData.path = ""
+            data.m_StreamData.size = 0
 
-    zip_path = TOOLS_DIR / ZIP
+        output = (CARDS_DIR / obj.container).with_name(f"{data.m_Name}.png")
+        output.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"Downloading {URL}")
+        info = None
+        if preserve_raw:
+            info = PngImagePlugin.PngInfo()
+            info.add(
+                bundler.RAW_TEXTURE_CHUNK,
+                bundler.pack_raw_texture(
+                    int(data.m_TextureFormat), data.m_Width, data.m_Height, raw
+                ),
+            )
 
-    with urllib.request.urlopen(URL) as response, zip_path.open("wb") as file:
-        shutil.copyfileobj(response, file)
+        data.image.save(output, pnginfo=info)
 
-    digest = hashlib.sha256(zip_path.read_bytes()).hexdigest()
-
-    if digest != SHA256:
-        zip_path.unlink()
-        raise RuntimeError(f"SHA256 mismatch for {ZIP}: {digest}")
-
-    with zipfile.ZipFile(zip_path) as archive:
-        archive.extractall(TOOLS_DIR)
-
-    zip_path.unlink()
-
-    return executable_path
+    bundler.parallel(textures, export, assets.stem)
 
 
 def generate() -> None:
@@ -318,11 +317,8 @@ def generate() -> None:
 
         for prefix in ["", "Toy_"]:
             for suffix in ["", "Plushie"]:
-                icon = (
-                    TEXTURE_DIR
-                    / "figures"
-                    / f"Icon_{prefix}{name.replace('PigB', 'PiggyB')}{suffix}.png"
-                )
+                name = name.replace("PigB", "PiggyB").replace("StarFish", "Starfish")
+                icon = TEXTURE_DIR / "figures" / f"Icon_{prefix}{name}{suffix}.png"
 
                 if icon.exists():
                     break
@@ -359,6 +355,10 @@ def generate() -> None:
     )
 
     # Expansions
+    # Compositing every animation frame over a black background is independent per frame, so
+    # we collect the jobs here and run them in one parallel pass once all cards are known.
+    animated_jobs: list[tuple[pathlib.Path, pathlib.Path]] = []
+
     for set in ART_STATIC_DIR.iterdir():
         set_name = SETS.get(set.name)
 
@@ -383,7 +383,7 @@ def generate() -> None:
             if rarity is None:
                 continue
 
-            for card_art in expansion.iterdir():
+            for card_art in sorted(expansion.iterdir()):
                 config_name = NAME_OVERRIDES.get(card_art.stem, card_art.stem)
                 ini = ORIGINAL_CARDS_DIR / config_set / "Default" / f"{config_name}.ini"
 
@@ -449,14 +449,11 @@ def generate() -> None:
                     total_padding = math.ceil(math.log10(len(frames)))
 
                     for frame in frames:
-                        img = Image.open(frame).convert("RGBA")
-                        background = Image.new("RGBA", img.size, (0, 0, 0, 255))
-                        result = Image.alpha_composite(background, img)
-
-                        result.save(
+                        output = (
                             output_frames_dir
                             / f"{frame.stem.rjust(total_padding, '0')}.png"
                         )
+                        animated_jobs.append((frame, output))
 
         cards.sort(key=lambda card: card["CardNumber"])
 
@@ -526,6 +523,14 @@ def generate() -> None:
             OUTPUT_DIR / f"nikke_{set_name.lower()}.json",
         )
 
+    def composite(job):
+        frame, output = job
+        image = Image.open(frame).convert("RGBA")
+        background = Image.new("RGBA", image.size, (0, 0, 0, 255))
+        Image.alpha_composite(background, image).save(output)
+
+    bundler.parallel(animated_jobs, composite, "animated")
+
     for bundle in OUTPUT_DIR.iterdir():
         if not bundle.is_dir() or "Nikke_" not in bundle.name:
             continue
@@ -538,62 +543,21 @@ def generate() -> None:
 
 
 def bundle():
-    UNITY_EXE = pathlib.Path(
-        r"C:\Program Files\Unity\Hub\Editor\2021.3.45f2\Editor\Unity.exe"
-    )
-    ASSETS_DIR = EXPANSION_BUILDER / "Assets"
+    # Build the per-set AssetBundles directly with UnityPy (see nikke.bundler) instead of
+    # driving the Unity editor. Bundle names are the set-directory name lowercased (animated
+    # sets get an `_animated` suffix), and the output lands where package() reads it from.
+    shutil.rmtree(BUNDLES_DIR, ignore_errors=True)
 
-    for path, dirs, files in ASSETS_DIR.walk(top_down=False):
-        if "Nikke" not in str(path):
-            continue
+    for set_dir in sorted(OUTPUT_DIR.iterdir()):
+        if set_dir.is_dir() and "Nikke_" in set_dir.name:
+            name = set_dir.name.lower()
+            bundler.build(set_dir, name, BUNDLES_DIR / name, OUTPUT_DIR)
 
-        for dir in dirs:
-            dir = path / dir
-
-            if not any(dir.iterdir()):
-                dir.rmdir()
-
-        for file in files:
-            file = path / file
-            output_file = OUTPUT_DIR / file.with_suffix("").relative_to(ASSETS_DIR)
-
-            if file.suffix == ".meta" and output_file.exists():
-                continue
-
-            print(file.relative_to(ASSETS_DIR))
-            file.unlink()
-
-    shutil.copytree(
-        OUTPUT_DIR,
-        ASSETS_DIR,
-        dirs_exist_ok=True,
-    )
-
-    bundle = subprocess.Popen(
-        [
-            str(UNITY_EXE),
-            "-batchmode",
-            "-nographics",
-            "-quit",
-            "-projectPath",
-            str(EXPANSION_BUILDER),
-            "-executeMethod",
-            "Builder.Run",
-            "-logFile",
-            "-",
-        ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        text=True,
-    )
-
-    for line in bundle.stdout or []:
-        print(line, end="", flush=True)
-
-    bundle.wait()
-
-    if bundle.returncode != 0:
-        raise subprocess.CalledProcessError(bundle.returncode, bundle.args)
+    if ANIMATED_OUTPUT_DIR.is_dir():
+        for set_dir in sorted(ANIMATED_OUTPUT_DIR.iterdir()):
+            if set_dir.is_dir():
+                name = f"{set_dir.name.lower()}_animated"
+                bundler.build(set_dir, name, BUNDLES_DIR / name, OUTPUT_DIR)
 
 
 def package():
@@ -630,7 +594,7 @@ def package():
             )
 
             plugin = plugins / "Nikke" / f"{entry.stem}_prefabloader"
-            bundle = EXPANSION_BUILDER / "AssetBundles" / entry.stem
+            bundle = BUNDLES_DIR / entry.stem
             bundle_animated = bundle.with_name(bundle.name + "_animated")
 
             copy(bundle, plugin / entry.stem)
