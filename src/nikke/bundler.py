@@ -439,6 +439,22 @@ class Bundle:
         """The embedded Standard shader materials bind to (kept from the seed)."""
         return self._sf.objects[self._protos.shader_path_id]
 
+    def _prune_types(self) -> None:
+        """Drop m_Types entries for classes no surviving object uses.
+
+        Bundles are cloned from one seed whose SerializedFile declares every prototype class
+        (Mesh, GameObject, MeshFilter, MeshRenderer, Transform, ...). Dropping the prototype
+        *objects* leaves those declarations behind in m_Types -- harmless at load time, but
+        they surface as phantom entries in tools (e.g. AssetStudio's "Asset Classes" tab) and
+        don't match what Unity emits. Rebuild m_Types from the types still in use and reindex
+        each object's type_id (an index into m_Types for these files).
+        """
+        used = sorted({obj.type_id for obj in self._sf.objects.values()})
+        remap = {old: new for new, old in enumerate(used)}
+        self._sf.types = [self._sf.types[old] for old in used]
+        for obj in self._sf.objects.values():
+            obj.type_id = remap[obj.type_id]
+
     def register(self, container_path: str, primary: ObjectReader, preload: list):
         """Expose `primary` at `container_path`, preloading it and its dependencies."""
         self._container.append((container_path.lower(), primary, preload))
@@ -451,6 +467,8 @@ class Bundle:
         has_material = any(o.type.name == "Material" for o in self._sf.objects.values())
         if not has_material:
             self._sf.objects.pop(self._protos.shader_path_id, None)
+
+        self._prune_types()
 
         manifest = self._manifest.read()
         manifest.m_Name = self._name
