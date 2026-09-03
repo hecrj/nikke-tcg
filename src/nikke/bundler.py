@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import dataclasses
+import hashlib
 import importlib.resources
 import os
 import pathlib
@@ -201,14 +202,18 @@ class Bundle:
             path_id: obj for path_id, obj in self._sf.objects.items() if path_id in keep
         }
 
-        # Drop the reference's `.resS` resource stream (~all its texture pixel data lives
-        # there via m_StreamData). Our textures store their data inline via set_image, so
-        # nothing references the stream and carrying it would bloat the bundle to ~240 MB.
-        self._env.file.files = {
-            name: f
-            for name, f in self._env.file.files.items()
-            if isinstance(f, SerializedFile)
-        }
+        # Rebuild the bundle's file table with exactly one entry: our SerializedFile under a
+        # unique internal name. Two things happen here:
+        #  * The reference's `.resS` resource stream is dropped (~all its texture pixel data
+        #    lives there via m_StreamData). Our textures store data inline via set_image, so
+        #    nothing references the stream and carrying it would bloat the bundle to ~240 MB.
+        #  * The `CAB-<hash>` archive name is made unique per bundle. Every bundle is cloned
+        #    from one seed, so they'd otherwise all share the seed's name -- and Unity keys
+        #    loaded SerializedFiles by that name, silently refusing to load a second bundle
+        #    whose name it already holds (only the first of ours would load at runtime).
+        # blake2b is just a stable Unity-style identifier here, not a security hash.
+        cab = "CAB-" + hashlib.blake2b(name.encode(), digest_size=16).hexdigest()
+        self._env.file.files = {cab: self._sf}
 
         self._name = name
         self._container: list[tuple[str, ObjectReader, list[ObjectReader]]] = []
